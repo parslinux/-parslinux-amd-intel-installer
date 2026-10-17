@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 22:09+0300\n"
+"POT-Creation-Date: 2026-10-17 22:12+0300\n"
 "PO-Revision-Date: 2024-07-16 11:17+0300\n"
 "Last-Translator: Osman Coskun <osman.coskun@pardus.org.tr>\n"
 "Language-Team: Turkish <dev@pardus.org.tr>\n"
@@ -137,11 +137,11 @@ msgstr ""
 msgid "🎮 Arayüzü İncele (Simülasyon Modu)"
 msgstr ""
 
-#: ui/ui.glade:530 ui/ui.glade:746
+#: ui/ui.glade:530 ui/ui.glade:740
 msgid "Reboot"
 msgstr "Yeniden başlat"
 
-#: ui/ui.glade:544 ui/ui.glade:762
+#: ui/ui.glade:544 ui/ui.glade:756
 msgid "Exit"
 msgstr "Çıkış"
 
@@ -149,46 +149,46 @@ msgstr "Çıkış"
 msgid "page_vte"
 msgstr "page_vte"
 
-#: ui/ui.glade:641 src/MainWindow.py:229
+#: ui/ui.glade:641 src/MainWindow.py:257
 #, fuzzy
 msgid "ParsLinux Nvidia Installer"
 msgstr "Pardus Nvidia Kurucu"
 
-#: ui/ui.glade:727
+#: ui/ui.glade:721
 msgid "You must reboot your device before using this application."
 msgstr ""
 "Bu uygulamayı kullanmadan önce cihazınızı yeniden başlatmanız gerekmektedir."
 
-#: ui/ui.glade:789
+#: ui/ui.glade:783
 msgid "Reboot required"
 msgstr "Yeniden başlatma gerekli"
 
-#: src/MainWindow.py:282
+#: src/MainWindow.py:310
 msgid "Operation completed successfully."
 msgstr ""
 
-#: src/MainWindow.py:284
+#: src/MainWindow.py:312
 #, python-brace-format
 msgid "Operation failed (exit code {code}). Please review the log above."
 msgstr ""
 
-#: src/MainWindow.py:413
+#: src/MainWindow.py:441
 msgid "Driver"
 msgstr "Sürücü"
 
-#: src/MainWindow.py:417
+#: src/MainWindow.py:445
 msgid "Version"
 msgstr "Sürüm"
 
-#: src/MainWindow.py:420 src/MainWindow.py:423
+#: src/MainWindow.py:448 src/MainWindow.py:451
 msgid "Description"
 msgstr "Açıklama"
 
-#: src/MainWindow.py:504
+#: src/MainWindow.py:532
 msgid "Selected version is no longer available"
 msgstr ""
 
-#: src/MainWindow.py:507
+#: src/MainWindow.py:535
 msgid "The package list has been refreshed. Please choose a driver again."
 msgstr ""
 

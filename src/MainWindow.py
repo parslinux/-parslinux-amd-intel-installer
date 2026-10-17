@@ -19,7 +19,7 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Polkit", "1.0")
 gi.require_version("Vte", "2.91")
 
-from gi.repository import Gtk, GObject, GLib, Vte, Gdk
+from gi.repository import Gtk, GObject, GLib, Vte, Gdk, GdkPixbuf
 from locale import gettext as _
 
 APPNAME_CODE = "parslinux-nvidia-installer"
@@ -157,10 +157,38 @@ class MainWindow(object):
                 version = open(ver_path).readline().strip()
         except Exception:
             pass
+        # Configure icon search path so named icons resolve locally
+        icon_theme = Gtk.IconTheme.get_default()
+        if icon_theme:
+            icon_theme.append_search_path(os.path.normpath(os.path.join(os.path.dirname(__file__), "../images")))
+            icon_theme.append_search_path(os.path.normpath(os.path.join(os.path.dirname(__file__), "..")))
+            icon_theme.append_search_path(os.path.normpath(os.path.join(os.path.dirname(__file__), "../data/assets")))
+
+        # Load ParsLinux logo pixbuf directly
+        logo_paths = [
+            os.path.normpath(os.path.join(os.path.dirname(__file__), "../images/parslinux-nvidia-installer.svg")),
+            os.path.normpath(os.path.join(os.path.dirname(__file__), "../parslinux-nvidia-installer.svg")),
+            os.path.normpath(os.path.join(os.path.dirname(__file__), "../data/assets/parslinux-logo.svg")),
+            "/usr/share/icons/hicolor/scalable/apps/parslinux-nvidia-installer.svg",
+        ]
+        self.app_icon_pixbuf = None
+        for lp in logo_paths:
+            if os.path.isfile(lp):
+                try:
+                    self.app_icon_pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(lp, 128, 128, True)
+                    break
+                except Exception:
+                    pass
+
         if self.ui_about_dialog:
             self.ui_about_dialog.set_version(version)
             self.ui_about_dialog.set_program_name("ParsLinux Nvidia Installer")
             self.ui_about_dialog.set_website("https://parslinux.org")
+            if self.app_icon_pixbuf:
+                self.ui_about_dialog.set_logo(self.app_icon_pixbuf)
+
+        if self.ui_main_window and self.app_icon_pixbuf:
+            self.ui_main_window.set_icon(self.app_icon_pixbuf)
 
         self.ui_info_dialog = self.get_ui("ui_info_dialog")
         self.ui_about_button.connect("clicked", self.on_about_button_clicked)

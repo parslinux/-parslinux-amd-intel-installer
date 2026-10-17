@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 22:09+0300\n"
+"POT-Creation-Date: 2026-10-17 22:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,11 +109,11 @@ msgstr ""
 msgid "🎮 Arayüzü İncele (Simülasyon Modu)"
 msgstr ""
 
-#: ui/ui.glade:530 ui/ui.glade:746
+#: ui/ui.glade:530 ui/ui.glade:740
 msgid "Reboot"
 msgstr ""
 
-#: ui/ui.glade:544 ui/ui.glade:762
+#: ui/ui.glade:544 ui/ui.glade:756
 msgid "Exit"
 msgstr ""
 
@@ -121,44 +121,44 @@ msgstr ""
 msgid "page_vte"
 msgstr ""
 
-#: ui/ui.glade:641 src/MainWindow.py:229
+#: ui/ui.glade:641 src/MainWindow.py:257
 msgid "ParsLinux Nvidia Installer"
 msgstr ""
 
-#: ui/ui.glade:727
+#: ui/ui.glade:721
 msgid "You must reboot your device before using this application."
 msgstr ""
 
-#: ui/ui.glade:789
+#: ui/ui.glade:783
 msgid "Reboot required"
 msgstr ""
 
-#: src/MainWindow.py:282
+#: src/MainWindow.py:310
 msgid "Operation completed successfully."
 msgstr ""
 
-#: src/MainWindow.py:284
+#: src/MainWindow.py:312
 #, python-brace-format
 msgid "Operation failed (exit code {code}). Please review the log above."
 msgstr ""
 
-#: src/MainWindow.py:413
+#: src/MainWindow.py:441
 msgid "Driver"
 msgstr ""
 
-#: src/MainWindow.py:417
+#: src/MainWindow.py:445
 msgid "Version"
 msgstr ""
 
-#: src/MainWindow.py:420 src/MainWindow.py:423
+#: src/MainWindow.py:448 src/MainWindow.py:451
 msgid "Description"
 msgstr ""
 
-#: src/MainWindow.py:504
+#: src/MainWindow.py:532
 msgid "Selected version is no longer available"
 msgstr ""
 
-#: src/MainWindow.py:507
+#: src/MainWindow.py:535
 msgid "The package list has been refreshed. Please choose a driver again."
 msgstr ""
 

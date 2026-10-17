@@ -670,15 +670,9 @@ Arayüzü ve özellikleri test etmek için aşağıdaki butondan simülasyon mod
     <property name="version">1.0.0</property>
     <property name="copyright">© ParsLinux Community &amp; Contributors</property>
     <property name="website">https://parslinux.org</property>
-    <property name="authors">ParsLinux Developers &lt;dev@parslinux.org&gt;
-Osman Coskun &lt;osman.coskun@pardus.org.tr&gt;
-Ali Riza Keskin &lt;aliriza.keskin@pardus.org.tr&gt;
-Fatih Altun &lt;fatih.altun@pardus.org.tr&gt;</property>
-    <property name="translator-credits">ParsLinux Translation Team &lt;dev@parslinux.org&gt;
-Osman Coskun &lt;osman.coskun@pardus.org.tr&gt;
-Hugo Carvalho &lt;hugokarvalho@hotmail.com&gt;</property>
-    <property name="artists">ParsLinux Artwork Team
-Yusuf Düzgün &lt;yusuf.duzgun@pardus.org.tr&gt;</property>
+    <property name="authors">ParsLinux Developers &lt;dev@parslinux.org&gt;</property>
+    <property name="translator-credits">ParsLinux Translation Team &lt;dev@parslinux.org&gt;</property>
+    <property name="artists">ParsLinux Artwork Team &lt;dev@parslinux.org&gt;</property>
     <property name="logo-icon-name">parslinux-nvidia-installer</property>
     <property name="license-type">gpl-3-0</property>
     <child internal-child="vbox">

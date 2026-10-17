@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pardus-nvidia-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 22:09+0300\n"
+"POT-Creation-Date: 2026-10-17 22:12+0300\n"
 "PO-Revision-Date: 2025-11-25 12:01+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
@@ -138,11 +138,11 @@ msgstr ""
 msgid "🎮 Arayüzü İncele (Simülasyon Modu)"
 msgstr ""
 
-#: ui/ui.glade:530 ui/ui.glade:746
+#: ui/ui.glade:530 ui/ui.glade:740
 msgid "Reboot"
 msgstr "Reiniciar"
 
-#: ui/ui.glade:544 ui/ui.glade:762
+#: ui/ui.glade:544 ui/ui.glade:756
 msgid "Exit"
 msgstr "Sair"
 
@@ -150,46 +150,46 @@ msgstr "Sair"
 msgid "page_vte"
 msgstr "página_vte"
 
-#: ui/ui.glade:641 src/MainWindow.py:229
+#: ui/ui.glade:641 src/MainWindow.py:257
 #, fuzzy
 msgid "ParsLinux Nvidia Installer"
 msgstr "Instalador Nvidia Pardus"
 
-#: ui/ui.glade:727
+#: ui/ui.glade:721
 msgid "You must reboot your device before using this application."
 msgstr "É necessário reiniciar o dispositivo antes de utilizar esta aplicação."
 
-#: ui/ui.glade:789
+#: ui/ui.glade:783
 msgid "Reboot required"
 msgstr "É necessário reiniciar"
 
-#: src/MainWindow.py:282
+#: src/MainWindow.py:310
 #, fuzzy
 msgid "Operation completed successfully."
 msgstr "Operação concluída com sucesso"
 
-#: src/MainWindow.py:284
+#: src/MainWindow.py:312
 #, python-brace-format
 msgid "Operation failed (exit code {code}). Please review the log above."
 msgstr ""
 
-#: src/MainWindow.py:413
+#: src/MainWindow.py:441
 msgid "Driver"
 msgstr "Controlador"
 
-#: src/MainWindow.py:417
+#: src/MainWindow.py:445
 msgid "Version"
 msgstr "Versão"
 
-#: src/MainWindow.py:420 src/MainWindow.py:423
+#: src/MainWindow.py:448 src/MainWindow.py:451
 msgid "Description"
 msgstr "Descrição"
 
-#: src/MainWindow.py:504
+#: src/MainWindow.py:532
 msgid "Selected version is no longer available"
 msgstr ""
 
-#: src/MainWindow.py:507
+#: src/MainWindow.py:535
 msgid "The package list has been refreshed. Please choose a driver again."
 msgstr ""
 
