@@ -22,8 +22,8 @@ nvidia_pub = 'nvidia.pub'
 source_dir = join_paths(prefix, 'share', 'parslinux', 'parslinux-nvidia-installer')
 
 install_data([desktop_file], install_dir : desktop_file_dir)
-install_data(['parslinux-nvidia-installer.svg'], install_dir : icon_dir)
-install_data(['parslinux-nvidia-installer', 'parslinux-nvidia-installer.svg'], install_dir : source_dir)
+install_data(['images/parslinux-nvidia-installer.svg'], install_dir : icon_dir)
+install_data(['parslinux-nvidia-installer', 'images/parslinux-nvidia-installer.svg'], install_dir : source_dir)
 install_data([polkit_file], install_dir : policy_dir)
 install_data([service_runner, update_translation_file], install_dir : source_dir, install_mode : 'rwxr-xr-x')
 install_data([service_file], install_dir : '/lib/systemd/system/', install_mode : 'rw-r--r--')
@@ -31,6 +31,7 @@ install_data([service_file], install_dir : '/lib/systemd/system/', install_mode 
 install_subdir('data', install_dir : source_dir)
 install_subdir('src', install_dir : source_dir)
 install_subdir('ui', install_dir : source_dir)
+install_subdir('images', install_dir : source_dir)
 
 install_data(['parslinux-nvidia-installer'], install_dir : prefix / 'bin')
 install_data([nvidia_pub], install_dir : source_dir)

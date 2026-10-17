@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Background Shadow -->
+    <filter id="pniShadow" x="-25%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#02101e" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#76B900" flood-opacity="0.3"/>
+    </filter>
+
+    <!-- GPU Core Glow -->
+    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Base Gradient (Obsidian to Midnight Cyan) -->
+    <linearGradient id="baseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141c24"/>
+      <stop offset="50%" stop-color="#0d141c"/>
+      <stop offset="100%" stop-color="#070c12"/>
+    </linearGradient>
+
+    <!-- Border Ring Gradient (NVIDIA Cyber Green to Pars Blue) -->
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#76B900"/>
+      <stop offset="45%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+
+    <!-- Shroud Metallic Gradient -->
+    <linearGradient id="shroudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a3440"/>
+      <stop offset="40%" stop-color="#1e252e"/>
+      <stop offset="100%" stop-color="#131920"/>
+    </linearGradient>
+
+    <!-- Fan Blade Gradient -->
+    <linearGradient id="fanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#384552"/>
+      <stop offset="100%" stop-color="#182026"/>
+    </linearGradient>
+
+    <!-- Neon Circuit Gradient -->
+    <linearGradient id="neonGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#90E000"/>
+      <stop offset="100%" stop-color="#60A500"/>
+    </linearGradient>
+
+    <linearGradient id="neonCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00F0FF"/>
+      <stop offset="100%" stop-color="#0091FF"/>
+    </linearGradient>
+
+    <!-- Gold PCIe Fingers -->
+    <linearGradient id="goldPcie" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Squircle with Premium Shadow -->
+  <rect x="8" y="8" width="112" height="112" rx="26" fill="url(#baseGrad)" filter="url(#pniShadow)"/>
+  
+  <!-- Sleek Accent Border -->
+  <rect x="8.75" y="8.75" width="110.5" height="110.5" rx="25.25" fill="none" stroke="url(#borderGrad)" stroke-width="1.8" opacity="0.9"/>
+  <rect x="9.5" y="9.5" width="109" height="109" rx="24.5" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.12"/>
+
+  <!-- Subtle Cyber Grid Background Lines -->
+  <g opacity="0.12" stroke="#00E5FF" stroke-width="0.75">
+    <line x1="20" y1="20" x2="108" y2="20"/>
+    <line x1="20" y1="108" x2="108" y2="108"/>
+    <line x1="20" y1="20" x2="20" y2="108"/>
+    <line x1="108" y1="20" x2="108" y2="108"/>
+    <line x1="42" y1="20" x2="42" y2="108"/>
+    <line x1="86" y1="20" x2="86" y2="108"/>
+  </g>
+
+  <!-- GRAPHICS CARD (GPU) -->
+  <g transform="translate(18, 30)">
+    <!-- Heatsink Aluminum Fin Plate -->
+    <rect x="2" y="8" width="88" height="52" rx="6" fill="#1b242e" stroke="#2e3c4d" stroke-width="1"/>
+    <!-- Heatsink Vertical Cooling Fins -->
+    <g stroke="#263442" stroke-width="1" opacity="0.7">
+      <line x1="10" y1="12" x2="10" y2="56"/>
+      <line x1="15" y1="12" x2="15" y2="56"/>
+      <line x1="20" y1="12" x2="20" y2="56"/>
+      <line x1="25" y1="12" x2="25" y2="56"/>
+      <line x1="30" y1="12" x2="30" y2="56"/>
+      <line x1="35" y1="12" x2="35" y2="56"/>
+      <line x1="40" y1="12" x2="40" y2="56"/>
+      <line x1="45" y1="12" x2="45" y2="56"/>
+      <line x1="50" y1="12" x2="50" y2="56"/>
+      <line x1="55" y1="12" x2="55" y2="56"/>
+      <line x1="60" y1="12" x2="60" y2="56"/>
+      <line x1="65" y1="12" x2="65" y2="56"/>
+      <line x1="70" y1="12" x2="70" y2="56"/>
+      <line x1="75" y1="12" x2="75" y2="56"/>
+      <line x1="80" y1="12" x2="80" y2="56"/>
+    </g>
+
+    <!-- Copper Heatpipe Glow -->
+    <path d="M 6 48 Q 46 54 86 48" fill="none" stroke="#F59E0B" stroke-width="2.5" opacity="0.6"/>
+
+    <!-- Outer Armor Shroud -->
+    <path d="M 4 10 L 88 10 Q 91 10 91 14 L 91 54 Q 91 58 87 58 L 5 58 Q 1 58 1 54 L 1 14 Q 1 10 4 10 Z" 
+          fill="url(#shroudGrad)" stroke="#374554" stroke-width="1.2"/>
+
+    <!-- Left Bracket IO Plate -->
+    <rect x="-3" y="6" width="4" height="58" rx="1.5" fill="#64748B" stroke="#475569" stroke-width="0.8"/>
+    <!-- HDMI/DP Ports -->
+    <rect x="-2" y="16" width="2" height="7" rx="0.5" fill="#1E293B"/>
+    <rect x="-2" y="28" width="2" height="9" rx="0.5" fill="#1E293B"/>
+    <rect x="-2" y="42" width="2" height="9" rx="0.5" fill="#1E293B"/>
+
+    <!-- PCIe Gold Connector Teeth (Bottom) -->
+    <g transform="translate(18, 58)">
+      <rect x="0" y="0" width="44" height="6" rx="0.5" fill="#0F172A"/>
+      <g fill="url(#goldPcie)">
+        <rect x="2" y="1" width="1.5" height="4"/>
+        <rect x="4.5" y="1" width="1.5" height="4"/>
+        <rect x="7" y="1" width="1.5" height="4"/>
+        <rect x="9.5" y="1" width="1.5" height="4"/>
+        <rect x="13" y="1" width="1.5" height="4"/>
+        <rect x="15.5" y="1" width="1.5" height="4"/>
+        <rect x="18" y="1" width="1.5" height="4"/>
+        <rect x="20.5" y="1" width="1.5" height="4"/>
+        <rect x="23" y="1" width="1.5" height="4"/>
+        <rect x="25.5" y="1" width="1.5" height="4"/>
+        <rect x="28" y="1" width="1.5" height="4"/>
+        <rect x="30.5" y="1" width="1.5" height="4"/>
+        <rect x="33" y="1" width="1.5" height="4"/>
+        <rect x="35.5" y="1" width="1.5" height="4"/>
+        <rect x="38" y="1" width="1.5" height="4"/>
+        <rect x="40.5" y="1" width="1.5" height="4"/>
+      </g>
+    </g>
+
+    <!-- Shroud Neon LED Light Bar (Top) -->
+    <path d="M 8 13 L 84 13" stroke="url(#neonGreen)" stroke-width="2" stroke-linecap="round" filter="url(#neonGlow)"/>
+    
+    <!-- Shroud Neon Cyan Accent (Bottom) -->
+    <path d="M 12 55 L 42 55" stroke="url(#neonCyan)" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+
+    <!-- FAN 1 (Left Fan) -->
+    <g transform="translate(26, 34)">
+      <!-- Fan Ring Housing -->
+      <circle cx="0" cy="0" r="19" fill="#090D12" stroke="#2A3847" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="17.5" fill="none" stroke="url(#neonGreen)" stroke-width="0.8" opacity="0.6"/>
+
+      <!-- Fan Blades -->
+      <g fill="url(#fanGrad)" stroke="#111820" stroke-width="0.5">
+        <path d="M 0 -3 C 6 -9 12 -12 16 -8 C 13 -4 8 -2 0 -1 Z" />
+        <path d="M 3 0 C 9 6 12 12 8 16 C 4 13 2 8 1 0 Z" />
+        <path d="M 0 3 C -6 9 -12 12 -16 8 C -13 4 -8 2 0 1 Z" />
+        <path d="M -3 0 C -9 -6 -12 -12 -8 -16 C -4 -13 -2 -8 -1 0 Z" />
+        <path d="M 2 -2 C 9 -4 14 0 14 5 C 10 4 5 1 1 -1 Z" />
+        <path d="M -2 2 C -9 4 -14 0 -14 -5 C -10 -4 -5 -1 -1 1 Z" />
+      </g>
+
+      <!-- Center Motor Hub with Green Accent -->
+      <circle cx="0" cy="0" r="7" fill="#131B22" stroke="#374151" stroke-width="1"/>
+      <circle cx="0" cy="0" r="5" fill="#76B900"/>
+      <circle cx="0" cy="0" r="2.5" fill="#0B131A"/>
+    </g>
+
+    <!-- FAN 2 (Right Fan) -->
+    <g transform="translate(66, 34)">
+      <!-- Fan Ring Housing -->
+      <circle cx="0" cy="0" r="19" fill="#090D12" stroke="#2A3847" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="17.5" fill="none" stroke="url(#neonCyan)" stroke-width="0.8" opacity="0.6"/>
+
+      <!-- Fan Blades -->
+      <g fill="url(#fanGrad)" stroke="#111820" stroke-width="0.5">
+        <path d="M 0 -3 C 6 -9 12 -12 16 -8 C 13 -4 8 -2 0 -1 Z" />
+        <path d="M 3 0 C 9 6 12 12 8 16 C 4 13 2 8 1 0 Z" />
+        <path d="M 0 3 C -6 9 -12 12 -16 8 C -13 4 -8 2 0 1 Z" />
+        <path d="M -3 0 C -9 -6 -12 -12 -8 -16 C -4 -13 -2 -8 -1 0 Z" />
+        <path d="M 2 -2 C 9 -4 14 0 14 5 C 10 4 5 1 1 -1 Z" />
+        <path d="M -2 2 C -9 4 -14 0 -14 -5 C -10 -4 -5 -1 -1 1 Z" />
+      </g>
+
+      <!-- Center Motor Hub with Pars Blue Accent -->
+      <circle cx="0" cy="0" r="7" fill="#131B22" stroke="#374151" stroke-width="1"/>
+      <circle cx="0" cy="0" r="5" fill="#00D2FF"/>
+      <circle cx="0" cy="0" r="2.5" fill="#0B131A"/>
+    </g>
+
+    <!-- Center Badge: ParsLinux Stylized Leopard Emblem -->
+    <g transform="translate(46, 34) scale(0.65)">
+      <polygon points="0,-12 10,-4 6,10 -6,10 -10,-4" fill="#0B1218" stroke="#00E5FF" stroke-width="1.5"/>
+      <!-- Leopard Face Silhouette -->
+      <path d="M -4 -3 L -6 -8 L -2 -5 L 2 -5 L 6 -8 L 4 -3 L 5 4 L 0 8 L -5 4 Z" fill="#76B900"/>
+    </g>
+  </g>
+
+  <!-- NVIDIA + PARS Tech Sparks / Badge at Bottom -->
+  <g transform="translate(42, 102)">
+    <rect x="-18" y="0" width="76" height="15" rx="7.5" fill="#090E14" stroke="#1E293B" stroke-width="1"/>
+    <!-- GEFORCE NVIDIA GREEN DOT -->
+    <circle cx="-10" cy="7.5" r="3.5" fill="#76B900" filter="url(#neonGlow)"/>
+    <!-- Text Badge -->
+    <text x="-2" y="11" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, sans-serif" 
+          font-size="7.5" font-weight="800" fill="#E2E8F0" letter-spacing="1.2">NVIDIA</text>
+    <!-- Cyan Pars Dot -->
+    <circle cx="50" cy="7.5" r="3.5" fill="#00D2FF" filter="url(#neonGlow)"/>
+  </g>
+</svg>

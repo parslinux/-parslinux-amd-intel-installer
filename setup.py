@@ -34,18 +34,23 @@ if os.path.exists(ver_path):
     except Exception:
         pass
 
+icon_source = "images/parslinux-nvidia-installer.svg" if os.path.isfile("images/parslinux-nvidia-installer.svg") else "parslinux-nvidia-installer.svg"
+
 data_files = [
     ("/usr/share/applications", ["org.parslinux.nvidia-installer.desktop"]),
     ("/usr/share/metainfo", ["data/org.parslinux.nvidia-installer.metainfo.xml"]),
     ("/usr/share/polkit-1/actions", ["org.parslinux.pkexec.parslinux-nvidia-installer.policy"]),
-    ("/usr/share/icons/hicolor/scalable/apps", ["parslinux-nvidia-installer.svg"]),
+    ("/usr/share/icons/hicolor/scalable/apps", [icon_source]),
     ("/usr/bin", ["parslinux-nvidia-installer"]),
     ("/usr/share/parslinux/parslinux-nvidia-installer", [
         "parslinux-nvidia-installer",
-        "parslinux-nvidia-installer.svg",
+        icon_source,
         "pni-disable-gpu.sh",
         "nvidia.pub",
         "update_translations.sh"
+    ]),
+    ("/usr/share/parslinux/parslinux-nvidia-installer/images", [
+        "images/parslinux-nvidia-installer.svg"
     ]),
     ("/usr/share/parslinux/parslinux-nvidia-installer/src", [
         "src/Main.py",
