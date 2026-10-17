@@ -9,15 +9,19 @@ Bu belge, **ParsLinux Nvidia Installer** üzerindeki birim testleri, donanım si
 Proje, fiziksel bir NVIDIA kartı gerektirmeyen kapsamlı bir test takımına sahiptir:
 
 ```bash
-# Tüm birim testlerini çalıştırın:
+# Tüm birim testlerini çalıştırın (20/20 Test):
 python3 -m unittest discover -s tests -p "test_*.py" -v
 ```
 
 ### Test Edilen Kritik Alanlar:
-- **Güvenlik Doğrulaması (`test_package_name_validation`):** Komut enjeksiyonu ve geçersiz paket adlarının engellenmesi.
+- **Güvenlik Doğrulaması (`test_package_name_validation`):** Paket adları, fan hızı ve TDP güç limiti doğrulama kontrolleri ile komut enjeksiyonunun engellenmesi.
 - **Yeniden Başlatma Bayrağı (`test_reboot_required_detection`):** Çekirdek güncelleme durumunun tespiti.
 - **Dağıtım Sürüm Ayrıştırma (`test_debian_major_parsing`):** ParsLinux ve Debian sürümlerinin doğru eşlenmesi.
 - **Simülatör Donanım Verisi (`test_debug_simulation_mode`):** Debug modunda mock GPU ve sürücü listesinin doğru üretilmesi.
+- **Canlı Sensör ve Telemetri (`test_monitor_hardware_telemetry`):** Sıcaklık, fan, VRAM ve güç tüketimi okuma/simülasyon mekanizması.
+- **Oyun ve Başlatıcı Tespiti (`test_monitor_gaming_launchers_and_offload`):** Steam, Lutris, Heroic tespiti ve offload yapılandırma doğrulaması.
+- **PRIME Güç Profilleri (`test_monitor_prime_profiles`):** Tasarruf, Hibrit, Performans modlarının doğrulanması.
+- **Sistem Tepsisi Entegrasyonu (`test_tray_app_creation`):** AppIndicator ve StatusIcon fallback yapılandırılması.
 - **Varlık ve XML Doğrulaması (`test_assets_and_metadata_exist`):** Glade, CSS, SVG ve AppStream dosyalarının sağlamlığı.
 
 ---

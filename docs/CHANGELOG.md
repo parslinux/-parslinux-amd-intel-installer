@@ -4,6 +4,36 @@ Tüm önemli değişiklikler bu dosyada belgelenecektir. Format [Keep a Changelo
 
 ---
 
+## [1.2.0] - 2026-10-17
+
+### 🚀 Gelişmiş Donanım Monitörü, Sistem Tepsisi ve Güç Yönetimi
+- **Modern 4 Sekmeli Arayüz**:
+  - `Gtk.StackSwitcher` ile sekmeli mimariye geçildi: **🎮 Sürücüler**, **📊 Donanım & Güç**, **🕹️ Oyun**, **🧠 Yapay Zeka**.
+- **Canlı Telemetri ve Sensörler (`src/monitor.py`)**:
+  - `nvidia-smi` üzerinden gerçek zamanlı GPU çekirdek sıcaklığı, fan hızı, VRAM bellek kullanımı ve güç çekimi (Watt) takibi.
+  - Donanım bulunmayan geliştirici ortamlarında otomatik simülatör telemetrisi.
+- **Donanım Fan ve Güç Limiti Kontrolü**:
+  - Kullanıcı tanımlı fan hızı kaydırıcısı (%20 - %100) ve manuel fan kontrolü (`nvidia-settings`).
+  - Ayarlanabilir GPU maksimum güç tüketim limiti (TDP 100W - 350W) (`nvidia-smi -pl`).
+- **PRIME GPU Güç Profili Seçici**:
+  - Melez dizüstü bilgisayarlar için dinamik profil yönetimi:
+    - 🍃 **Tasarruf (Intel/iGPU)**: NVIDIA GPU tamamen uykuya alınır.
+    - ⚡ **Hibrit (On-Demand)**: Yalnızca talep eden uygulamalarda NVIDIA kullanılır.
+    - 🚀 **Performans (NVIDIA)**: Tüm ekran sunumu ve grafikler harici GPU'da çalışır.
+- **Sistem Tepsisi (AppIndicator / Tray) Arka Plan Göstergesi (`src/tray.py`)**:
+  - `--tray` / `-t` seçeneğiyle arka planda sistem tepsisinde çalışabilme.
+  - Canlı sıcaklık ve profil etiket göstergesi (`45°C • Hibrit`).
+  - Hızlı profil değiştirme menüsü ve ana kontrol paneli kısayolu.
+- **Oyun ve Başlatıcı Merkezi (Gaming Hub)**:
+  - Sistemde yüklü oyun platformlarının (Steam, Lutris, Heroic, Bottles) otomatik tespiti ve durumu.
+  - Global otomatik NVIDIA PRIME Offload anahtarı (`/etc/environment.d/10-nvidia-gaming.conf`).
+- **Yapay Zeka ve CUDA Geliştirici Kiti**:
+  - Tek tıkla CUDA Toolkit (`nvidia-cuda-toolkit`), cuDNN (`libcudnn8`) ve TensorRT kütüphanelerinin kurulum sihirbazı.
+- **Genişletilmiş Birim Testleri**:
+  - Birim test kapsamı 20/20'ye yükseltildi (`tests/test_nvidia_installer.py`).
+
+---
+
 ## [1.0.0] - 2026-10-17
 
 ### 🎉 İlk Sürüm (ParsLinux Çatallaması)

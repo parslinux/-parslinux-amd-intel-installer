@@ -4,10 +4,11 @@
 [![ParsLinux](https://img.shields.io/badge/ParsLinux-Ecosystem-orange.svg)](https://parslinux.org)
 [![Python 3](https://img.shields.io/badge/Python-3.8+-green.svg)](https://www.python.org/)
 [![GTK 3](https://img.shields.io/badge/GUI-GTK%203-blue.svg)](https://www.gtk.org/)
+[![Version](https://img.shields.io/badge/Version-1.2.0-brightgreen.svg)](docs/VERSION.md)
 
-**ParsLinux Nvidia Installer**, ParsLinux işletim sisteminde resmi NVIDIA grafik sürücülerini tek tıkla kurmayı, güncellemeyi, kaldırmayı ve dizüstü bilgisayarlardaki melez (Optimus/hybrid) GPU'ları yönetmeyi sağlayan modern grafiksel sistem aracıdır.
+**ParsLinux Nvidia Installer**, ParsLinux işletim sisteminde resmi NVIDIA grafik sürücülerini tek tıkla kurmayı, güncellemeyi, donanım telemetrisini canlı izlemeyi, fan ve güç limitlerini ayarlamayı, oyun hızlandırmayı ve yapay zeka/CUDA ortamını yapılandırmayı sağlayan modern bir grafiksel sistem merkezidir.
 
-Pardus projesinin `pardus-nvidia-installer` aracından forklanarak ParsLinux mimarisine, çoklu dağıtım paketleme sistemine ve ParsLinux görsel kimliğine uyarlanmıştır.
+Pardus projesinin `pardus-nvidia-installer` aracından forklanarak ParsLinux mimarisine, çoklu dağıtım paketleme sistemine ve ParsLinux görsel kimliğine uyarlanmış; üzerine telemetri, güç yönetimi, oyun hızlandırıcı ve sistem tepsisi katmanları eklenmiştir.
 
 ---
 
@@ -15,8 +16,15 @@ Pardus projesinin `pardus-nvidia-installer` aracından forklanarak ParsLinux mim
 
 - 🔍 **Akıllı Donanım Tespiti:** Sistemdeki PCI veriyolunu tarayarak NVIDIA kartlarını otomatik algılar.
 - 🎯 **Donanıma Özel Sürücü Önerisi:** Kartınızın mimarisine (`RTX`, `GTX`, `Tesla 470`, `Nouveau`) en uygun sürücüyü filtreleyerek sunar.
-- 🌐 **Resmi NVIDIA CUDA Depo Entegrasyonu:** Tek tıkla resmi NVIDIA CUDA / sürücü deposunu ekleyip güncel kararlı sürücülere erişim sağlar.
-- ⚡ **Melez GPU Güç Tasarrufu (Hybrid/Optimus):** Dizüstü bilgisayarlarda harici NVIDIA kartını açılışta güvenle devre dışı bırakıp batarya ömrünü uzatma olanağı.
+- 📊 **Canlı Donanım İzleme & Sensörler:** Gerçek zamanlı GPU sıcaklığı (renk kodlu), fan devri, VRAM kullanımı (GB ve çubuk) ve anlık güç tüketimi (`Watt`).
+- ⚡ **PRIME Güç Profili Seçici:** Melez (Optimus/hybrid) dizüstü bilgisayarlarda 3 profil:
+  - 🍃 **Tasarruf (Entegre):** NVIDIA GPU'yu uyutup batarya ömrünü maksimuma çıkarır.
+  - ⚡ **Hibrit (İsteğe Bağlı):** Masaüstü entegre kartta çalışır, oyunlar NVIDIA ile başlar.
+  - 🚀 **Performans (NVIDIA):** Sürekli harici GPU devrededir, harici ekranlar aktiftir.
+- ⚙️ **Özel Fan Eğrisi & Güç Sınırı (Power Limit):** Fan devrini (%20-%100) ve kartın maksimum güç sınırını (TDP) kaydırıcılarla manuel ayarlama.
+- 🕹️ **Oyun Hızlandırıcı & PRIME Offload:** Steam, Lutris, Heroic ve Bottles oyunlarını otomatik olarak yüksek performanslı NVIDIA GPU ve Vulkan/DXVK katmanıyla açar (`/etc/environment.d`).
+- 🧠 **Yapay Zeka ve Geliştirici Kütüphaneleri:** Tek tıkla **CUDA Toolkit** (`nvcc`), **cuDNN** ve **TensorRT** kurulum sihirbazı.
+- 🖥️ **Sistem Tepsisi (AppIndicator / Tray):** Masaüstü üst barında canlı sıcaklık ve profil göstergesi (`45°C • Hibrit`) ve sağ tık hızlı erişim menüsü (`--tray` / `-t`).
 - 🛡️ **Güvenli Çekirdek Filtresi:** Birincil ekran bağdaştırıcısını (`boot_vga=1`) asla kaldırmaz; siyah ekran riskini önler.
 - 🖥️ **Entegre VTE Terminali:** Kurulum ve kaldırma adımlarını gerçek zamanlı terminal günlüğüyle takip etme imkanı.
 - 🧪 **Geliştirici & Sanal Makine Simülasyonu:** NVIDIA kartı bulunmayan cihazlarda dahi `--debug` moduyla tam arayüz testi.
@@ -31,6 +39,7 @@ Pardus projesinin `pardus-nvidia-installer` aracından forklanarak ParsLinux mim
 | **Python** | `python3` (3.8+) | `python` |
 | **GObject Introspection** | `python3-gi`, `gir1.2-gtk-3.0` | `python-gobject`, `gtk3` |
 | **Terminal Bileşeni** | `gir1.2-vte-2.91` | `vte3` |
+| **Sistem Tepsisi** | `gir1.2-ayatanaappindicator3-0.1` | `libayatana-appindicator` |
 | **Yetkilendirme (Polkit)** | `gir1.2-polkit-1.0`, `policykit-1` | `polkit` |
 | **Donanım Tanıma** | `pciutils` | `hwdata` |
 | **GPG Doğrulama** | `gnupg` | `gnupg` |
@@ -44,8 +53,11 @@ Pardus projesinin `pardus-nvidia-installer` aracından forklanarak ParsLinux mim
 # Donanım tespiti yaparak başlatma (kart yoksa otomatik simülasyon)
 ./run.sh
 
-# Simüle edilmiş RTX 3060 kartı ile demo modu
+# Simüle edilmiş RTX 4070 Ti kartı ile demo modu
 ./run.sh --debug
+
+# Sistem tepsisi göstergesini başlatma
+./parslinux-nvidia-installer --tray
 
 # Master kontrol paneli
 ./manage.sh
@@ -96,33 +108,21 @@ parslinux-nvidia-installer/
 ├── meson.build                     # Meson derleme tanımı
 ├── PKGBUILD / .SRCINFO             # Arch Linux / CachyOS paket tanımları
 ├── debian/                         # Debian paketleme ve betikleri
-│   ├── control, changelog, rules, postinst, postrm, copyright
+├── docs/                           # Kapsamlı standart dokümantasyon seti
 ├── src/
-│   ├── Main.py                     # Gtk.Application giriş noktası ve CLI argümanları
-│   ├── MainWindow.py               # Pencere yönetimi, VTE terminali ve etkileşim
-│   ├── nvidia.py                   # PCI tarayıcısı, pci.ids ayrıştırıcı ve sürücü modeli
-│   └── package.py                  # Pkexec altında çalışan ayrıcalıklı kurulum motoru
-├── ui/
-│   ├── ui.glade                    # Glade ana arayüz tasarımı
-│   └── driver_toggle.glade         # Sürücü seçim kartı bileşeni
-├── data/
-│   ├── nvidia-pci.json             # PCI aygıt kimlikleri ve sürücü eşleme tablosu
-│   ├── org.parslinux.nvidia-installer.metainfo.xml # AppStream metaverisi
-│   ├── assets/                     # ParsLinux logosu ve kart ikonları
-│   └── po/                         # Yerelleştirme dosyaları (Türkçe, Portekizce vb.)
-├── docs/                           # Detaylı teknik belgeler
-├── tests/                          # Kapsamlı birim ve entegrasyon testleri
-├── run.sh                          # Geliştirme başlatma betiği
-├── stop.sh                         # Süreç durdurma betiği
-├── install.sh                      # Kurulum betiği
-├── uninstall.sh                    # Kaldırma betiği
-├── package.sh                      # Paketleyici
-└── manage.sh                       # Terminal kontrol paneli
+│   ├── Main.py                     # Gtk.Application giriş noktası ve CLI ayrıştırıcı
+│   ├── MainWindow.py               # 4 sekmeli ana pencere denetleyicisi
+│   ├── monitor.py                  # Canlı GPU telemetri, sensör, PRIME ve AI tespit motoru
+│   ├── tray.py                     # Sistem tepsisi (AppIndicator) durum göstergesi
+│   ├── nvidia.py                   # PCI donanım tespiti ve sürücü eşleme motoru
+│   └── package.py                  # PolicyKit root yetkili paket ve donanım yürütücüsü
+└── tests/                          # 20/20 birim test takımı
 ```
 
 ---
 
-## ⚖️ Lisans
+## 🤝 Katkıda Bulunma ve Lisans
 
-Bu proje **GNU Genel Kamu Lisansı Sürüm 3 (GPL-3.0-or-later)** ile lisanslanmıştır.  
-Detaylar için [LICENSE](LICENSE) dosyasına bakabilirsiniz.
+Katkıda bulunma yönergeleri için [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) belgesini inceleyebilirsiniz.
+Bu proje **GNU General Public License v3.0 (GPL-3.0-or-later)** ile lisanslanmıştır.
+Tüm hakları ParsLinux Topluluğu ve katkıcılarına aittir.

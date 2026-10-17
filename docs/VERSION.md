@@ -14,7 +14,7 @@
 ---
 
 ## 2. Mevcut Sürüm
-- **Versiyon:** `1.0.0`
+- **Versiyon:** `1.2.0`
 - **Çıkış Tarihi:** 17 Ekim 2026
-- **Durum:** Kararlı İlk Sürüm (Stable Initial Release)
+- **Durum:** Kararlı Sürüm (Canlı Telemetri, PRIME Profilleri, Sistem Tepsisi & AI Desteği)
 - **Hedef Taban:** ParsLinux 1.0 (Debian Bookworm/Trixie tabanlı) & Arch Linux

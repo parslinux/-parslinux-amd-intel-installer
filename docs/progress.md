@@ -21,12 +21,17 @@
 - [x] Oyun bazlı profil yönetimi (Steam, Lutris, Heroic oyunlarında otomatik NVIDIA PRIME offload).
 - [x] Sistem tepsisi (AppIndicator / Tray) mini sıcaklık ve mod göstergesi (`src/tray.py`).
 - [x] Modern 4 sekmeli (`Gtk.StackSwitcher`) kullanıcı arayüzü tasarımı.
+- [x] Otomatik test takımı genişletildi (20/20 test başarılı).
 
 ---
 
-## 🎯 Gelecek Hedefler (v1.3.0+)
-- [ ] Gelişmiş GPU hız aşırtma (overclock) çekirdek ve bellek frekans kaydırıcıları.
-- [ ] Oyun esnasında ekran üzeri canlı FPS ve telemetri göstergesi (MangoHud entegrasyonu).
-- [ ] Çoklu monitör G-Sync / VRR (Değişken Yenileme Hızı) yapılandırma asistanı.
-
-
+## 🎯 Gelecek Hedefler (v1.3.0 & Yol Haritası)
+- [ ] **Gelişmiş GPU Hız Aşırtma (Overclocking)**:
+  - Çekirdek (Core Clock) ve Bellek (Memory Clock) frekans ofset kaydırıcıları (+/- MHz).
+  - Voltaj ve güç eğrisi profilleri.
+- [ ] **Oyun İçi Canlı HUD / Telemetri (MangoHud Entegrasyonu)**:
+  - Oyunlarda ekran üzeri FPS, GPU/CPU sıcaklığı ve gecikme bilgisi katmanı.
+- [ ] **Çoklu Monitör ve G-Sync / VRR Yapılandırma Asistanı**:
+  - Wayland ve X11 ortamlarında adaptif senkronizasyon (VRR) otomatik ayarı.
+- [ ] **Yedekleme ve Geri Yükleme Noktaları**:
+  - Sürücü güncellemesi öncesi Timeshift veya initramfs anlık görüntüsü (snapshot) oluşturma.

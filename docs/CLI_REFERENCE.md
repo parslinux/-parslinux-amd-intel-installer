@@ -13,6 +13,7 @@ parslinux-nvidia-installer [SEÇENEKLER]
 | `--version` | `-v` | Uygulama sürüm bilgisini görüntüler ve çıkar. |
 | `--details` | `-d` | Donanım ve sürücü detay sayfasını doğrudan açar. |
 | `--remove` | `-r` | Sürücü kaldırma / açık kaynak sürücüye dönme sayfasını açar. |
+| `--tray` | `-t` | Arka planda sistem tepsisinde (AppIndicator / Tray) çalışır. |
 
 ---
 
@@ -43,3 +44,8 @@ pkexec /usr/share/parslinux/parslinux-nvidia-installer/src/package.py <ALT_KOMUT
 3. `update`: Resmi NVIDIA CUDA / sürücü deposu yapılandırmasını (`dest`) açar/kapatır ve apt listelerini günceller.
 4. `disable-sec-gpu`: Melez dizüstü sistemlerde ikincil NVIDIA GPU'yu devre dışı bırakır.
 5. `enable-sec-gpu`: Devre dışı bırakılmış NVIDIA GPU'yu yeniden etkinleştirir ve PCI veriyolunu tarar.
+6. `prime-mode <intel|on-demand|nvidia>`: Dizüstü bilgisayarlar için PRIME GPU güç ve çalışma profilini değiştirir.
+7. `set-fan-speed <YÜZDE_20_100>`: GPU fan dönüş hızını özel yüzdeye ayarlar (`nvidia-settings`).
+8. `set-power-limit <WATT_100_350>`: GPU maksimum güç tüketim sınırını (TDP) ayarlar (`nvidia-smi -pl`).
+9. `set-game-offload <1|0>`: Tüm oyun ve uygulamalar için global NVIDIA PRIME offload ortam değişkenlerini (`/etc/environment.d`) açar/kapatır.
+10. `install-ai-tools`: CUDA Toolkit, cuDNN ve TensorRT kütüphanelerini sisteme kurar.
