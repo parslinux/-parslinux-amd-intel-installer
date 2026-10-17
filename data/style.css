@@ -1,0 +1,83 @@
+/* ==============================================================================
+   ParsLinux Nvidia Installer - Modern Cyber Theme
+   ============================================================================== */
+
+window {
+    background-color: #0f141c;
+    color: #e2e8f0;
+}
+
+headerbar {
+    background: linear-gradient(to bottom, #1a222d, #121820);
+    border-bottom: 1px solid #1e293b;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+headerbar .title {
+    font-weight: 700;
+    color: #f8fafc;
+}
+
+/* Radio Cards in Driver List */
+radiobutton {
+    background-color: #161e29;
+    border: 1px solid #253346;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin: 4px 0;
+    transition: all 200ms ease-in-out;
+}
+
+radiobutton:hover {
+    background-color: #1e2837;
+    border-color: #00e5ff;
+}
+
+radiobutton:checked {
+    background-color: #132420;
+    border-color: #76b900;
+    box-shadow: 0 0 10px rgba(118, 185, 0, 0.25);
+}
+
+/* Status Cards & Banners */
+.card-box {
+    background-color: #161f2b;
+    border: 1px solid #243245;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.sim-button {
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
+    color: #ffffff;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 8px 18px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
+    transition: all 150ms ease;
+}
+
+.sim-button:hover {
+    background: linear-gradient(135deg, #0369a1, #0284c7);
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.5);
+}
+
+/* Primary Action Button (Apply) */
+button.suggested-action, #ui_apply_chg_button {
+    background: linear-gradient(135deg, #76b900, #5a8e00);
+    color: #ffffff;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(118, 185, 0, 0.35);
+}
+
+button.suggested-action:hover, #ui_apply_chg_button:hover {
+    background: linear-gradient(135deg, #85cf00, #76b900);
+}
+
+/* Switch */
+switch:checked {
+    background-color: #76b900;
+}

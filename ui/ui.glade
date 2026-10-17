@@ -424,21 +424,80 @@ Feel free to report any issues or concerns via our GitHub repository: &lt;a href
               <object class="GtkBox" id="ui_novidia_box">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="margin-start">10</property>
-                <property name="margin-end">10</property>
+                <property name="margin-start">24</property>
+                <property name="margin-end">24</property>
+                <property name="margin-top">24</property>
+                <property name="margin-bottom">24</property>
                 <property name="orientation">vertical</property>
+                <property name="spacing">16</property>
+                <property name="valign">center</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="pixbuf">../data/assets/video_card.svg</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
                 <child>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">There is no NVIDIA graphics card on your system. 
-You can't use this application</property>
+                    <property name="use-markup">True</property>
+                    <property name="label" translatable="yes">&lt;span font_weight="bold" font_size="large" foreground="#F8FAFC"&gt;NVIDIA Grafik Kartı Algılanmadı&lt;/span&gt;</property>
                     <property name="justify">center</property>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="ui_detected_gpu_label">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="use-markup">True</property>
+                    <property name="label">&lt;span foreground="#94A3B8"&gt;Algılanan Donanım: Taranıyor...&lt;/span&gt;</property>
+                    <property name="justify">center</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="use-markup">True</property>
+                    <property name="label" translatable="yes">&lt;span foreground="#64748B" font_size="small"&gt;ParsLinux Nvidia Installer, resmi NVIDIA sürücülerini yönetmek için tasarlanmıştır.
+Arayüzü ve özellikleri test etmek için aşağıdaki butondan simülasyon modunu açabilirsiniz.&lt;/span&gt;</property>
+                    <property name="justify">center</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="ui_btn_simulate">
+                    <property name="label" translatable="yes">🎮 Arayüzü İncele (Simülasyon Modu)</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="halign">center</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
               </object>
@@ -558,7 +617,7 @@ You can't use this application</property>
                 <property name="can-focus">False</property>
                 <property name="margin-top">5</property>
                 <property name="margin-bottom">5</property>
-                <property name="label">© TÜBİTAK BİLGEM</property>
+                <property name="label">© parslinux</property>
                 <attributes>
                   <attribute name="weight" value="light"/>
                 </attributes>

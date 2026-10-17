@@ -19,7 +19,7 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Polkit", "1.0")
 gi.require_version("Vte", "2.91")
 
-from gi.repository import Gtk, GObject, GLib, Vte
+from gi.repository import Gtk, GObject, GLib, Vte, Gdk
 from locale import gettext as _
 
 APPNAME_CODE = "parslinux-nvidia-installer"
@@ -58,6 +58,35 @@ def check_is_reboot_pending():
     )
 
 
+def get_system_gpu_description():
+    try:
+        out = subprocess.check_output(["lspci"], text=True, stderr=subprocess.DEVNULL)
+        for line in out.splitlines():
+            line_lower = line.lower()
+            if any(term in line_lower for term in ("vga compatible", "3d controller", "display controller")):
+                parts = line.split(":", 2)
+                if len(parts) >= 3:
+                    return parts[2].strip()
+    except Exception:
+        pass
+    return "Intel / AMD Grafik Bağdaştırıcısı"
+
+
+def apply_custom_css():
+    try:
+        css_provider = Gtk.CssProvider()
+        css_path = os.path.normpath(os.path.join(os.path.dirname(__file__), "../data/style.css"))
+        if os.path.isfile(css_path):
+            css_provider.load_from_path(css_path)
+            screen = Gdk.Screen.get_default()
+            if screen:
+                Gtk.StyleContext.add_provider_for_screen(
+                    screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+                )
+    except Exception as e:
+        print(f"Warning: Failed to load style.css: {e}", file=sys.stderr)
+
+
 class MainWindow(object):
     def __init__(self, application):
         self.application = application
@@ -71,6 +100,8 @@ class MainWindow(object):
                 file=sys.stderr,
             )
             sys.exit(1)
+
+        apply_custom_css()
 
         self.is_debug = nvidia.is_debug_mode()
 
@@ -147,6 +178,18 @@ class MainWindow(object):
         self.ui_enable_button = self.get_ui("ui_enable_button")
         self.ui_enable_button.connect("clicked", self.on_enable_button_clicked)
 
+        # Simulation button in no-device view
+        self.ui_btn_simulate = self.get_ui("ui_btn_simulate")
+        if self.ui_btn_simulate:
+            self.ui_btn_simulate.connect("clicked", self.on_simulate_clicked)
+
+        self.ui_detected_gpu_label = self.get_ui("ui_detected_gpu_label")
+        if self.ui_detected_gpu_label:
+            detected = get_system_gpu_description()
+            self.ui_detected_gpu_label.set_markup(
+                f'<span foreground="#94A3B8"><b>Sistemdeki Donanım:</b> {detected}</span>'
+            )
+
         marker_present = not package.check_sec_state()
         self.disabled_no_devices = (
             not self.nvidia_devices and marker_present and not self.is_debug
@@ -184,8 +227,16 @@ class MainWindow(object):
 
         self.ui_main_window.set_application(application)
         self.ui_main_window.set_title(_("ParsLinux Nvidia Installer"))
-        self.user_disclaimer()
         self.ui_main_window.show_all()
+
+    def on_simulate_clicked(self, button):
+        self.is_debug = True
+        os.environ["PARSLINUX_NVI_DEBUG"] = "1"
+        self.nvidia_devices = nvidia.graphics()
+        self.ui_main_stack.set_visible_child_name("page_main")
+        self.create_gpu_drivers()
+        self.ui_apply_chg_button.set_sensitive(True)
+        self.ui_repo_switch.set_sensitive(True)
 
     def do_reboot(self, widget):
         self.ui_confirm_dialog.set_transient_for(widget.get_toplevel())
@@ -279,24 +330,6 @@ class MainWindow(object):
             None,
         )
 
-    def user_disclaimer(self):
-        # Don't prompt repeatedly if accepted once
-        disclaimer_ack = os.path.expanduser("~/.config/parslinux/nvidia-disclaimer-accepted")
-        if os.path.isfile(disclaimer_ack):
-            return
-
-        response = self.ui_info_dialog.run()
-        if response != Gtk.ResponseType.OK:
-            self.application.quit()
-        else:
-            self.ui_info_dialog.hide()
-            try:
-                os.makedirs(os.path.dirname(disclaimer_ack), exist_ok=True)
-                with open(disclaimer_ack, "w") as f:
-                    f.write("accepted\n")
-            except OSError:
-                pass
-
     def check_secondary_gpu(self):
         self.initial_sec_gpu_state = package.check_sec_state()
         if self.initial_sec_gpu_state:
@@ -317,6 +350,8 @@ class MainWindow(object):
         if len(self.nvidia_devices) == 0 and not self.is_debug:
             self.ui_main_stack.set_visible_child(self.ui_novidia_box)
             return
+
+        self.ui_main_stack.set_visible_child_name("page_main")
 
         for toggle in self.drv_arr:
             self.ui_gpu_box.remove(toggle)
