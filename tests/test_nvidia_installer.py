@@ -96,6 +96,45 @@ class TestPackageSecurity(unittest.TestCase):
         self.assertIn(distro, ("debian12", "debian13"))
 
 
+class TestMonitorAndTelemetry(unittest.TestCase):
+    def test_gpu_telemetry_simulated(self):
+        import monitor
+        data = monitor.get_gpu_telemetry(simulated=True)
+        self.assertTrue(data["available"])
+        self.assertTrue(data["simulated"])
+        self.assertIn("RTX 4070 Ti", data["name"])
+        self.assertGreaterEqual(data["temp"], 30)
+        self.assertLessEqual(data["temp"], 90)
+        self.assertGreater(data["vram_total"], 0)
+        self.assertGreaterEqual(data["vram_used"], 0)
+        self.assertGreaterEqual(data["power"], 10)
+
+    def test_prime_profile_detection(self):
+        import monitor
+        profile = monitor.get_prime_profile()
+        self.assertIn(profile, ("integrated", "on-demand", "nvidia"))
+
+    def test_ai_stack_detection(self):
+        import monitor
+        status = monitor.get_ai_stack_status()
+        self.assertIn("cuda", status)
+        self.assertIn("cudnn", status)
+        self.assertIn("tensorrt", status)
+        self.assertIn("installed", status["cuda"])
+
+    def test_prime_mode_validation(self):
+        self.assertFalse(package.set_prime_mode("invalid_mode"))
+        self.assertFalse(package.set_prime_mode(""))
+
+    def test_ai_package_whitelisting(self):
+        self.assertTrue(package._is_allowed_package("nvidia-cuda-toolkit"))
+        self.assertTrue(package._is_allowed_package("libcudnn8"))
+        self.assertTrue(package._is_allowed_package("libcudnn8-dev"))
+        self.assertTrue(package._is_allowed_package("libnvinfer8"))
+        self.assertTrue(package._is_allowed_package("tensorrt"))
+        self.assertTrue(package._is_allowed_package("nvidia-prime"))
+
+
 class TestMetadataAndFiles(unittest.TestCase):
     def test_desktop_file_syntax(self):
         desktop_file = os.path.join(PROJECT_DIR, "org.parslinux.nvidia-installer.desktop")

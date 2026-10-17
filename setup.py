@@ -55,6 +55,7 @@ data_files = [
     ("/usr/share/parslinux/parslinux-nvidia-installer/src", [
         "src/Main.py",
         "src/MainWindow.py",
+        "src/monitor.py",
         "src/nvidia.py",
         "src/package.py",
         "src/__version__"

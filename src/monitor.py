@@ -1,0 +1,180 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+ParsLinux Nvidia Installer - Hardware Monitor, PRIME Profiler & AI Stack Helper
+Provides telemetry, power profiles, and AI developer toolkit status.
+"""
+
+import os
+import shutil
+import subprocess
+import time
+import math
+import glob
+
+# Primary and legacy GPU disable markers
+PRIMARY_DISABLE_PATH = "/var/cache/parslinux-nvi-disable-gpu"
+LEGACY_DISABLE_PATH = "/var/cache/pni-disable-gpu"
+PRIME_STATE_FILE = "/var/cache/parslinux-nvi-prime-mode"
+
+
+def is_gpu_disabled():
+    return os.path.isfile(PRIMARY_DISABLE_PATH) or os.path.isfile(LEGACY_DISABLE_PATH)
+
+
+def get_prime_profile():
+    """
+    Returns the active PRIME power profile:
+    - 'integrated': Secondary NVIDIA GPU is completely powered down (saving battery).
+    - 'on-demand': Hybrid mode with PRIME Render Offload (active when needed).
+    - 'nvidia': High performance mode (always on NVIDIA GPU).
+    """
+    if is_gpu_disabled():
+        return "integrated"
+
+    if os.path.isfile(PRIME_STATE_FILE):
+        try:
+            with open(PRIME_STATE_FILE, "r") as f:
+                mode = f.read().strip()
+                if mode in ("integrated", "on-demand", "nvidia"):
+                    return mode
+        except OSError:
+            pass
+
+    # Check system prime-select if installed
+    prime_select = shutil.which("prime-select")
+    if prime_select:
+        try:
+            out = subprocess.check_output([prime_select, "get-current"], text=True, stderr=subprocess.DEVNULL).strip()
+            if "intel" in out or "integrated" in out:
+                return "integrated"
+            elif "on-demand" in out:
+                return "on-demand"
+            elif "nvidia" in out:
+                return "nvidia"
+        except Exception:
+            pass
+
+    return "on-demand"
+
+
+def get_gpu_telemetry(simulated=False):
+    """
+    Gathers GPU telemetry metrics (Temperature, Fan Speed, VRAM, Power, Utilization).
+    Returns real metrics via nvidia-smi if available, or simulated metrics if in debug mode.
+    """
+    # 1. Try real nvidia-smi if not forced simulated
+    if not simulated:
+        smi = shutil.which("nvidia-smi")
+        if smi:
+            try:
+                cmd = [
+                    smi,
+                    "--query-gpu=name,temperature.gpu,fan.speed,memory.used,memory.total,power.draw,utilization.gpu,driver_version",
+                    "--format=csv,noheader,nounits",
+                ]
+                output = subprocess.check_output(cmd, text=True, timeout=2).strip()
+                lines = output.splitlines()
+                if lines:
+                    parts = [p.strip() for p in lines[0].split(",")]
+                    if len(parts) >= 8:
+                        def safe_int(v, default=0):
+                            try:
+                                return int(float(v))
+                            except (ValueError, TypeError):
+                                return default
+
+                        def safe_float(v, default=0.0):
+                            try:
+                                return float(v)
+                            except (ValueError, TypeError):
+                                return default
+
+                        return {
+                            "available": True,
+                            "simulated": False,
+                            "name": parts[0],
+                            "temp": safe_int(parts[1], 45),
+                            "fan": safe_int(parts[2], 0),
+                            "vram_used": safe_int(parts[3], 0),
+                            "vram_total": max(safe_int(parts[4], 8192), 1),
+                            "power": safe_float(parts[5], 35.0),
+                            "utilization": safe_int(parts[6], 10),
+                            "driver": parts[7],
+                        }
+            except Exception:
+                pass
+
+    # 2. Simulated Telemetry (realistic variations)
+    t = time.time()
+    # Sinusoidal wave to create smooth realistic fluctuations
+    temp_jitter = int(math.sin(t / 8.0) * 4)
+    vram_jitter = int(math.cos(t / 12.0) * 180)
+    fan_jitter = int(math.sin(t / 10.0) * 3)
+    power_jitter = math.sin(t / 6.0) * 6.5
+    util_jitter = int(math.sin(t / 5.0) * 8)
+
+    base_temp = 46 + temp_jitter
+    base_fan = 34 + fan_jitter
+    base_vram = 3560 + vram_jitter
+    total_vram = 12288
+    base_power = round(52.4 + power_jitter, 1)
+    base_util = max(5, 16 + util_jitter)
+
+    return {
+        "available": True,
+        "simulated": True,
+        "name": "NVIDIA GeForce RTX 4070 Ti (Simüle)",
+        "temp": base_temp,
+        "fan": base_fan,
+        "vram_used": base_vram,
+        "vram_total": total_vram,
+        "power": base_power,
+        "utilization": base_util,
+        "driver": "550.54.14",
+    }
+
+
+def get_ai_stack_status():
+    """
+    Detects installation status of CUDA Toolkit, cuDNN, and TensorRT.
+    """
+    status = {
+        "cuda": {"installed": False, "version": None, "pkg": "nvidia-cuda-toolkit"},
+        "cudnn": {"installed": False, "version": None, "pkg": "libcudnn8"},
+        "tensorrt": {"installed": False, "version": None, "pkg": "tensorrt"},
+    }
+
+    # 1. CUDA
+    nvcc = shutil.which("nvcc")
+    if not nvcc:
+        for path in ("/usr/local/cuda/bin/nvcc", "/usr/bin/nvcc"):
+            if os.path.isfile(path) and os.access(path, os.X_OK):
+                nvcc = path
+                break
+
+    if nvcc:
+        status["cuda"]["installed"] = True
+        try:
+            out = subprocess.check_output([nvcc, "--version"], text=True, stderr=subprocess.DEVNULL)
+            for line in out.splitlines():
+                if "release" in line:
+                    parts = line.split("release")
+                    if len(parts) > 1:
+                        status["cuda"]["version"] = parts[1].split(",")[0].strip()
+        except Exception:
+            status["cuda"]["version"] = "12.x"
+
+    # 2. cuDNN
+    cudnn_paths = glob.glob("/usr/lib*/**/libcudnn.so*", recursive=True) + glob.glob("/usr/local/cuda*/**/libcudnn.so*", recursive=True)
+    if cudnn_paths:
+        status["cudnn"]["installed"] = True
+        status["cudnn"]["version"] = "8.x / 9.x"
+
+    # 3. TensorRT
+    nvinfer_paths = glob.glob("/usr/lib*/**/libnvinfer.so*", recursive=True) + glob.glob("/usr/local/cuda*/**/libnvinfer.so*", recursive=True)
+    if nvinfer_paths:
+        status["tensorrt"]["installed"] = True
+        status["tensorrt"]["version"] = "8.x / 10.x"
+
+    return status

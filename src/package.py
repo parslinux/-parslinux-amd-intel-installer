@@ -282,6 +282,7 @@ def check_sec_state():
 
 _LINUX_HEADERS_RE = re.compile(r"^linux-headers-[a-zA-Z0-9\.\-_+]+$")
 _NVIDIA_DRIVER_RE = re.compile(r"^nvidia-[a-zA-Z0-9\-_]+$")
+_AI_DEV_RE = re.compile(r"^(libcudnn[0-9]*(-dev)?|libnvinfer[0-9]*(-dev)?|tensorrt[a-zA-Z0-9\-_]*|nvidia-prime)$")
 _VERSION_RE = re.compile(r"^[0-9][A-Za-z0-9.+~:-]*$")
 
 
@@ -297,10 +298,10 @@ def _is_allowed_package(name):
     if sep:
         if not ver or not _VERSION_RE.match(ver):
             return False
-        return bool(_NVIDIA_DRIVER_RE.match(pkg))
+        return bool(_NVIDIA_DRIVER_RE.match(pkg) or _AI_DEV_RE.match(pkg))
     if name == nouveau:
         return True
-    if _LINUX_HEADERS_RE.match(name) or _NVIDIA_DRIVER_RE.match(name):
+    if _LINUX_HEADERS_RE.match(name) or _NVIDIA_DRIVER_RE.match(name) or _AI_DEV_RE.match(name):
         return True
     return False
 
@@ -489,6 +490,79 @@ def get_pkg_info(package_name: str):
     return {"ver": version, "name": name}
 
 
+prime_mode_path = "/var/cache/parslinux-nvi-prime-mode"
+
+
+def set_prime_mode(mode: str):
+    """
+    Sets PRIME power profile:
+    - 'integrated': Power down secondary GPU and switch to iGPU.
+    - 'on-demand': Enable secondary GPU with NVIDIA PRIME Render Offload.
+    - 'nvidia': Enable secondary GPU with performance rendering.
+    """
+    valid_modes = ("integrated", "on-demand", "nvidia")
+    if mode not in valid_modes:
+        print(f"set_prime_mode: invalid mode '{mode}'. Expected one of {valid_modes}", file=sys.stderr)
+        return False
+
+    try:
+        os.makedirs(os.path.dirname(prime_mode_path), exist_ok=True)
+        with open(prime_mode_path, "w") as f:
+            f.write(mode + "\n")
+    except OSError as e:
+        print(f"set_prime_mode: failed to save state file: {e}", file=sys.stderr)
+
+    changed = False
+    if mode == "integrated":
+        changed = disable_sec_gpu()
+        prime_select = shutil_which("prime-select")
+        if prime_select:
+            try:
+                subprocess.call([prime_select, "intel"])
+            except Exception:
+                pass
+    else:
+        changed = enable_sec_gpu()
+        prime_select = shutil_which("prime-select")
+        if prime_select:
+            try:
+                subprocess.call([prime_select, mode])
+            except Exception:
+                pass
+
+    if changed:
+        mark_need_reboot()
+    print(f"PRIME profile set to: {mode}")
+    return True
+
+
+def shutil_which(cmd):
+    import shutil
+    return shutil.which(cmd)
+
+
+def install_ai_tools(requested_pkgs=None):
+    """
+    Installs CUDA Toolkit and optional deep learning libraries (cuDNN, TensorRT).
+    """
+    if not requested_pkgs:
+        requested_pkgs = ["nvidia-cuda-toolkit"]
+
+    # Validate all packages against security whitelist
+    for p in requested_pkgs:
+        if not _is_allowed_package(p):
+            print(f"install_ai_tools: package '{p}' rejected by security policy", file=sys.stderr)
+            return False
+
+    cmd = ["apt-get", "install", "-yq", "--install-recommends"] + list(requested_pkgs)
+    print(f"Executing: {' '.join(cmd)}")
+    rc = subprocess.call(cmd, env={**os.environ})
+    if rc == 0:
+        mark_need_reboot()
+        return True
+    return False
+
+
 if __name__ == "__main__":
     args = sys.argv
     if len(args) <= 1:
@@ -504,6 +578,12 @@ if __name__ == "__main__":
         ok = disable_sec_gpu()
     elif param1 == "enable-sec-gpu":
         ok = enable_sec_gpu()
+    elif param1 == "prime-mode":
+        mode_arg = args[2] if len(args) > 2 else "on-demand"
+        ok = set_prime_mode(mode_arg)
+    elif param1 == "install-ai-tools":
+        pkgs_arg = args[2:] if len(args) > 2 else ["nvidia-cuda-toolkit"]
+        ok = install_ai_tools(pkgs_arg)
     elif param1 == "install-nvidia":
         ok = install_nvidia(args[2:])
     else:

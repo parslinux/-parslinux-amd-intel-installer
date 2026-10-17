@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 22:12+0300\n"
+"POT-Creation-Date: 2026-10-17 22:53+0300\n"
 "PO-Revision-Date: 2024-07-16 11:17+0300\n"
 "Last-Translator: Osman Coskun <osman.coskun@pardus.org.tr>\n"
 "Language-Team: Turkish <dev@pardus.org.tr>\n"
@@ -149,7 +149,7 @@ msgstr "Çıkış"
 msgid "page_vte"
 msgstr "page_vte"
 
-#: ui/ui.glade:641 src/MainWindow.py:257
+#: ui/ui.glade:641 src/MainWindow.py:262
 #, fuzzy
 msgid "ParsLinux Nvidia Installer"
 msgstr "Pardus Nvidia Kurucu"
@@ -163,33 +163,95 @@ msgstr ""
 msgid "Reboot required"
 msgstr "Yeniden başlatma gerekli"
 
-#: src/MainWindow.py:310
+#: src/MainWindow.py:318
 msgid "Operation completed successfully."
 msgstr ""
 
-#: src/MainWindow.py:312
+#: src/MainWindow.py:320
 #, python-brace-format
 msgid "Operation failed (exit code {code}). Please review the log above."
 msgstr ""
 
-#: src/MainWindow.py:441
+#: src/MainWindow.py:451
 msgid "Driver"
 msgstr "Sürücü"
 
-#: src/MainWindow.py:445
+#: src/MainWindow.py:455
 msgid "Version"
 msgstr "Sürüm"
 
-#: src/MainWindow.py:448 src/MainWindow.py:451
+#: src/MainWindow.py:458 src/MainWindow.py:461
 msgid "Description"
 msgstr "Açıklama"
 
-#: src/MainWindow.py:532
+#: src/MainWindow.py:542
 msgid "Selected version is no longer available"
 msgstr ""
 
-#: src/MainWindow.py:535
+#: src/MainWindow.py:545
 msgid "The package list has been refreshed. Please choose a driver again."
+msgstr ""
+
+#: src/MainWindow.py:587
+msgid "🎮 Sürücüler"
+msgstr ""
+
+#: src/MainWindow.py:590
+msgid "📊 Donanım & PRIME"
+msgstr ""
+
+#: src/MainWindow.py:593
+msgid "🧠 Yapay Zeka (CUDA)"
+msgstr ""
+
+#: src/MainWindow.py:616
+msgid "Sensörleri Yenile"
+msgstr ""
+
+#: src/MainWindow.py:720
+msgid ""
+"🍃 Tasarruf\n"
+"(Entegre)"
+msgstr ""
+
+#: src/MainWindow.py:724
+msgid ""
+"⚡ Hibrit\n"
+"(İsteğe Bağlı)"
+msgstr ""
+
+#: src/MainWindow.py:728
+msgid ""
+"🚀 Performans\n"
+"(NVIDIA)"
+msgstr ""
+
+#: src/MainWindow.py:765
+msgid "🟢 NVIDIA CUDA Toolkit (nvcc, runtimes & headers)"
+msgstr ""
+
+#: src/MainWindow.py:770
+msgid "🧬 NVIDIA cuDNN (Derin Sinir Ağları Kütüphanesi)"
+msgstr ""
+
+#: src/MainWindow.py:775
+msgid "🚀 NVIDIA TensorRT (Yüksek Hızlı Çıkarım Motoru)"
+msgstr ""
+
+#: src/MainWindow.py:791
+msgid "🚀 Seçilen Geliştirici Bileşenlerini Kur"
+msgstr ""
+
+#: src/MainWindow.py:844
+msgid "🍃 Tasarruf (Entegre GPU Aktif - NVIDIA Kapalı)"
+msgstr ""
+
+#: src/MainWindow.py:845
+msgid "⚡ Hibrit (İsteğe Bağlı / PRIME Render Offload)"
+msgstr ""
+
+#: src/MainWindow.py:846
+msgid "🚀 Performans (NVIDIA Kartı Sürekli Aktif)"
 msgstr ""
 
 #: src/nvidia.py:386

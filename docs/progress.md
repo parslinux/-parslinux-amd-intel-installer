@@ -1,6 +1,6 @@
 # 📊 İlerleme ve Yol Haritası (`progress.md`)
 
-## 📌 Tamamlanan Görevler (v1.0.0)
+## 📌 Tamamlanan Görevler (v1.0.0 & v1.1.0)
 - [x] Kaynak kodun `pardus-nvidia-installer` deposundan incelenmesi ve çatallanması.
 - [x] Tüm marka ve meta verilerin `parslinux-nvidia-installer` olarak dönüştürülmesi.
 - [x] TÜBİTAK/BİLGEM ve Pardus kalıntılarının kaynak koddan temizlenmesi.
@@ -12,12 +12,17 @@
 - [x] Debian harici ortamlarda çökmeleri önleyen `MockAptCache` katmanı eklenmesi.
 - [x] `run.sh`, `stop.sh`, `install.sh`, `uninstall.sh`, `package.sh` ve `manage.sh` yönetim araçlarının yazılması.
 - [x] Debian `.deb` ve Arch Linux `.pkg.tar.zst` paketlerinin başarıyla inşa edilmesi (`dist/`).
-- [x] Birim test takımının oluşturulması (`tests/test_nvidia_installer.py`, 12/12 başarılı).
+- [x] Birim test takımının oluşturulması (`tests/test_nvidia_installer.py`, 17/17 başarılı).
 - [x] Tam standartlaştırılmış dokümantasyon seti (`docs/`) ve `.claudeignore` oluşturulması.
+- [x] Gelişmiş Wayland / PRIME profil seçici arayüzü (🍃 Tasarruf / ⚡ Hibrit / 🚀 Performans).
+- [x] Canlı telemetri, GPU sıcaklığı, fan hızı ve VRAM kullanım göstergeleri (`src/monitor.py`).
+- [x] CUDA Toolkit, cuDNN ve TensorRT geliştirici kütüphaneleri için tek tıkla kurulum sihirbazı.
+- [x] Modern 3 sekmeli (`Gtk.StackSwitcher`) kullanıcı arayüzü tasarımı.
 
 ---
 
-## 🎯 Gelecek Hedefler (v1.1.0+)
-- [ ] Gelişmiş Wayland / PRIME profil seçici arayüzü (Entegre / NVIDIA / Hibrit).
-- [ ] Fan kontrolü, sıcaklık izleme ve VRAM kullanım göstergeleri.
-- [ ] CUDA, cuDNN ve TensorRT geliştirici kütüphaneleri için tek tıkla kurulum sihirbazı.
+## 🎯 Gelecek Hedefler (v1.2.0+)
+- [ ] Özel GPU fan eğrisi (fan curve) ve güç limiti (power limit) ayarlayıcısı.
+- [ ] Oyun bazlı profil yönetimi (Steam/Lutris oyunlarında otomatik yüksek performans tetikleme).
+- [ ] Sistem tepsisi (AppIndicator / Tray) mini sıcaklık ve mod göstergesi.
+
