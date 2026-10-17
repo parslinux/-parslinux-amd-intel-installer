@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 22:53+0300\n"
+"POT-Creation-Date: 2026-10-17 23:18+0300\n"
 "PO-Revision-Date: 2024-07-16 11:17+0300\n"
 "Last-Translator: Osman Coskun <osman.coskun@pardus.org.tr>\n"
 "Language-Team: Turkish <dev@pardus.org.tr>\n"
@@ -149,7 +149,7 @@ msgstr "Çıkış"
 msgid "page_vte"
 msgstr "page_vte"
 
-#: ui/ui.glade:641 src/MainWindow.py:262
+#: ui/ui.glade:641 src/MainWindow.py:263
 #, fuzzy
 msgid "ParsLinux Nvidia Installer"
 msgstr "Pardus Nvidia Kurucu"
@@ -163,94 +163,122 @@ msgstr ""
 msgid "Reboot required"
 msgstr "Yeniden başlatma gerekli"
 
-#: src/MainWindow.py:318
+#: src/MainWindow.py:267
+msgid "Sistem Tepsisi Göstergesini Başlat (Tray)"
+msgstr ""
+
+#: src/MainWindow.py:329
 msgid "Operation completed successfully."
 msgstr ""
 
-#: src/MainWindow.py:320
+#: src/MainWindow.py:331
 #, python-brace-format
 msgid "Operation failed (exit code {code}). Please review the log above."
 msgstr ""
 
-#: src/MainWindow.py:451
+#: src/MainWindow.py:462
 msgid "Driver"
 msgstr "Sürücü"
 
-#: src/MainWindow.py:455
+#: src/MainWindow.py:466
 msgid "Version"
 msgstr "Sürüm"
 
-#: src/MainWindow.py:458 src/MainWindow.py:461
+#: src/MainWindow.py:469 src/MainWindow.py:472
 msgid "Description"
 msgstr "Açıklama"
 
-#: src/MainWindow.py:542
+#: src/MainWindow.py:553
 msgid "Selected version is no longer available"
 msgstr ""
 
-#: src/MainWindow.py:545
+#: src/MainWindow.py:556
 msgid "The package list has been refreshed. Please choose a driver again."
 msgstr ""
 
-#: src/MainWindow.py:587
+#: src/MainWindow.py:598
 msgid "🎮 Sürücüler"
 msgstr ""
 
-#: src/MainWindow.py:590
-msgid "📊 Donanım & PRIME"
+#: src/MainWindow.py:601
+msgid "📊 Donanım & Güç"
 msgstr ""
 
-#: src/MainWindow.py:593
+#: src/MainWindow.py:604
+msgid "🕹️ Oyun"
+msgstr ""
+
+#: src/MainWindow.py:607
 msgid "🧠 Yapay Zeka (CUDA)"
 msgstr ""
 
-#: src/MainWindow.py:616
+#: src/MainWindow.py:630
 msgid "Sensörleri Yenile"
 msgstr ""
 
-#: src/MainWindow.py:720
+#: src/MainWindow.py:734
 msgid ""
 "🍃 Tasarruf\n"
 "(Entegre)"
 msgstr ""
 
-#: src/MainWindow.py:724
+#: src/MainWindow.py:738
 msgid ""
 "⚡ Hibrit\n"
 "(İsteğe Bağlı)"
 msgstr ""
 
-#: src/MainWindow.py:728
+#: src/MainWindow.py:742
 msgid ""
 "🚀 Performans\n"
 "(NVIDIA)"
 msgstr ""
 
-#: src/MainWindow.py:765
+#: src/MainWindow.py:764
+msgid "💨 Fan Hızı (%):"
+msgstr ""
+
+#: src/MainWindow.py:771 src/MainWindow.py:788
+msgid "Uygula"
+msgstr ""
+
+#: src/MainWindow.py:781
+msgid "⚡ Güç Sınırı (W):"
+msgstr ""
+
+#: src/MainWindow.py:852
+msgid "NVIDIA ile Başlat"
+msgstr ""
+
+#: src/MainWindow.py:862
+msgid "🚀 3D Grafik Testi Başlat (vkcube / glxgears)"
+msgstr ""
+
+#: src/MainWindow.py:893
 msgid "🟢 NVIDIA CUDA Toolkit (nvcc, runtimes & headers)"
 msgstr ""
 
-#: src/MainWindow.py:770
+#: src/MainWindow.py:898
 msgid "🧬 NVIDIA cuDNN (Derin Sinir Ağları Kütüphanesi)"
 msgstr ""
 
-#: src/MainWindow.py:775
+#: src/MainWindow.py:903
 msgid "🚀 NVIDIA TensorRT (Yüksek Hızlı Çıkarım Motoru)"
 msgstr ""
 
-#: src/MainWindow.py:791
+#: src/MainWindow.py:919
 msgid "🚀 Seçilen Geliştirici Bileşenlerini Kur"
 msgstr ""
 
-#: src/MainWindow.py:844
+#: src/MainWindow.py:972
 msgid "🍃 Tasarruf (Entegre GPU Aktif - NVIDIA Kapalı)"
 msgstr ""
 
-#: src/MainWindow.py:845
+#: src/MainWindow.py:973
 msgid "⚡ Hibrit (İsteğe Bağlı / PRIME Render Offload)"
 msgstr ""
 
-#: src/MainWindow.py:846
+#: src/MainWindow.py:974
 msgid "🚀 Performans (NVIDIA Kartı Sürekli Aktif)"
 msgstr ""
 

@@ -56,6 +56,7 @@ data_files = [
         "src/Main.py",
         "src/MainWindow.py",
         "src/monitor.py",
+        "src/tray.py",
         "src/nvidia.py",
         "src/package.py",
         "src/__version__"

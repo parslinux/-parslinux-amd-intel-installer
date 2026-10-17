@@ -134,6 +134,26 @@ class TestMonitorAndTelemetry(unittest.TestCase):
         self.assertTrue(package._is_allowed_package("tensorrt"))
         self.assertTrue(package._is_allowed_package("nvidia-prime"))
 
+    def test_fan_and_power_validation(self):
+        self.assertFalse(package.set_fan_speed(-10))
+        self.assertFalse(package.set_fan_speed(150))
+        self.assertFalse(package.set_power_limit(10))
+        self.assertFalse(package.set_power_limit(900))
+
+    def test_gaming_helpers(self):
+        import monitor
+        launchers = monitor.get_detected_game_launchers()
+        self.assertIsInstance(launchers, list)
+        self.assertTrue(any(l["id"] == "steam" for l in launchers))
+        offload_status = monitor.get_game_offload_status()
+        self.assertIsInstance(offload_status, bool)
+
+    def test_tray_module_initialization(self):
+        import tray
+        ind = tray.run_tray_indicator()
+        self.assertIsNotNone(ind)
+        self.assertTrue(hasattr(ind, "menu"))
+
 
 class TestMetadataAndFiles(unittest.TestCase):
     def test_desktop_file_syntax(self):

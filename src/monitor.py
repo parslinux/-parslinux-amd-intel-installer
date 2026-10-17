@@ -178,3 +178,78 @@ def get_ai_stack_status():
         status["tensorrt"]["version"] = "8.x / 10.x"
 
     return status
+
+
+def get_fan_control_info():
+    """
+    Returns configured fan speed setting if any.
+    """
+    cache_path = "/var/cache/parslinux-nvi-fan-speed"
+    val = None
+    if os.path.isfile(cache_path):
+        try:
+            with open(cache_path, "r") as f:
+                val = int(f.read().strip())
+        except (ValueError, OSError):
+            pass
+    return {"custom_speed": val, "is_custom": val is not None}
+
+
+def get_power_limit_info():
+    """
+    Returns power limit settings (min, max, target, default).
+    """
+    cache_path = "/var/cache/parslinux-nvi-power-limit"
+    target = None
+    if os.path.isfile(cache_path):
+        try:
+            with open(cache_path, "r") as f:
+                target = int(f.read().strip())
+        except (ValueError, OSError):
+            pass
+    return {
+        "target_watts": target or 200,
+        "default_watts": 220,
+        "min_watts": 100,
+        "max_watts": 350,
+        "is_custom": target is not None,
+    }
+
+
+def get_game_offload_status():
+    """
+    Checks if global NVIDIA game offload environment config is active.
+    """
+    path = "/etc/environment.d/10-parslinux-nvidia-games.conf"
+    return os.path.isfile(path)
+
+
+def get_detected_game_launchers():
+    """
+    Detects gaming platforms on the system (Steam, Lutris, Heroic, Bottles).
+    """
+    launchers = []
+    candidates = [
+        {"id": "steam", "name": "Steam", "icon": "steam", "bin": "steam"},
+        {"id": "lutris", "name": "Lutris", "icon": "lutris", "bin": "lutris"},
+        {"id": "heroic", "name": "Heroic Games Launcher", "icon": "heroic", "bin": "heroic"},
+        {"id": "bottles", "name": "Bottles (Şişeler)", "icon": "com.usebottles.bottles", "bin": "bottles"},
+    ]
+    for c in candidates:
+        installed = bool(shutil.which(c["bin"]))
+        if not installed:
+            # Check Flatpak
+            try:
+                out = subprocess.check_output(["flatpak", "list", "--app"], text=True, stderr=subprocess.DEVNULL)
+                if c["id"] in out.lower():
+                    installed = True
+            except Exception:
+                pass
+        launchers.append({
+            "id": c["id"],
+            "name": c["name"],
+            "installed": installed,
+            "bin": c["bin"],
+        })
+    return launchers
+

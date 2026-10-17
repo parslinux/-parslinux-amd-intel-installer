@@ -53,6 +53,15 @@ class Application(Gtk.Application):
         )
 
         self.add_main_option(
+            "tray",
+            ord("t"),
+            GLib.OptionFlags.NONE,
+            GLib.OptionArg.NONE,
+            "Run background system tray indicator for temperature & profile monitoring",
+            None,
+        )
+
+        self.add_main_option(
             "version",
             ord("v"),
             GLib.OptionFlags.NONE,
@@ -85,6 +94,12 @@ class Application(Gtk.Application):
 
         if "debug" in self.args:
             os.environ["PARSLINUX_NVI_DEBUG"] = "1"
+
+        if "tray" in self.args:
+            import tray
+            self.tray = tray.run_tray_indicator(on_open_callback=self.activate)
+            self.hold()
+            return 0
 
         self.activate()
         return 0

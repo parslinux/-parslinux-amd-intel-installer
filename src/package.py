@@ -563,6 +563,85 @@ def install_ai_tools(requested_pkgs=None):
     return False
 
 
+FAN_SPEED_CACHE = "/var/cache/parslinux-nvi-fan-speed"
+POWER_LIMIT_CACHE = "/var/cache/parslinux-nvi-power-limit"
+GAME_OFFLOAD_CONF = "/etc/environment.d/10-parslinux-nvidia-games.conf"
+
+
+def set_fan_speed(percent: int):
+    try:
+        val = int(percent)
+        if not (0 <= val <= 100):
+            print("set_fan_speed: percent must be 0..100", file=sys.stderr)
+            return False
+    except (ValueError, TypeError):
+        return False
+
+    os.makedirs(os.path.dirname(FAN_SPEED_CACHE), exist_ok=True)
+    with open(FAN_SPEED_CACHE, "w") as f:
+        f.write(str(val) + "\n")
+
+    settings_bin = shutil_which("nvidia-settings")
+    if settings_bin:
+        try:
+            subprocess.call([
+                settings_bin,
+                "-a", "[gpu:0]/GPUFanControlState=1",
+                "-a", f"[fan:0]/GPUTargetFanSpeed={val}"
+            ])
+        except Exception:
+            pass
+    print(f"Fan speed set to {val}%")
+    return True
+
+
+def set_power_limit(watts: int):
+    try:
+        val = int(watts)
+        if not (50 <= val <= 600):
+            print("set_power_limit: watts must be 50..600", file=sys.stderr)
+            return False
+    except (ValueError, TypeError):
+        return False
+
+    os.makedirs(os.path.dirname(POWER_LIMIT_CACHE), exist_ok=True)
+    with open(POWER_LIMIT_CACHE, "w") as f:
+        f.write(str(val) + "\n")
+
+    smi_bin = shutil_which("nvidia-smi")
+    if smi_bin:
+        try:
+            rc = subprocess.call([smi_bin, "-pl", str(val)])
+            if rc != 0:
+                print("nvidia-smi power limit failed, cache updated", file=sys.stderr)
+        except Exception:
+            pass
+    print(f"Power limit set to {val}W")
+    return True
+
+
+def set_game_offload(state: str):
+    enable = str(state).lower() in ("1", "true", "on", "enable")
+    os.makedirs(os.path.dirname(GAME_OFFLOAD_CONF), exist_ok=True)
+    if enable:
+        content = (
+            "__NV_PRIME_RENDER_OFFLOAD=1\n"
+            "__GLX_VENDOR_LIBRARY_NAME=nvidia\n"
+            "__VK_LAYER_NV_optimus=NVIDIA_only\n"
+        )
+        with open(GAME_OFFLOAD_CONF, "w") as f:
+            f.write(content)
+        print("Automatic NVIDIA game offload enabled in /etc/environment.d")
+    else:
+        if os.path.isfile(GAME_OFFLOAD_CONF):
+            try:
+                os.remove(GAME_OFFLOAD_CONF)
+            except OSError:
+                pass
+        print("Automatic NVIDIA game offload disabled")
+    return True
+
+
 if __name__ == "__main__":
     args = sys.argv
     if len(args) <= 1:
@@ -581,6 +660,15 @@ if __name__ == "__main__":
     elif param1 == "prime-mode":
         mode_arg = args[2] if len(args) > 2 else "on-demand"
         ok = set_prime_mode(mode_arg)
+    elif param1 == "set-fan-speed":
+        spd = int(args[2]) if len(args) > 2 else 50
+        ok = set_fan_speed(spd)
+    elif param1 == "set-power-limit":
+        pwr = int(args[2]) if len(args) > 2 else 200
+        ok = set_power_limit(pwr)
+    elif param1 == "set-game-offload":
+        st = args[2] if len(args) > 2 else "on"
+        ok = set_game_offload(st)
     elif param1 == "install-ai-tools":
         pkgs_arg = args[2:] if len(args) > 2 else ["nvidia-cuda-toolkit"]
         ok = install_ai_tools(pkgs_arg)

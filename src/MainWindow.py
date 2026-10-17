@@ -9,6 +9,7 @@ import os
 import signal
 import subprocess
 import sys
+import shutil
 import locale
 import platform
 
@@ -260,6 +261,16 @@ class MainWindow(object):
         self.ui_main_window.set_default_size(580, 720)
         self.ui_main_window.set_application(application)
         self.ui_main_window.set_title(_("ParsLinux Nvidia Installer"))
+
+        # Add Tray launcher button to HeaderBar
+        self.btn_tray_toggle = Gtk.Button.new_from_icon_name("media-record-symbolic", Gtk.IconSize.BUTTON)
+        self.btn_tray_toggle.set_tooltip_text(_("Sistem Tepsisi Göstergesini Başlat (Tray)"))
+        self.btn_tray_toggle.connect("clicked", lambda b: self.start_tray_indicator())
+        headerbar = self.ui_main_window.get_titlebar()
+        if headerbar and isinstance(headerbar, Gtk.HeaderBar):
+            headerbar.pack_end(self.btn_tray_toggle)
+            self.btn_tray_toggle.show()
+
         self.ui_main_window.show_all()
 
     def on_simulate_clicked(self, button):
@@ -587,7 +598,10 @@ class MainWindow(object):
         self.feature_stack.add_titled(self.ui_controller_box, "drivers", _("🎮 Sürücüler"))
 
         self.page_monitor = self.build_monitor_page()
-        self.feature_stack.add_titled(self.page_monitor, "monitor", _("📊 Donanım & PRIME"))
+        self.feature_stack.add_titled(self.page_monitor, "monitor", _("📊 Donanım & Güç"))
+
+        self.page_gaming = self.build_gaming_page()
+        self.feature_stack.add_titled(self.page_gaming, "gaming", _("🕹️ Oyun"))
 
         self.page_ai = self.build_ai_page()
         self.feature_stack.add_titled(self.page_ai, "ai_tools", _("🧠 Yapay Zeka (CUDA)"))
@@ -736,8 +750,122 @@ class MainWindow(object):
 
         box.pack_start(card_prime, False, False, 0)
 
+        # 3. Hardware Fan & Power Limit Card
+        card_ctrl = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        card_ctrl.get_style_context().add_class("monitor-card")
+
+        ctrl_header = Gtk.Label()
+        ctrl_header.set_markup('<span font_weight="bold" foreground="#38BDF8">⚙️ Özel Fan Hızı &amp; Güç Sınırı (Power Limit)</span>')
+        ctrl_header.set_halign(Gtk.Align.START)
+        card_ctrl.pack_start(ctrl_header, False, False, 0)
+
+        # Fan Scale Row
+        row_fan = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
+        lbl_fan_ctrl = Gtk.Label(label=_("💨 Fan Hızı (%):"))
+        lbl_fan_ctrl.set_halign(Gtk.Align.START)
+        fan_info = monitor.get_fan_control_info()
+        self.scale_fan = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 20, 100, 5)
+        self.scale_fan.set_value(fan_info["custom_speed"] or 50)
+        self.scale_fan.set_digits(0)
+        self.scale_fan.set_value_pos(Gtk.PositionType.RIGHT)
+        btn_apply_fan = Gtk.Button(label=_("Uygula"))
+        btn_apply_fan.get_style_context().add_class("prime-btn")
+        btn_apply_fan.connect("clicked", lambda b: self.on_apply_fan_speed())
+        row_fan.pack_start(lbl_fan_ctrl, False, False, 0)
+        row_fan.pack_start(self.scale_fan, True, True, 0)
+        row_fan.pack_end(btn_apply_fan, False, False, 0)
+        card_ctrl.pack_start(row_fan, False, False, 2)
+
+        # Power Scale Row
+        row_power = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
+        lbl_power_ctrl = Gtk.Label(label=_("⚡ Güç Sınırı (W):"))
+        lbl_power_ctrl.set_halign(Gtk.Align.START)
+        power_info = monitor.get_power_limit_info()
+        self.scale_power = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, power_info["min_watts"], power_info["max_watts"], 10)
+        self.scale_power.set_value(power_info["target_watts"])
+        self.scale_power.set_digits(0)
+        self.scale_power.set_value_pos(Gtk.PositionType.RIGHT)
+        btn_apply_power = Gtk.Button(label=_("Uygula"))
+        btn_apply_power.get_style_context().add_class("prime-btn")
+        btn_apply_power.connect("clicked", lambda b: self.on_apply_power_limit())
+        row_power.pack_start(lbl_power_ctrl, False, False, 0)
+        row_power.pack_start(self.scale_power, True, True, 0)
+        row_power.pack_end(btn_apply_power, False, False, 0)
+        card_ctrl.pack_start(row_power, False, False, 2)
+
+        box.pack_start(card_ctrl, False, False, 0)
+
         self.refresh_telemetry_ui()
         self.refresh_prime_ui()
+        return box
+
+    def build_gaming_page(self):
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=14)
+        box.set_margin_start(10)
+        box.set_margin_end(10)
+        box.set_margin_top(6)
+        box.set_margin_bottom(10)
+
+        card_game = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        card_game.get_style_context().add_class("card-box")
+
+        header = Gtk.Label()
+        header.set_markup('<span font_weight="bold" foreground="#38BDF8">🕹️ Oyun Hızlandırıcı &amp; PRIME Offload</span>')
+        header.set_halign(Gtk.Align.START)
+        card_game.pack_start(header, False, False, 0)
+
+        desc = Gtk.Label()
+        desc.set_markup('<span font_size="small" foreground="#94A3B8">Oyunları otomatik olarak yüksek performanslı NVIDIA GPU ve Vulkan DXVK katmanlarıyla çalıştırın.</span>')
+        desc.set_line_wrap(True)
+        desc.set_halign(Gtk.Align.START)
+        card_game.pack_start(desc, False, False, 0)
+
+        # Global Offload Switch
+        row_switch = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        lbl_switch = Gtk.Label()
+        lbl_switch.set_markup('<b>Tüm Oyunlar İçin Otomatik NVIDIA Offload</b>')
+        lbl_switch.set_halign(Gtk.Align.START)
+        self.switch_game_offload = Gtk.Switch()
+        self.switch_game_offload.set_active(monitor.get_game_offload_status())
+        self.switch_game_offload.connect("state-set", self.on_toggle_game_offload)
+        row_switch.pack_start(lbl_switch, True, True, 0)
+        row_switch.pack_end(self.switch_game_offload, False, False, 0)
+        card_game.pack_start(row_switch, False, False, 4)
+
+        # Launchers Box
+        lbl_launchers = Gtk.Label()
+        lbl_launchers.set_markup('<span font_weight="bold" font_size="small" foreground="#E2E8F0">Algılanan Oyun Başlatıcıları:</span>')
+        lbl_launchers.set_halign(Gtk.Align.START)
+        card_game.pack_start(lbl_launchers, False, False, 4)
+
+        self.box_launchers = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        launchers = monitor.get_detected_game_launchers()
+        for l in launchers:
+            row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+            status_color = "#4ADE80" if l["installed"] else "#64748B"
+            status_text = "✓ Algılandı" if l["installed"] else "✗ Yüklü Değil"
+            lbl = Gtk.Label()
+            lbl.set_markup(f'🎮 <b>{l["name"]}</b>: <span foreground="{status_color}">{status_text}</span>')
+            lbl.set_halign(Gtk.Align.START)
+            row.pack_start(lbl, True, True, 0)
+            if l["installed"]:
+                btn_run = Gtk.Button(label=_("NVIDIA ile Başlat"))
+                btn_run.get_style_context().add_class("prime-btn")
+                bin_name = l["bin"]
+                btn_run.connect("clicked", lambda b, cmd=bin_name: self.launch_game_with_nvidia(cmd))
+                row.pack_end(btn_run, False, False, 0)
+            self.box_launchers.pack_start(row, False, False, 0)
+
+        card_game.pack_start(self.box_launchers, False, False, 4)
+
+        # Quick Test Button
+        btn_test = Gtk.Button(label=_("🚀 3D Grafik Testi Başlat (vkcube / glxgears)"))
+        btn_test.get_style_context().add_class("sim-button")
+        btn_test.set_halign(Gtk.Align.CENTER)
+        btn_test.connect("clicked", self.on_run_graphics_test)
+        card_game.pack_start(btn_test, False, False, 8)
+
+        box.pack_start(card_game, False, False, 0)
         return box
 
     def build_ai_page(self):
@@ -903,3 +1031,52 @@ class MainWindow(object):
         exec_path = get_package_exec_path()
         params = ["/usr/bin/pkexec", exec_path, "install-ai-tools", *pkgs]
         self.vte_start(params)
+
+    def on_apply_fan_speed(self):
+        val = int(self.scale_fan.get_value())
+        self.apt_opr = "set-fan-speed"
+        exec_path = get_package_exec_path()
+        params = ["/usr/bin/pkexec", exec_path, "set-fan-speed", str(val)]
+        self.vte_start(params)
+
+    def on_apply_power_limit(self):
+        val = int(self.scale_power.get_value())
+        self.apt_opr = "set-power-limit"
+        exec_path = get_package_exec_path()
+        params = ["/usr/bin/pkexec", exec_path, "set-power-limit", str(val)]
+        self.vte_start(params)
+
+    def on_toggle_game_offload(self, switch, state):
+        exec_path = get_package_exec_path()
+        arg = "on" if state else "off"
+        params = ["/usr/bin/pkexec", exec_path, "set-game-offload", arg]
+        self.vte_start(params)
+
+    def launch_game_with_nvidia(self, bin_name):
+        env = os.environ.copy()
+        env["__NV_PRIME_RENDER_OFFLOAD"] = "1"
+        env["__GLX_VENDOR_LIBRARY_NAME"] = "nvidia"
+        env["__VK_LAYER_NV_optimus"] = "NVIDIA_only"
+        try:
+            subprocess.Popen([bin_name], env=env)
+        except Exception as e:
+            print(f"Failed to launch {bin_name}: {e}", file=sys.stderr)
+
+    def on_run_graphics_test(self, button):
+        env = os.environ.copy()
+        env["__NV_PRIME_RENDER_OFFLOAD"] = "1"
+        env["__GLX_VENDOR_LIBRARY_NAME"] = "nvidia"
+        for cmd in ("vkcube", "glxgears"):
+            if shutil.which(cmd):
+                try:
+                    subprocess.Popen([cmd], env=env)
+                    return
+                except Exception:
+                    pass
+        print("Neither vkcube nor glxgears installed for benchmark test", file=sys.stderr)
+
+    def start_tray_indicator(self):
+        import tray
+        if not hasattr(self, "tray_instance") or self.tray_instance is None:
+            self.tray_instance = tray.run_tray_indicator(on_open_callback=self.ui_main_window.present)
+
