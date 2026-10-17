@@ -1,0 +1,196 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Fatih Altun <fatih.altun@pardus.org.tr>, 2024.
+# Osman Coskun <osman.coskun@pardus.org.tr>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-17 21:28+0300\n"
+"PO-Revision-Date: 2024-07-16 11:17+0300\n"
+"Last-Translator: Osman Coskun <osman.coskun@pardus.org.tr>\n"
+"Language-Team: Turkish <dev@pardus.org.tr>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Gtranslator 42.0\n"
+
+#: ui/ui.glade:11
+msgid "<span><b>Warning</b></span>"
+msgstr "<span><b>Dikkat</b></span>"
+
+#: ui/ui.glade:13
+msgid ""
+"Changes have been made . To ensure these changes take effect, a system "
+"restart is required. Please save any work and click 'OK' to complete the "
+"process."
+msgstr ""
+"Değişiklikler yapıldı. Bu değişikliklerin etkin olması için sisteminizi "
+"yeniden başlatmanız gerekmektedir. Lütfen bütün işlerinizi kaydedin ve "
+"'Tamam' butonuna basarak işlemi tamamlayın."
+
+#: ui/ui.glade:52
+msgid "<span><b>⚠️ Important Notice: ⚠️</b></span>"
+msgstr "<span><b>⚠️ Önemli Hatırlatma: ⚠️</b></span>"
+
+#: ui/ui.glade:54
+#, fuzzy
+msgid ""
+"This application is developed and maintained by the ParsLinux team to "
+"facilitate Nvidia graphics driver installation. The drivers are sourced from "
+"official ParsLinux and Nvidia repositories.\n"
+"\n"
+"<b>Driver Source and Usage</b>\n"
+"While this is an official ParsLinux application, the graphics drivers "
+"themselves are developed by Nvidia Corporation. ParsLinux provides this "
+"installation tool as a convenience for our users, but the drivers remain the "
+"intellectual property of Nvidia Corporation.\n"
+"\n"
+"<b>Disclaimer:</b>\n"
+"Please note that while we strive to ensure a smooth installation process, "
+"ParsLinux cannot guarantee the performance or compatibility of Nvidia "
+"drivers with all hardware configurations. Users install these drivers at "
+"their own discretion and risk.\n"
+"\n"
+"<b>Issue Reporting:</b>\n"
+"Feel free to report any issues or concerns via our GitHub repository: <a "
+"href=\"https://github.com/parslinux/parslinux-nvidia-installer\"> ParsLinux "
+"GitHub </a>"
+msgstr ""
+"Bu uygulama, Nvidia grafik sürücülerinin kurulumunu kolaylaştırmak için "
+"Pardus ekibi tarafından geliştirilmiş ve yönetilmektedir. Sürücüler, resmi "
+"Pardus ve Nvidia depolarından sağlanmaktadır.\n"
+"\n"
+"<b>Sürücü Kaynağı ve Kullanımı</b>\n"
+"Bu resmi bir Pardus uygulaması olmakla birlikte, grafik sürücüleri Nvidia "
+"Corporation tarafından geliştirilmiştir. Pardus, bu kurulum aracını "
+"kullanıcılarımıza bir kolaylık olarak sunmaktadır, ancak sürücüler Nvidia "
+"Corporation'ın fikri mülkiyeti olarak kalmaktadır.\n"
+"\n"
+"<b>Sorumluluk Reddi:</b>\n"
+"Sorunsuz bir kurulum süreci sağlamak için çaba göstermekle birlikte, Pardus, "
+"Nvidia sürücülerinin tüm donanım yapılandırmalarıyla uyumluluğunu veya "
+"performansını garanti edemez. Kullanıcılar bu sürücüleri kendi takdirleri ve "
+"riskleri altında kurarlar.\n"
+"\n"
+"<b>Sorun Bildirimi:</b>\n"
+"Her türlü sorun veya endişenizi GitHub depomuz üzerinden bildirebilirsiniz: "
+"<a href=\"https://github.com/pardus/pardus-nvidia-installer\"> Pardus Github "
+"</a>"
+
+#: ui/ui.glade:197
+msgid ""
+"This application indicates that your secondary NVIDIA GPU is currently "
+"disabled. To activate it, simply click the 'Enable GPU' button next to this "
+"message."
+msgstr ""
+"Görünüşe göre ikincil NVIDIA ekran kartınız şu anda etkin değil. "
+"Etkinleştirmek için 'Ekran Kartını Etkinleştir' butonuna basınız."
+
+#: ui/ui.glade:209
+msgid "Enable GPU"
+msgstr "Ekran Kartını Etkinleştir"
+
+#: ui/ui.glade:226 ui/ui.glade:447
+msgid "page1"
+msgstr "sayfa1"
+
+#: ui/ui.glade:255
+msgid "Use Nvidia Repository"
+msgstr "Nvidia Deposunu Kullan"
+
+#: ui/ui.glade:360
+msgid "Disable Secondary GPU"
+msgstr "İkincil Ekran Kartını Devre Dışı Bırak"
+
+#: ui/ui.glade:380
+msgid "Apply Changes"
+msgstr "Değişiklikleri Uygula"
+
+#: ui/ui.glade:406
+msgid "page2"
+msgstr "sayfa2"
+
+#: ui/ui.glade:420
+msgid "page_main"
+msgstr "page_main"
+
+#: ui/ui.glade:434
+msgid ""
+"There is no NVIDIA graphics card on your system. \n"
+"You can't use this application"
+msgstr ""
+"Sisteminizde NVIDIA ekran kartı bulunmuyor.\n"
+"Bu uygulamayı kullanamazsınız."
+
+#: ui/ui.glade:474 ui/ui.glade:690
+msgid "Reboot"
+msgstr "Yeniden başlat"
+
+#: ui/ui.glade:488 ui/ui.glade:706
+msgid "Exit"
+msgstr "Çıkış"
+
+#: ui/ui.glade:527
+msgid "page_vte"
+msgstr "page_vte"
+
+#: ui/ui.glade:585 src/MainWindow.py:186
+#, fuzzy
+msgid "ParsLinux Nvidia Installer"
+msgstr "Pardus Nvidia Kurucu"
+
+#: ui/ui.glade:671
+msgid "You must reboot your device before using this application."
+msgstr ""
+"Bu uygulamayı kullanmadan önce cihazınızı yeniden başlatmanız gerekmektedir."
+
+#: ui/ui.glade:733
+msgid "Reboot required"
+msgstr "Yeniden başlatma gerekli"
+
+#: src/MainWindow.py:231
+msgid "Operation completed successfully."
+msgstr ""
+
+#: src/MainWindow.py:233
+#, python-brace-format
+msgid "Operation failed (exit code {code}). Please review the log above."
+msgstr ""
+
+#: src/MainWindow.py:378
+msgid "Driver"
+msgstr "Sürücü"
+
+#: src/MainWindow.py:382
+msgid "Version"
+msgstr "Sürüm"
+
+#: src/MainWindow.py:385 src/MainWindow.py:388
+msgid "Description"
+msgstr "Açıklama"
+
+#: src/MainWindow.py:469
+msgid "Selected version is no longer available"
+msgstr ""
+
+#: src/MainWindow.py:472
+msgid "The package list has been refreshed. Please choose a driver again."
+msgstr ""
+
+#: src/nvidia.py:386
+msgid "Open Source Driver"
+msgstr "Açık Kaynaklı Sürücü"
+
+#: src/nvidia.py:404 src/nvidia.py:415 src/nvidia.py:424 src/nvidia.py:427
+msgid "Proprietary Driver"
+msgstr "Tescilli Sürücü"
+
+#: src/nvidia.py:430
+#, fuzzy
+msgid "Legacy Driver"
+msgstr "Tescilli Sürücü"

@@ -1,0 +1,220 @@
+parslinux-nvidia-installer (1.0.0-1) unstable; urgency=medium
+
+  * Forked from pardus-nvidia-installer for ParsLinux ecosystem.
+  * Rebranded user interface, desktop entry, polkit policies and metadata.
+  * Added simulation and debug mode for development and testing without physical GPU.
+  * Enhanced multi-distribution detection (ParsLinux, Debian, Arch, Ubuntu).
+  * Added dual-marker support for reboot and secondary GPU power states.
+  * Added setup.py and manage.sh developer tooling suite.
+
+ -- ParsLinux Developers <dev@parslinux.org>  Sat, 17 Oct 2026 21:00:00 +0300
+
+pardus-nvidia-installer (2.0.1) unstable; urgency=medium
+
+  * Remove pkla and purge it on upgrade - #ZA-26072117001 - #PARDUS-1736
+  * Del unused line - #PARDUS-1736
+
+ -- Emel Öztürk <emel.ozturk@pardus.org.tr>  Fri, 24 Jul 2026 12:39:01 +0300
+
+pardus-nvidia-installer (2.0.0) unstable; urgency=medium
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translation
+
+  [ Emel Öztürk ]
+  * Fix slow startup by fixing apt cache usage
+  * Fix picking up intel/amd cars as nvidia devices - #PARDUS-1551
+  * Drop call to nonexistent controlArgs() - # PARDUS-1551
+  * Split install nvidia/nouveau subcommands - Reboot marker on success only - #PARDUS-1551
+  * Correct inverted secondary gpu equality check - #PARDUS-1551
+  * Mark reboot only after successful ops and gpu state changes - #PARDUS-1551
+  * Disable optrigerring widgets while vte child runs - #PARDUS-1551
+  * Remove dead toggle subcommand - #PARDUS-1551
+  * Sync repo switch with filesystem after update - #PARDUS-1551
+  * Fix zero pad int2hex to 4 hex digits - #PARDUS-1551
+  * Remove unused lines and imports - #PARDUS-1551
+  * Fix duplicate driver entries on multi gpu systems - #PARDUS-1551
+  * Hide info dialog and trim pni-disable-gpu - PARDUS-1551
+  * Fixes reboot ui, package.py exits, deb files - Load confirm dialog before reboot - Remove unused lines - Remove prints - Fix guard condition(disable gpu scrpit) - Edit deb files - #PARDUS-1551
+  * Fix install_nvidia order to avoid driverless state on failure - Install new nvidia driver before purging old one - #PARDUS-1587
+  * Fixes after review & tests
+  * Harden pci scan and lazy load apt cache in nvidia.py - #PARDUS-1587
+  * Tolerate missing packages in apt cache - #PARDUS-1587
+  * Keep enable button reachable when secondary GPU is PCI-removed - #PARDUS-1587
+  * Compare NvidiaDriver instances by value not identity - PARDUS-1587
+  * Make repo toggle atomic with rollback on apt failure - #PARDUS-1587
+  * Compute nvidia package list from apt cache in install_nouveau - #PARDUS-1587
+  * Reinstall xserver-xorg-video-nouveau after purge - #PARDUS-1587
+  * Restore modprobe .bak files when re-installing nouveau - #PARDUS-1587
+  * Filter pni-disable-gpu by NVIDIA vendor and quiet greps - #PARDUS-1587
+  * Use apt-get with strict update and clean debug prints - Use apt-get for script stability - Fail apt get update on any repo err via Error-Mode=any - Fix shebang typo in package.py - Remove prints & unused imports - #PARDUS-1587
+  * Validate package names before apt in install_nvidia - #PARDUS-1587
+  * Fix typo in translations - # PARDUS-1587
+  * Generate version at pkg time - #PARDUS-1624
+  * Fix typos in TR translation - #PARDUS-1624
+  * Select cuda repo by debian base and fix deb13 keyring
+  * Detect secondary pgu by boot_vga instead of pci class - Vga class discrete cards are correctly identified and disabled - #PARDUS-1624
+  * Fix boot gpu disable script exiting early under set -e - #PARDUS-1624
+  * Fix README - #PARDUS-1624
+  * Improve ui - #PARDUS-1624
+  * Cleanup mainwindow - #PARDUS-1624
+  * Fix secondary gpu re enable pci scan and conf moves - #PARDUS-1624
+  * Keep installed driver visible when nvidia repo is enabled - #PARDUS-1624
+  * Drop stale cross origin nvidia libs when switching driver - #PARDUS-1624
+  * Pin nvidia driver version and allow downgrades - #PARDUS-1624
+  * Apply pinned driver selection and refresh list in place - #PARDUS-1624
+  * Fix nvidia driver downgrade by aligning whole stach to target version - #PARDUS-1624
+  * Purge entire nvidia stack when switching to nouveau - #PARDUS-1624
+
+ -- Emel Öztürk <emel.ozturk@pardus.org.tr>  Mon, 22 Jun 2026 09:01:02 +0300
+
+pardus-nvidia-installer (0.1.0) unstable; urgency=medium
+
+  [ Osman Coskun ]
+  * fix(#7): Legal Notice updated
+  * Files removed to update gitignore
+  * gitignore updated
+
+  [ Ali Riza KESKIN ]
+  * Update nvidia pci list from 580 driver list included legacy cards.
+  * remove status label and progressbar and add vte
+  * gui improvements
+  * fix reboot / ok button
+
+  [ aliriza ]
+  * fix install nvidia installation
+
+  [ Ali Riza KESKIN ]
+  * improve install/remove packages
+  * fix swithing version issue and returncode
+  * need reboot dialog added
+  * reboot function created and It uses logind
+  * typo fix
+  * update translation
+  * debug mode variable added
+  * fix install linux-headers-6.12.48+deb13-amd64 package
+
+  [ Fatih Altun ]
+  * Update app icon
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Mon, 24 Nov 2025 14:40:50 +0300
+
+pardus-nvidia-installer (0.0.6) unstable; urgency=medium
+
+  [ Osman Coskun ]
+  * ULAKBIM > BILGEM
+
+  [ Fatih Altun ]
+  * Update copyright
+  * Update static appversion
+  * Update position of ui_info_dialog as centered
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Thu, 28 Nov 2024 17:20:53 +0300
+
+pardus-nvidia-installer (0.0.5) unstable; urgency=medium
+
+  [ Osman Coskun ]
+  * gitignore updated for build files
+  * locale files and languages added
+  * fix: charset
+  * feat: disable gpu
+  * fix: nvidia conf
+  * fix: layout
+  * feat: disable button
+  * fix: missing files
+  * feat: prerm service added
+  * fix: pni service
+  * prerm added
+  * feat: control added
+  * feat: TR translation
+  * fix: removed nvidia devices other than gpu
+  * fix: meson
+  * gpg dearmor added
+  * fix: novidia
+  * fix: multiple versions
+  * fix: multiversion
+  * ui dialogs
+  * fix: version control
+  * checking drivers and dialogs
+
+  [ Pardus ]
+  * drivers separated
+  * feat: downgrade, upgrade
+
+  [ Osman Coskun ]
+  * TODOS completed
+  * Update README.md
+  * Create pull_request_template.md
+  * Create bug_report.md
+  * Create feature_request.md
+
+  [ Fatih Altun ]
+  * Fix about dialog close problem on xfce
+  * Update .gitignore
+  * Fix some spaces, copyright and position on ui
+  * Update about dialog values
+  * Fix Turkish translation file
+
+  [ Osman Coskun ]
+  * feat: build files added to gitignore
+  * fix: missing translations
+  * fix: more debian build file
+  * feat: app icon changed
+  * fix: info github url
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translations
+  * Update Portuguese translation (.desktop) file
+
+  [ Osman Coskun ]
+  * feat: translator credits
+  * feat: controls improved. fix: #3
+
+  [ Fatih Altun ]
+  * Update app icon
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Tue, 16 Jul 2024 15:36:46 +0300
+
+pardus-nvidia-installer (0.0.4) unstable; urgency=medium
+
+  * feat: translations are added.
+  * feat: Turkish translation completed.
+  * Removed unusued functions and variables from core files.
+
+pardus-nvidia-installer (0.0.3) unstable; urgency=medium
+
+  * feat: mirror switch between nvidia and pardus.
+
+ -- osman.coskun <osman.coskun@pardus.org.tr> Tue, 30 Jan 2023 17:24:30 +0300
+
+pardus-nvidia-installer (0.0.2) unstable; urgency=medium
+
+  * fix: multiple driver support added with control
+  * feat:multiple driver support added with new pci data
+  * feat: new pci list per driver version
+  * Created README.md
+  * fix: alternative message for nvidia devices which currently doesnt have any driver in the repo
+  * fix: buttons are disabled during installation
+  *	fix: nvidia pci device parsing
+  *	fix: meson & application start
+  * feat: debian files created
+  * feat: added icon,desktop,meson files
+  * feat: restart confirm dialog added
+  * feat: getting driver logic improved
+  * fix: added policy and pkla file
+  * feat: added process std functionality
+  *	fix: pkexec
+  * feat: permission dialog added
+  *	feat: control buttons added
+  * feat: drivers are listing in ui.
+  * fix: PCI and Nvidia parsing logic improved
+  * feat: driver and pci can be found now
+  * feat: ui file created. basic structure is done
+
+ -- osman.coskun <osman.coskun@pardus.org.tr>  Tue, 07 Nov 2023 08:26:59 +0300
+
+pardus-nvidia-installer (0.0.1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- osman.coskun <osman.coskun@pardus.org.tr>  Fri, 06 Oct 2023 09:36:59 +0300

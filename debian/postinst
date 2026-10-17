@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e 
+
+systemctl daemon-reload || true
+systemctl enable pni-disable-gpu.service || true
+
+pub_file="/usr/share/parslinux/parslinux-nvidia-installer/nvidia.pub"
+if [ ! -f "$pub_file" ]; then
+    pub_file="/usr/share/pardus/pardus-nvidia-installer/nvidia.pub"
+fi
+
+if [ -f "$pub_file" ]; then
+    cat "$pub_file" | gpg --dearmor --yes | tee /usr/share/keyrings/nvidia-drivers.gpg > /dev/null 2>&1 || true
+fi
+
+exit 0

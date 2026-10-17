@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-17 21:28+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ui/ui.glade:11
+msgid "<span><b>Warning</b></span>"
+msgstr ""
+
+#: ui/ui.glade:13
+msgid ""
+"Changes have been made . To ensure these changes take effect, a system "
+"restart is required. Please save any work and click 'OK' to complete the "
+"process."
+msgstr ""
+
+#: ui/ui.glade:52
+msgid "<span><b>⚠️ Important Notice: ⚠️</b></span>"
+msgstr ""
+
+#: ui/ui.glade:54
+msgid ""
+"This application is developed and maintained by the ParsLinux team to "
+"facilitate Nvidia graphics driver installation. The drivers are sourced from "
+"official ParsLinux and Nvidia repositories.\n"
+"\n"
+"<b>Driver Source and Usage</b>\n"
+"While this is an official ParsLinux application, the graphics drivers "
+"themselves are developed by Nvidia Corporation. ParsLinux provides this "
+"installation tool as a convenience for our users, but the drivers remain the "
+"intellectual property of Nvidia Corporation.\n"
+"\n"
+"<b>Disclaimer:</b>\n"
+"Please note that while we strive to ensure a smooth installation process, "
+"ParsLinux cannot guarantee the performance or compatibility of Nvidia "
+"drivers with all hardware configurations. Users install these drivers at "
+"their own discretion and risk.\n"
+"\n"
+"<b>Issue Reporting:</b>\n"
+"Feel free to report any issues or concerns via our GitHub repository: <a "
+"href=\"https://github.com/parslinux/parslinux-nvidia-installer\"> ParsLinux "
+"GitHub </a>"
+msgstr ""
+
+#: ui/ui.glade:197
+msgid ""
+"This application indicates that your secondary NVIDIA GPU is currently "
+"disabled. To activate it, simply click the 'Enable GPU' button next to this "
+"message."
+msgstr ""
+
+#: ui/ui.glade:209
+msgid "Enable GPU"
+msgstr ""
+
+#: ui/ui.glade:226 ui/ui.glade:447
+msgid "page1"
+msgstr ""
+
+#: ui/ui.glade:255
+msgid "Use Nvidia Repository"
+msgstr ""
+
+#: ui/ui.glade:360
+msgid "Disable Secondary GPU"
+msgstr ""
+
+#: ui/ui.glade:380
+msgid "Apply Changes"
+msgstr ""
+
+#: ui/ui.glade:406
+msgid "page2"
+msgstr ""
+
+#: ui/ui.glade:420
+msgid "page_main"
+msgstr ""
+
+#: ui/ui.glade:434
+msgid ""
+"There is no NVIDIA graphics card on your system. \n"
+"You can't use this application"
+msgstr ""
+
+#: ui/ui.glade:474 ui/ui.glade:690
+msgid "Reboot"
+msgstr ""
+
+#: ui/ui.glade:488 ui/ui.glade:706
+msgid "Exit"
+msgstr ""
+
+#: ui/ui.glade:527
+msgid "page_vte"
+msgstr ""
+
+#: ui/ui.glade:585 src/MainWindow.py:186
+msgid "ParsLinux Nvidia Installer"
+msgstr ""
+
+#: ui/ui.glade:671
+msgid "You must reboot your device before using this application."
+msgstr ""
+
+#: ui/ui.glade:733
+msgid "Reboot required"
+msgstr ""
+
+#: src/MainWindow.py:231
+msgid "Operation completed successfully."
+msgstr ""
+
+#: src/MainWindow.py:233
+#, python-brace-format
+msgid "Operation failed (exit code {code}). Please review the log above."
+msgstr ""
+
+#: src/MainWindow.py:378
+msgid "Driver"
+msgstr ""
+
+#: src/MainWindow.py:382
+msgid "Version"
+msgstr ""
+
+#: src/MainWindow.py:385 src/MainWindow.py:388
+msgid "Description"
+msgstr ""
+
+#: src/MainWindow.py:469
+msgid "Selected version is no longer available"
+msgstr ""
+
+#: src/MainWindow.py:472
+msgid "The package list has been refreshed. Please choose a driver again."
+msgstr ""
+
+#: src/nvidia.py:386
+msgid "Open Source Driver"
+msgstr ""
+
+#: src/nvidia.py:404 src/nvidia.py:415 src/nvidia.py:424 src/nvidia.py:427
+msgid "Proprietary Driver"
+msgstr ""
+
+#: src/nvidia.py:430
+msgid "Legacy Driver"
+msgstr ""

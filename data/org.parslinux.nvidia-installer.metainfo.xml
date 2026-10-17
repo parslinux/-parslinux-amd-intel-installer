@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.parslinux.nvidia-installer</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>ParsLinux Nvidia Installer</name>
+  <name xml:lang="tr">ParsLinux Nvidia Sürücü Kurucu</name>
+  <summary>Official NVIDIA graphics driver installer and GPU manager</summary>
+  <summary xml:lang="tr">Resmi NVIDIA grafik sürücüsü kurucu ve GPU yönetim aracı</summary>
+  <description>
+    <p>
+      ParsLinux Nvidia Installer is an official utility designed to detect NVIDIA GPUs,
+      recommend the optimal proprietary or open-source drivers, and install them safely
+      with a single click.
+    </p>
+    <p xml:lang="tr">
+      ParsLinux Nvidia Sürücü Kurucu, sisteminizdeki NVIDIA ekran kartlarını otomatik olarak
+      tespit eden, donanımınıza en uygun resmi kapalı kaynak veya nouveau açık kaynak sürücüleri
+      öneren ve tek tıkla güvenli kurulum sağlayan resmi ParsLinux aracıdır.
+    </p>
+    <ul>
+      <li>Automatic PCI hardware detection</li>
+      <li>Official NVIDIA repository integration</li>
+      <li>Hybrid GPU power saving management</li>
+      <li>DKMS kernel module compilation support</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">org.parslinux.nvidia-installer.desktop</launchable>
+  <provides>
+    <binary>parslinux-nvidia-installer</binary>
+  </provides>
+  <developer_name>ParsLinux Developers</developer_name>
+  <url type="homepage">https://parslinux.org</url>
+  <url type="bugtracker">https://github.com/parslinux/parslinux-nvidia-installer/issues</url>
+  <icon type="stock">parslinux-nvidia-installer</icon>
+  <categories>
+    <category>Settings</category>
+    <category>HardwareSettings</category>
+    <category>System</category>
+  </categories>
+</component>

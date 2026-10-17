@@ -1,0 +1,20 @@
+[Desktop Entry]
+Name=ParsLinux Nvidia Installer
+Name[tr]=ParsLinux Nvidia Sürücü Kurucu
+Name[pt]=Instalador Nvidia ParsLinux
+GenericName=Nvidia Graphics Driver Installer
+GenericName[tr]=Nvidia Grafik Sürücüsü Kurucu
+GenericName[pt]=Instalador de Controladores Nvidia
+Comment=Easily detect and install official NVIDIA graphics drivers and manage hybrid GPUs
+Comment[tr]=NVIDIA grafik sürücülerini kolayca tespit edip kurun ve melez GPU'ları yönetin
+Comment[pt]=Detecte e instale facilmente controladores gráficos NVIDIA oficiais e faça a gestão de GPUs híbridas
+Exec=parslinux-nvidia-installer %u
+Icon=parslinux-nvidia-installer
+Terminal=false
+Type=Application
+Categories=Settings;HardwareSettings;System;X-ParsLinux-Apps;X-Pardus-Apps;
+StartupNotify=true
+Keywords=nvidia;driver;gpu;graphics;cuda;nouveau;display;hybrid;optimus;gaming;
+Keywords[tr]=nvidia;surucu;sürücü;ekran kartı;grafik;cuda;nouveau;melez;optimus;oyun;
+Keywords[pt]=nvidia;controlador;gpu;gráficos;cuda;nouveau;híbrido;optimus;jogos;
+X-ParsLinux-Priority=High

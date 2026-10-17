@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+
+<policyconfig>
+
+  <vendor>ParsLinux Developers</vendor>
+  <vendor_url>https://parslinux.org/</vendor_url>
+
+  <action id="org.parslinux.pkexec.parslinux-nvidia-installer">
+    <description>Run Nvidia Driver Installer Helper</description>
+    <description xml:lang="tr">Nvidia Sürücü Kurucu Yardımcısını Çalıştır</description>
+    <message>Authentication is required for ParsLinux Nvidia Installer to manage drivers on your system.</message>
+    <message xml:lang="tr">ParsLinux Nvidia Sürücü Kurucu'nun sisteminizde sürücü kurabilmesi veya kaldırabilmesi için yönetici yetkisi gerekiyor.</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/share/parslinux/parslinux-nvidia-installer/src/package.py</annotate>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+  </action>
+
+  <!-- Legacy action ID alias for backward compatibility -->
+  <action id="tr.org.pardus.pkexec.pardus-nvidia-installer">
+    <description>Run Nvidia Driver Installer Helper (Legacy)</description>
+    <description xml:lang="tr">Nvidia Sürücü Kurucu Yardımcısını Çalıştır (Eski Uyumluluk)</description>
+    <message>Authentication is required for ParsLinux Nvidia Installer to make changes on your system.</message>
+    <message xml:lang="tr">ParsLinux Nvidia Kurucusu'nun sistem üzerinde değişiklik yapması için izniniz gerekiyor.</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/share/parslinux/parslinux-nvidia-installer/src/package.py</annotate>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+  </action>
+
+</policyconfig>

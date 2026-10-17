@@ -1,0 +1,12 @@
+[Unit]
+Description=Disable secondary graphic card on boot (ParsLinux)
+Before=display-manager.service graphical.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=root
+ExecStart=/usr/share/parslinux/parslinux-nvidia-installer/pni-disable-gpu.sh
+
+[Install]
+WantedBy=multi-user.target

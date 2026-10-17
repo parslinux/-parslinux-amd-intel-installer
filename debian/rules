@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+# Write the package version (from debian/changelog) into src/__version__ so
+# the about dialog can show it. Generated before configure so meson's
+# install_subdir('src') ships it.
+override_dh_auto_configure:
+	dpkg-parsechangelog -S Version > src/__version__
+	dh_auto_configure

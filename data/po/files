@@ -1,0 +1,6 @@
+ui/driver_toggle.glade
+ui/ui.glade
+src/Main.py
+src/MainWindow.py
+src/nvidia.py
+src/package.py

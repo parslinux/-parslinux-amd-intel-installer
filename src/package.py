@@ -1,0 +1,513 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+ParsLinux Nvidia Installer - Privileged Package & Hardware Management Helper
+Executed directly or via PolicyKit (pkexec) to manage drivers and system services.
+"""
+
+import os
+import re
+import sys
+import subprocess
+
+try:
+    import apt
+    import apt_pkg
+    apt_pkg.init_system()
+    HAS_APT = True
+except ImportError:
+    HAS_APT = False
+    apt = None
+    apt_pkg = None
+
+os.environ["DEBIAN_FRONTEND"] = "noninteractive"
+nouveau = "xserver-xorg-video-nouveau"
+
+nvidia_modprobe_conf = "/etc/modprobe.d/nvidia.conf"
+nvidia_modprobed_conf = "/etc/modprobe.d/nvidia.conf.bak"
+nouveau_modprobe_conf = "/etc/modprobe.d/nvidia-blacklists-nouveau.conf"
+nouveau_modprobed_conf = "/etc/modprobe.d/nvidia-blacklists-nouveau.conf.bak"
+
+# Primary and legacy GPU disable markers
+nvidia_disable_gpu_path = "/var/cache/parslinux-nvi-disable-gpu"
+legacy_disable_gpu_path = "/var/cache/pni-disable-gpu"
+
+pci_rescan_path = "/sys/bus/pci/rescan"
+dest = "/etc/apt/sources.list.d/nvidia-drivers.list"
+
+# Keyring location and armored public key source
+nvidia_keyring = "/usr/share/keyrings/nvidia-drivers.gpg"
+nvidia_pub_src = os.path.normpath(os.path.join(os.path.dirname(__file__), "../nvidia.pub"))
+
+cuda_repo_base = "https://developer.download.nvidia.com/compute/cuda/repos"
+
+# NVIDIA CUDA repository signing keys:
+#   debian12 -> "cudatools" (A4B469963BF863CC, SHA1)
+#   debian13 -> "Kitmaker (Debian 13 ...)" (97A5D4CB8793F200, SHA256)
+_CUDA_REPO_KEY_FPR = {
+    "debian12": "EB693B3035CD5710E231E123A4B469963BF863CC",
+    "debian13": "02182E60104FCDC26EAE1B8597A5D4CB8793F200",
+}
+
+_SUPPORTED_CUDA_MAJORS = tuple(
+    sorted(int(d[len("debian"):]) for d in _CUDA_REPO_KEY_FPR)
+)
+
+_DEBIAN_CODENAME_MAJOR = {
+    "bullseye": 11,
+    "bookworm": 12,
+    "trixie": 13,
+    "forky": 14,
+    "sid": 13,
+}
+
+REBOOT_MARKERS = [
+    "/run/parslinux-nvi.reboot",
+    "/run/pardus-nvi.reboot",
+]
+
+
+def readfile(filepath):
+    if not os.path.isfile(filepath):
+        return None
+    try:
+        with open(filepath, "r", encoding="utf-8", errors="replace") as f:
+            return f.read().strip()
+    except OSError:
+        return None
+
+
+def sys_source():
+    return os.path.isfile(dest)
+
+
+def _debian_major():
+    """
+    Detect Debian base version.
+    Supports ParsLinux, Debian, Pardus, Ubuntu and derivative os-release fields.
+    """
+    # 1. Check /etc/parslinux_version if present
+    parslinux_ver = readfile("/etc/parslinux_version")
+    if parslinux_ver:
+        m = re.match(r"^(\d+)", parslinux_ver)
+        if m:
+            return 12  # ParsLinux 1.0 is based on Debian 12/13 series
+
+    # 2. Check /etc/debian_version
+    raw = readfile("/etc/debian_version")
+    if raw:
+        m = re.match(r"^(\d+)", raw)
+        if m:
+            return int(m.group(1))
+        codename = raw.split("/", 1)[0].strip().lower()
+        major = _DEBIAN_CODENAME_MAJOR.get(codename)
+        if major:
+            return major
+
+    # 3. Check /etc/os-release or /usr/lib/os-release
+    for path in ("/etc/os-release", "/usr/lib/os-release"):
+        content = readfile(path)
+        if not content:
+            continue
+        env_dict = {}
+        for line in content.splitlines():
+            if "=" in line and not line.startswith("#"):
+                k, v = line.split("=", 1)
+                env_dict[k.strip()] = v.strip().strip('"').strip("'")
+        
+        # Check DEBIAN_CODENAME, VERSION_CODENAME
+        for key in ("DEBIAN_CODENAME", "VERSION_CODENAME", "UBUNTU_CODENAME"):
+            if key in env_dict:
+                cname = env_dict[key].lower()
+                if cname in _DEBIAN_CODENAME_MAJOR:
+                    return _DEBIAN_CODENAME_MAJOR[cname]
+
+        # Check VERSION_ID
+        if "VERSION_ID" in env_dict:
+            m = re.match(r"^(\d+)", env_dict["VERSION_ID"])
+            if m:
+                val = int(m.group(1))
+                if val in (11, 12, 13, 14):
+                    return val
+
+    # Default to newest supported release (e.g. 13)
+    return _SUPPORTED_CUDA_MAJORS[-1]
+
+
+def cuda_repo_distro():
+    major = _debian_major()
+    if major is None:
+        major = _SUPPORTED_CUDA_MAJORS[-1]
+    elif major < _SUPPORTED_CUDA_MAJORS[0]:
+        major = _SUPPORTED_CUDA_MAJORS[0]
+    elif major > _SUPPORTED_CUDA_MAJORS[-1]:
+        major = _SUPPORTED_CUDA_MAJORS[-1]
+    return f"debian{major}"
+
+
+def _nvidia_source_line(distro=None):
+    if distro is None:
+        distro = cuda_repo_distro()
+    return f"deb [signed-by={nvidia_keyring}] {cuda_repo_base}/{distro}/x86_64/ /\n"
+
+
+def _keyring_has_fingerprint(keyring, fingerprint):
+    if not os.path.isfile(keyring):
+        return False
+    try:
+        out = subprocess.run(
+            ["gpg", "--no-default-keyring", "--show-keys",
+             "--with-colons", "--with-fingerprint", keyring],
+            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+        ).stdout.decode("utf-8", "replace")
+    except (OSError, ValueError):
+        return False
+    for line in out.splitlines():
+        parts = line.split(":")
+        if parts and parts[0] == "fpr" and len(parts) >= 10:
+            if parts[9].upper() == fingerprint.upper():
+                return True
+    return False
+
+
+def _build_keyring_from_pub():
+    if not os.path.isfile(nvidia_pub_src):
+        print(f"ensure_keyring: armored key source missing: {nvidia_pub_src}", file=sys.stderr)
+        return False
+    try:
+        with open(nvidia_pub_src, "rb") as src:
+            proc = subprocess.run(
+                ["gpg", "--dearmor"],
+                stdin=src, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            )
+        if proc.returncode != 0 or not proc.stdout:
+            print(f"ensure_keyring: gpg --dearmor failed: {proc.stderr.decode('utf-8', 'replace').strip()}", file=sys.stderr)
+            return False
+        os.makedirs(os.path.dirname(nvidia_keyring), exist_ok=True)
+        tmp = nvidia_keyring + ".tmp"
+        with open(tmp, "wb") as out:
+            out.write(proc.stdout)
+        os.chmod(tmp, 0o644)
+        os.replace(tmp, nvidia_keyring)
+        return True
+    except OSError as e:
+        print(f"ensure_keyring: failed to build {nvidia_keyring}: {e}", file=sys.stderr)
+        return False
+
+
+def ensure_keyring(distro):
+    fpr = _CUDA_REPO_KEY_FPR.get(distro)
+    if fpr is None:
+        return True
+    if _keyring_has_fingerprint(nvidia_keyring, fpr):
+        return True
+    if not _build_keyring_from_pub():
+        return False
+    return _keyring_has_fingerprint(nvidia_keyring, fpr)
+
+
+def mark_need_reboot():
+    for path in REBOOT_MARKERS:
+        try:
+            with open(path, "w") as f:
+                f.write("1")
+        except OSError:
+            pass
+
+
+def move_conf_if_dest_absent(src, dst):
+    if not (os.path.isfile(src) and not os.path.isfile(dst)):
+        return False
+    try:
+        os.replace(src, dst)
+        return True
+    except OSError as e:
+        print(f"move_conf: failed to move {src} -> {dst}: {e}", file=sys.stderr)
+        return False
+
+
+def disable_sec_gpu():
+    changed = False
+    for path in (nvidia_disable_gpu_path, legacy_disable_gpu_path):
+        if not os.path.isfile(path):
+            try:
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                with open(path, "w") as f:
+                    f.write("Secondary GPU Disabled by ParsLinux Nvidia Installer\n")
+                changed = True
+            except OSError:
+                pass
+
+    if move_conf_if_dest_absent(nvidia_modprobe_conf, nvidia_modprobed_conf):
+        changed = True
+    if move_conf_if_dest_absent(nouveau_modprobe_conf, nouveau_modprobed_conf):
+        changed = True
+    if changed:
+        mark_need_reboot()
+    return True
+
+
+def rescan_pci():
+    try:
+        if os.path.exists(pci_rescan_path):
+            with open(pci_rescan_path, "w") as f:
+                f.write("1")
+    except OSError as e:
+        print(f"enable_sec_gpu: pci rescan failed: {e}", file=sys.stderr)
+
+
+def enable_sec_gpu():
+    changed = False
+    for path in (nvidia_disable_gpu_path, legacy_disable_gpu_path):
+        if os.path.isfile(path):
+            try:
+                os.remove(path)
+                changed = True
+            except OSError:
+                pass
+
+    if move_conf_if_dest_absent(nvidia_modprobed_conf, nvidia_modprobe_conf):
+        changed = True
+    if move_conf_if_dest_absent(nouveau_modprobed_conf, nouveau_modprobe_conf):
+        changed = True
+    rescan_pci()
+    if changed:
+        mark_need_reboot()
+    return True
+
+
+def check_sec_state():
+    return not (os.path.isfile(nvidia_disable_gpu_path) or os.path.isfile(legacy_disable_gpu_path))
+
+
+_LINUX_HEADERS_RE = re.compile(r"^linux-headers-[a-zA-Z0-9\.\-_+]+$")
+_NVIDIA_DRIVER_RE = re.compile(r"^nvidia-[a-zA-Z0-9\-_]+$")
+_VERSION_RE = re.compile(r"^[0-9][A-Za-z0-9.+~:-]*$")
+
+
+def _split_pkg(arg):
+    name, sep, ver = arg.partition("=")
+    return (name, ver) if sep else (name, None)
+
+
+def _is_allowed_package(name):
+    if not name or len(name) > 100 or name.startswith("-"):
+        return False
+    pkg, sep, ver = name.partition("=")
+    if sep:
+        if not ver or not _VERSION_RE.match(ver):
+            return False
+        return bool(_NVIDIA_DRIVER_RE.match(pkg))
+    if name == nouveau:
+        return True
+    if _LINUX_HEADERS_RE.match(name) or _NVIDIA_DRIVER_RE.match(name):
+        return True
+    return False
+
+
+def _nvidia_stack_realign(driver, pinned_version=None):
+    if not HAS_APT:
+        return [], []
+    try:
+        cache = apt.Cache()
+    except Exception as e:
+        print(f"install_nvidia: could not open apt cache: {e}", file=sys.stderr)
+        return [], []
+    if driver not in cache:
+        return [], []
+    if pinned_version:
+        target = pinned_version
+    else:
+        candidate = cache[driver].candidate
+        if candidate is None:
+            return [], []
+        target = candidate.version
+    pins, removals = [], []
+    for pkg in cache:
+        try:
+            if not pkg.is_installed or pkg.name == driver:
+                continue
+            installed = pkg.installed
+            source = (installed.source_name or "") if installed else ""
+            if not source.startswith("nvidia-graphics-drivers"):
+                continue
+            if installed.version == target:
+                continue
+            if any(v.version == target for v in pkg.versions):
+                pins.append(f"{pkg.name}={target}")
+            else:
+                removals.append(f"{pkg.name}-")
+        except Exception:
+            continue
+    return pins, removals
+
+
+def install_nvidia(packages):
+    if not packages:
+        print("install_nvidia: no packages provided, aborting", file=sys.stderr)
+        return False
+    for pkg in packages:
+        if not _is_allowed_package(pkg):
+            print(f"install_nvidia: refusing unsafe package name: {pkg!r}", file=sys.stderr)
+            return False
+
+    print("Updating package lists...")
+    if subprocess.call(
+        ["apt-get", "update", "-yq", "-o", "APT::Update::Error-Mode=any"],
+        env={**os.environ},
+    ) != 0:
+        print("Warning: apt-get update returned non-zero, continuing...")
+
+    driver_spec = next((p for p in packages if p.startswith("nvidia-")), None)
+    pins, removals = [], []
+    if driver_spec:
+        driver_name, pinned = _split_pkg(driver_spec)
+        pins, removals = _nvidia_stack_realign(driver_name, pinned)
+
+    cmds = [
+        ["apt-get", "install", "-yq", "--allow-downgrades", "--",
+         *packages, *pins, *removals],
+        ["apt-get", "autoremove", "-yq"],
+    ]
+    for cmd in cmds:
+        print(f"Executing: {' '.join(cmd)}")
+        rc = subprocess.call(cmd, env={**os.environ})
+        if rc != 0:
+            return False
+    mark_need_reboot()
+    return True
+
+
+_NVIDIA_EXTRA_PKGS = (
+    "xserver-xorg-video-nvidia",
+    "libgl1-nvidia-glvnd-glx",
+    "glx-alternative-nvidia",
+)
+
+
+def _nvidia_stack_packages():
+    if not HAS_APT:
+        return []
+    try:
+        cache = apt.Cache()
+    except Exception as e:
+        print(f"install_nouveau: failed to open apt cache: {e}", file=sys.stderr)
+        return []
+    names = []
+    for pkg in cache:
+        try:
+            if not pkg.is_installed:
+                continue
+            installed = pkg.installed
+            source = (installed.source_name or "") if installed else ""
+            if (pkg.name.startswith("nvidia-")
+                    or source.startswith("nvidia-graphics-drivers")
+                    or pkg.name in _NVIDIA_EXTRA_PKGS):
+                names.append(pkg.name)
+        except Exception:
+            continue
+    return names
+
+
+def restore_modprobe_baks_if_enabled():
+    if os.path.isfile(nvidia_disable_gpu_path) or os.path.isfile(legacy_disable_gpu_path):
+        return
+    move_conf_if_dest_absent(nvidia_modprobed_conf, nvidia_modprobe_conf)
+    move_conf_if_dest_absent(nouveau_modprobed_conf, nouveau_modprobe_conf)
+
+
+def install_nouveau():
+    restore_modprobe_baks_if_enabled()
+    nvidia_pkgs = _nvidia_stack_packages()
+
+    cmds = []
+    if nvidia_pkgs:
+        cmds.append(["apt-get", "purge", "-yq", *nvidia_pkgs])
+    cmds.append(["apt-get", "autoremove", "-yq"])
+    cmds.append(["apt-get", "install", "-yq", nouveau])
+
+    for cmd in cmds:
+        print(f"Executing: {' '.join(cmd)}")
+        rc = subprocess.call(cmd, env={**os.environ})
+        if rc != 0:
+            return False
+    mark_need_reboot()
+    return True
+
+
+def update():
+    backup = dest + ".prev"
+    had = os.path.isfile(dest)
+    try:
+        if had:
+            os.replace(dest, backup)
+        else:
+            distro = cuda_repo_distro()
+            if not ensure_keyring(distro):
+                raise RuntimeError(f"missing signing key for {distro} repo")
+            tmp = dest + ".tmp"
+            with open(tmp, "w") as f:
+                f.write(_nvidia_source_line(distro))
+            os.replace(tmp, dest)
+
+        rc = subprocess.call(
+            ["apt-get", "update", "-yq", "-o", "APT::Update::Error-Mode=any"],
+            env={**os.environ},
+        )
+        if rc != 0:
+            raise RuntimeError(f"apt update failed with rc={rc}")
+
+        if had and os.path.isfile(backup):
+            os.remove(backup)
+        return True
+
+    except Exception as e:
+        print(f"update: rolling back due to error: {e}", file=sys.stderr)
+        if had:
+            if os.path.isfile(backup):
+                os.replace(backup, dest)
+        else:
+            if os.path.isfile(dest):
+                os.remove(dest)
+        return False
+
+
+def get_pkg_info(package_name: str):
+    if not HAS_APT:
+        return {"ver": "1.0.0", "name": package_name}
+    cache = apt.Cache()
+    if package_name not in cache:
+        return {"ver": "unknown", "name": package_name}
+    pkg = cache[package_name]
+    if pkg.is_installed:
+        version = pkg.installed.version
+        name = pkg.installed.summary
+    else:
+        version = pkg.versions[0].version if pkg.versions else "unknown"
+        name = pkg.versions[0].summary if pkg.versions else package_name
+
+    return {"ver": version, "name": name}
+
+
+if __name__ == "__main__":
+    args = sys.argv
+    if len(args) <= 1:
+        print("Usage: package.py <command> [args...]", file=sys.stderr)
+        sys.exit(2)
+
+    param1 = args[1]
+    if param1 in ("nouveau", nouveau, "install-nouveau"):
+        ok = install_nouveau()
+    elif param1 == "update":
+        ok = update()
+    elif param1 == "disable-sec-gpu":
+        ok = disable_sec_gpu()
+    elif param1 == "enable-sec-gpu":
+        ok = enable_sec_gpu()
+    elif param1 == "install-nvidia":
+        ok = install_nvidia(args[2:])
+    else:
+        print(f"unknown subcommand: {param1}", file=sys.stderr)
+        sys.exit(2)
+
+    sys.exit(0 if ok else 1)

@@ -1,0 +1,22 @@
+pkgbase = parslinux-nvidia-installer
+	pkgdesc = ParsLinux NVIDIA Graphics Driver Installer and Hybrid GPU Manager
+	pkgver = 1.0.0
+	pkgrel = 1
+	url = https://parslinux.org
+	arch = any
+	license = GPL-3.0-or-later
+	makedepends = python-setuptools
+	makedepends = gettext
+	depends = python
+	depends = python-gobject
+	depends = gtk3
+	depends = vte3
+	depends = polkit
+	depends = hwdata
+	depends = gnupg
+	optdepends = nvidia-dkms: NVIDIA proprietary kernel module
+	optdepends = nvidia-utils: NVIDIA user-space tools and libraries
+	optdepends = opencl-nvidia: NVIDIA OpenCL implementation
+	optdepends = optimus-manager: Hybrid GPU switching support
+
+pkgname = parslinux-nvidia-installer

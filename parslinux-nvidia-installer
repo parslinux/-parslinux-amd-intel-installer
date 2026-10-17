@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+ParsLinux Nvidia Installer
+Launcher script supporting both system-installed and local-source environments.
+"""
+
+import os
+import sys
+
+# Locate directory: check local src/ first, then system path
+current_dir = os.path.dirname(os.path.realpath(__file__))
+local_src = os.path.join(current_dir, "src")
+system_src = "/usr/share/parslinux/parslinux-nvidia-installer/src"
+legacy_system_src = "/usr/share/pardus/pardus-nvidia-installer/src"
+
+if os.path.isdir(local_src) and os.path.isfile(os.path.join(local_src, "Main.py")):
+    app_src = local_src
+elif os.path.isdir(system_src) and os.path.isfile(os.path.join(system_src, "Main.py")):
+    app_src = system_src
+elif os.path.isdir(legacy_system_src) and os.path.isfile(os.path.join(legacy_system_src, "Main.py")):
+    app_src = legacy_system_src
+else:
+    app_src = current_dir
+
+if app_src not in sys.path:
+    sys.path.insert(0, app_src)
+
+os.chdir(app_src)
+
+try:
+    import Main
+except Exception as e:
+    print(f"Error launching ParsLinux Nvidia Installer: {e}", file=sys.stderr)
+    sys.exit(1)
