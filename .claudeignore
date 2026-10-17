@@ -1,0 +1,66 @@
+# Git
+.git/
+.gitignore
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Debian Packaging Artifacts & Builds
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/parslinux-nvidia-installer/
+debian/*.substvars
+debian/*.debhelper.log
+*.deb
+*.build
+*.buildinfo
+*.changes
+*.upload
+*.tar.gz
+*.tar.xz
+*.dsc
+
+# Arch Linux Packaging
+pkg/
+srcdir/
+*.pkg.tar.*
+
+# Compiled Binary Locales
+*.mo
+mo/
+
+# Temporary files & Logs
+*~
+*.swp
+*.bak
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+
+# IDE & Editor Files
+.idea/
+.vscode/
