@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pardus-nvidia-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 21:43+0300\n"
+"POT-Creation-Date: 2026-10-17 22:09+0300\n"
 "PO-Revision-Date: 2025-11-25 12:01+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
@@ -82,7 +82,7 @@ msgstr ""
 "do nosso repositório GitHub: <a href=\"https://github.com/pardus/pardus-"
 "nvidia-installer\"> Github do Pardus </a>"
 
-#: ui/ui.glade:197
+#: ui/ui.glade:194
 msgid ""
 "This application indicates that your secondary NVIDIA GPU is currently "
 "disabled. To activate it, simply click the 'Enable GPU' button next to this "
@@ -92,94 +92,104 @@ msgstr ""
 "desativada. Para ativá-la, basta clicar no botão 'Ativar GPU' junto a esta "
 "mensagem."
 
-#: ui/ui.glade:209
+#: ui/ui.glade:206
 msgid "Enable GPU"
 msgstr "Ativar GPU"
 
-#: ui/ui.glade:226 ui/ui.glade:447
+#: ui/ui.glade:223 ui/ui.glade:503
 msgid "page1"
 msgstr "página1"
 
-#: ui/ui.glade:255
+#: ui/ui.glade:252
 msgid "Use Nvidia Repository"
 msgstr "Usar o repositório da Nvidia"
 
-#: ui/ui.glade:360
+#: ui/ui.glade:357
 msgid "Disable Secondary GPU"
 msgstr "Desativar a GPU secundária"
 
-#: ui/ui.glade:380
+#: ui/ui.glade:377
 msgid "Apply Changes"
 msgstr "Aplicar alterações"
 
-#: ui/ui.glade:406
+#: ui/ui.glade:403
 msgid "page2"
 msgstr "página2"
 
-#: ui/ui.glade:420
+#: ui/ui.glade:417
 msgid "page_main"
 msgstr "página_principal"
 
-#: ui/ui.glade:434
+#: ui/ui.glade:448
 msgid ""
-"There is no NVIDIA graphics card on your system. \n"
-"You can't use this application"
+"<span font_weight=\"bold\" font_size=\"large\" foreground=\"#F8FAFC\">NVIDIA "
+"Grafik Kartı Algılanmadı</span>"
 msgstr ""
-"Não existe nenhuma placa gráfica NVIDIA no sistema. \n"
-"Não é possível utilizar esta aplicação"
 
-#: ui/ui.glade:474 ui/ui.glade:690
+#: ui/ui.glade:476
+msgid ""
+"<span foreground=\"#64748B\" font_size=\"small\">ParsLinux Nvidia Installer, "
+"resmi NVIDIA sürücülerini yönetmek için tasarlanmıştır.\n"
+"Arayüzü ve özellikleri test etmek için aşağıdaki butondan simülasyon modunu "
+"açabilirsiniz.</span>"
+msgstr ""
+
+#: ui/ui.glade:488
+msgid "🎮 Arayüzü İncele (Simülasyon Modu)"
+msgstr ""
+
+#: ui/ui.glade:530 ui/ui.glade:746
 msgid "Reboot"
 msgstr "Reiniciar"
 
-#: ui/ui.glade:488 ui/ui.glade:706
+#: ui/ui.glade:544 ui/ui.glade:762
 msgid "Exit"
 msgstr "Sair"
 
-#: ui/ui.glade:527
+#: ui/ui.glade:583
 msgid "page_vte"
 msgstr "página_vte"
 
-#: ui/ui.glade:585 src/MainWindow.py:186
+#: ui/ui.glade:641 src/MainWindow.py:229
 #, fuzzy
 msgid "ParsLinux Nvidia Installer"
 msgstr "Instalador Nvidia Pardus"
 
-#: ui/ui.glade:671
+#: ui/ui.glade:727
 msgid "You must reboot your device before using this application."
 msgstr "É necessário reiniciar o dispositivo antes de utilizar esta aplicação."
 
-#: ui/ui.glade:733
+#: ui/ui.glade:789
 msgid "Reboot required"
 msgstr "É necessário reiniciar"
 
-#: src/MainWindow.py:231
+#: src/MainWindow.py:282
 #, fuzzy
 msgid "Operation completed successfully."
 msgstr "Operação concluída com sucesso"
 
-#: src/MainWindow.py:233
+#: src/MainWindow.py:284
 #, python-brace-format
 msgid "Operation failed (exit code {code}). Please review the log above."
 msgstr ""
 
-#: src/MainWindow.py:378
+#: src/MainWindow.py:413
 msgid "Driver"
 msgstr "Controlador"
 
-#: src/MainWindow.py:382
+#: src/MainWindow.py:417
 msgid "Version"
 msgstr "Versão"
 
-#: src/MainWindow.py:385 src/MainWindow.py:388
+#: src/MainWindow.py:420 src/MainWindow.py:423
 msgid "Description"
 msgstr "Descrição"
 
-#: src/MainWindow.py:469
+#: src/MainWindow.py:504
 msgid "Selected version is no longer available"
 msgstr ""
 
-#: src/MainWindow.py:472
+#: src/MainWindow.py:507
 msgid "The package list has been refreshed. Please choose a driver again."
 msgstr ""
 
@@ -195,6 +205,13 @@ msgstr "Controlador Proprietário"
 #, fuzzy
 msgid "Legacy Driver"
 msgstr "Controlador Proprietário"
+
+#~ msgid ""
+#~ "There is no NVIDIA graphics card on your system. \n"
+#~ "You can't use this application"
+#~ msgstr ""
+#~ "Não existe nenhuma placa gráfica NVIDIA no sistema. \n"
+#~ "Não é possível utilizar esta aplicação"
 
 #~ msgid "page0"
 #~ msgstr "página0"

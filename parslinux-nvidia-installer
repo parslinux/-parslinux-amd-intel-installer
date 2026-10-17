@@ -30,6 +30,13 @@ os.chdir(app_src)
 
 try:
     import Main
+    if hasattr(Main, "main"):
+        sys.exit(Main.main())
+    elif hasattr(Main, "app"):
+        sys.exit(Main.app.run(sys.argv))
+    else:
+        app = Main.Application()
+        sys.exit(app.run(sys.argv))
 except Exception as e:
     print(f"Error launching ParsLinux Nvidia Installer: {e}", file=sys.stderr)
     sys.exit(1)

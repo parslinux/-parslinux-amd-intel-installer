@@ -19,7 +19,7 @@ class Application(Gtk.Application):
         super().__init__(
             *args,
             application_id="org.parslinux.nvidia-installer",
-            flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
+            flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE | Gio.ApplicationFlags.NON_UNIQUE,
             **kwargs
         )
         self.window = None
@@ -90,7 +90,10 @@ class Application(Gtk.Application):
         return 0
 
 
+app = Application()
+
+def main():
+    return app.run(sys.argv)
+
 if __name__ == "__main__":
-    app = Application()
-    exit_status = app.run(sys.argv)
-    sys.exit(exit_status)
+    sys.exit(main())
