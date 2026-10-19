@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.parslinux.amd-intel-installer</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>ParsLinux AMD &amp; Intel Installer</name>
+  <name xml:lang="tr">ParsLinux AMD &amp; Intel Grafik Yöneticisi</name>
+  <summary>AMD Radeon and Intel graphics configuration center</summary>
+  <summary xml:lang="tr">AMD Radeon ve Intel grafik yapılandırma merkezi</summary>
+  <description>
+    <p>
+      ParsLinux AMD &amp; Intel Installer is an official utility designed to detect AMD and Intel GPUs,
+      configure Vulkan (RADV/ANV), hardware video acceleration (VA-API/QuickSync), and manage hybrid graphics.
+    </p>
+    <p xml:lang="tr">
+      ParsLinux AMD &amp; Intel Grafik Yöneticisi, sisteminizdeki AMD ve Intel ekran kartlarını otomatik olarak
+      tespit eden, Vulkan, donanım video hızlandırma (VA-API/QuickSync) ve melez grafik optimizasyonlarını
+      sağlayan resmi ParsLinux aracıdır.
+    </p>
+    <ul>
+      <li>Automatic PCI hardware and architecture detection</li>
+      <li>Vulkan and 32-bit gaming layers configuration</li>
+      <li>Hardware video decode (VA-API / QuickSync) setup</li>
+      <li>Hybrid GPU power saving management</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">org.parslinux.amd-intel-installer.desktop</launchable>
+  <provides>
+    <binary>parslinux-amd-intel-installer</binary>
+  </provides>
+  <developer_name>ParsLinux Developers</developer_name>
+  <url type="homepage">https://parslinux.org</url>
+  <url type="bugtracker">https://github.com/parslinux/-parslinux-amd-intel-installer/issues</url>
+  <icon type="stock">parslinux-amd-intel-installer</icon>
+  <categories>
+    <category>Settings</category>
+    <category>HardwareSettings</category>
+    <category>System</category>
+  </categories>
+</component>

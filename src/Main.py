@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-ParsLinux Nvidia Installer - Application Entry Point
+ParsLinux AMD & Intel Installer - Application Entry Point
 """
 
 import gi
 import sys
 import os
 
-gi.require_version("Gtk", "3.0")
+gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk, Gio, GLib
 
 from MainWindow import MainWindow
@@ -18,7 +18,7 @@ class Application(Gtk.Application):
     def __init__(self, *args, **kwargs):
         super().__init__(
             *args,
-            application_id="org.parslinux.nvidia-installer",
+            application_id="org.parslinux.amd-intel-installer",
             flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE | Gio.ApplicationFlags.NON_UNIQUE,
             **kwargs
         )
@@ -35,11 +35,29 @@ class Application(Gtk.Application):
         )
 
         self.add_main_option(
+            "detect",
+            ord("c"),
+            GLib.OptionFlags.NONE,
+            GLib.OptionArg.NONE,
+            "Auto-detect graphics hardware and display diagnostic report",
+            None,
+        )
+
+        self.add_main_option(
+            "json",
+            ord("j"),
+            GLib.OptionFlags.NONE,
+            GLib.OptionArg.NONE,
+            "Output hardware detection report in JSON format",
+            None,
+        )
+
+        self.add_main_option(
             "remove",
             ord("r"),
             GLib.OptionFlags.NONE,
             GLib.OptionArg.NONE,
-            "Open removal/purge page of proprietary drivers",
+            "Open removal page of extra driver components",
             None,
         )
 
@@ -89,16 +107,27 @@ class Application(Gtk.Application):
                         version = f.read().strip()
                 except Exception:
                     pass
-            print(f"ParsLinux Nvidia Installer {version}")
+            print(f"ParsLinux AMD & Intel Installer {version}")
             return 0
 
         if "debug" in self.args:
             os.environ["PARSLINUX_NVI_DEBUG"] = "1"
+            os.environ["PARSLINUX_DEBUG"] = "1"
+
+        if "detect" in self.args or "details" in self.args:
+            import detector
+            import json as json_mod
+            if "json" in self.args:
+                gpus = detector.detect_all_system_gpus()
+                print(json_mod.dumps(gpus, indent=2, ensure_ascii=False))
+            else:
+                print(detector.generate_hardware_report())
+            return 0
 
         if "tray" in self.args:
-            import tray
-            self.tray = tray.run_tray_indicator(on_open_callback=self.activate)
-            self.hold()
+            import subprocess
+            tray_script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tray.py")
+            subprocess.Popen([sys.executable, tray_script])
             return 0
 
         self.activate()

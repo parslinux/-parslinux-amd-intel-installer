@@ -1,28 +1,29 @@
-# 🖥️ Önyükleyici ve Grafik Modu Kılavuzu (`GRUB_THEME_GUIDE.md`)
+# 🖥️ GRUB ve Çekirdek Grafik Parametreleri (`GRUB_THEME_GUIDE.md`)
 
-Bu belge, NVIDIA tescilli grafik sürücülerinin ParsLinux GRUB önyükleyicisi ve çekirdek açılış parametreleri ile uyumluluğunu açıklamaktadır.
+Bu belge, AMD ve Intel grafik sürücülerinin ParsLinux GRUB önyükleyicisi ve çekirdek açılış parametreleri ile uyumluluğunu açıklamaktadır.
 
 ---
 
-## 1. Çekirdek Açılış Parametreleri
+## 1. AMD & Intel Çekirdek Modülleri
 
-NVIDIA sürücülerinin Wayland ve yüksek çözünürlüklü konsol kipinde sorunsuz çalışması için `/etc/default/grub` dosyasına aşağıdaki parametreler eklenir:
+- **AMD:** Çekirdek `amdgpu` modülünü otomatik yükler. Modern kartlar (GCN 3 ve sonrası) varsayılan olarak bu modülü kullanır.
+- **Intel:** Çekirdek `i915` veya yeni nesil kartlar için `xe` modülünü kullanır.
 
-```ini
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"
-```
+---
 
-Değişiklik yapıldıktan sonra önyükleyici yapılandırması güncellenmelidir:
+## 2. Sorun Giderme Açılış Parametreleri
+
+Eski donanımlar veya özel GPU yapılandırmalarında `/etc/default/grub` dosyasına eklenebilecek parametreler:
+- AMD eski kartları `amdgpu` modülüne zorlama:
+  ```bash
+  radeon.si_support=0 amdgpu.si_support=1 radeon.cik_support=0 amdgpu.cik_support=1
+  ```
+- Intel Xe sürücüsünü deneme (12. nesil ve üzeri):
+  ```bash
+  i915.force_probe=!device_id xe.force_probe=device_id
+  ```
+
+Parametreleri uyguladıktan sonra:
 ```bash
 sudo update-grub
 ```
-
----
-
-## 2. Olası Açılış Kilitlenmelerinde GRUB Müdahalesi
-
-Eğer yeni bir sürücü kurulduktan sonra masaüstü açılmazsa:
-1. Bilgisayar açılırken GRUB menüsünde sistem girdisini seçip `e` tuşuna basın.
-2. `linux` ile başlayan satırın sonuna `nomodeset` parametresini ekleyin.
-3. `F10` veya `Ctrl+X` ile açılışı başlatın.
-4. Sistem temel grafik kipinde açıldıktan sonra `parslinux-nvidia-installer` ile sürücüyü onarın veya Nouveau'ya geri dönün.

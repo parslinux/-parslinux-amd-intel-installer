@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# ParsLinux Nvidia Installer - Packaging Script (.deb & .pkg.tar.zst)
+# ParsLinux AMD & Intel Installer - Packaging Script (.deb & .pkg.tar.zst)
 # ==============================================================================
 set -e
 
@@ -18,7 +18,7 @@ cd "$PROJECT_DIR"
 DIST_DIR="$PROJECT_DIR/dist"
 mkdir -p "$DIST_DIR"
 
-echo -e "${CYAN}${BOLD}=== ParsLinux Nvidia Installer — Package Builder ===${NC}"
+echo -e "${CYAN}${BOLD}=== ParsLinux AMD & Intel Installer — Package Builder ===${NC}"
 
 show_help() {
     echo -e "Usage: ${BOLD}./package.sh [OPTIONS]${NC}"
@@ -63,7 +63,7 @@ done
 
 if [ "$CLEAN_FIRST" = true ]; then
     echo -e "${YELLOW}Cleaning build artifacts...${NC}"
-    rm -rf build dist debian/.debhelper debian/parslinux-nvidia-installer debian/files *.deb *.tar.gz *.tar.xz *.pkg.tar.zst pkg src/__pycache__ tests/__pycache__ mo
+    rm -rf build dist debian/.debhelper debian/parslinux-amd-intel-installer debian/files *.deb *.tar.gz *.tar.xz *.pkg.tar.zst pkg src/__pycache__ tests/__pycache__ mo
     echo -e "${GREEN}✓ Cleaned successfully.${NC}"
     exit 0
 fi
@@ -74,8 +74,8 @@ build_deb() {
     echo -e "${BLUE}▶ Building Debian (.deb) package...${NC}"
     if ! command -v dpkg-buildpackage &>/dev/null; then
         echo -e "${YELLOW}dpkg-buildpackage not found. Using direct archive packager...${NC}"
-        BUILDROOT="/tmp/parslinux-nvidia-installer-deb-root"
-        DEB_TMP="/tmp/parslinux-nvidia-deb-build"
+        BUILDROOT="/tmp/parslinux-amd-intel-deb-root"
+        DEB_TMP="/tmp/parslinux-amd-intel-deb-build"
         rm -rf "$BUILDROOT" "$DEB_TMP"
         mkdir -p "$BUILDROOT" "$DEB_TMP"
 
@@ -91,12 +91,12 @@ build_deb() {
         chmod 755 "$BUILDROOT/DEBIAN/postrm" 2>/dev/null || true
 
         if command -v dpkg-deb &>/dev/null; then
-            dpkg-deb --build --root-owner-group "$BUILDROOT" "$DIST_DIR/parslinux-nvidia-installer_1.0.0-1_all.deb"
+            dpkg-deb --build --root-owner-group "$BUILDROOT" "$DIST_DIR/parslinux-amd-intel-installer_1.0.0-1_all.deb"
         elif command -v ar &>/dev/null; then
             echo "2.0" > "$DEB_TMP/debian-binary"
             (cd "$BUILDROOT/DEBIAN" && tar -czf "$DEB_TMP/control.tar.gz" *)
             (cd "$BUILDROOT" && tar --exclude="./DEBIAN" -czf "$DEB_TMP/data.tar.gz" ./*)
-            (cd "$DEB_TMP" && ar -rc "$DIST_DIR/parslinux-nvidia-installer_1.0.0-1_all.deb" debian-binary control.tar.gz data.tar.gz)
+            (cd "$DEB_TMP" && ar -rc "$DIST_DIR/parslinux-amd-intel-installer_1.0.0-1_all.deb" debian-binary control.tar.gz data.tar.gz)
         else
             echo -e "${RED}✗ Error: Neither dpkg-deb nor ar available.${NC}"
             rm -rf "$BUILDROOT" "$DEB_TMP"
@@ -104,12 +104,12 @@ build_deb() {
         fi
 
         rm -rf "$BUILDROOT" "$DEB_TMP"
-        echo -e "${GREEN}✓ Successfully built: $DIST_DIR/parslinux-nvidia-installer_1.0.0-1_all.deb${NC}"
+        echo -e "${GREEN}✓ Successfully built: $DIST_DIR/parslinux-amd-intel-installer_1.0.0-1_all.deb${NC}"
         return 0
     fi
 
     dpkg-buildpackage -us -uc -b
-    mv ../parslinux-nvidia-installer_*.deb "$DIST_DIR/" 2>/dev/null || true
+    mv ../parslinux-amd-intel-installer_*.deb "$DIST_DIR/" 2>/dev/null || true
     echo -e "${GREEN}✓ Debian package built in $DIST_DIR/${NC}"
 }
 
@@ -135,7 +135,6 @@ else
     # Auto-detection
     if command -v pacman &>/dev/null && command -v makepkg &>/dev/null; then
         build_arch
-        # Also try deb building if dpkg-deb is present
         if command -v dpkg-deb &>/dev/null; then
             build_deb || true
         fi

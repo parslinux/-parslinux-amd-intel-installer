@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 23:18+0300\n"
+"POT-Creation-Date: 2026-10-19 18:07+0300\n"
 "PO-Revision-Date: 2024-07-16 11:17+0300\n"
 "Last-Translator: Osman Coskun <osman.coskun@pardus.org.tr>\n"
 "Language-Team: Turkish <dev@pardus.org.tr>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Gtranslator 42.0\n"
 
-#: ui/ui.glade:11
+#: ui/ui.glade:7
 msgid "<span><b>Warning</b></span>"
 msgstr "<span><b>Dikkat</b></span>"
 
-#: ui/ui.glade:13
+#: ui/ui.glade:9
 msgid ""
 "Changes have been made . To ensure these changes take effect, a system "
 "restart is required. Please save any work and click 'OK' to complete the "
@@ -33,271 +33,425 @@ msgstr ""
 "yeniden başlatmanız gerekmektedir. Lütfen bütün işlerinizi kaydedin ve "
 "'Tamam' butonuna basarak işlemi tamamlayın."
 
-#: ui/ui.glade:52
+#: ui/ui.glade:15
 msgid "<span><b>⚠️ Important Notice: ⚠️</b></span>"
 msgstr "<span><b>⚠️ Önemli Hatırlatma: ⚠️</b></span>"
 
-#: ui/ui.glade:54
-#, fuzzy
+#: ui/ui.glade:17
 msgid ""
 "This application is developed and maintained by the ParsLinux team to "
-"facilitate Nvidia graphics driver installation. The drivers are sourced from "
-"official ParsLinux and Nvidia repositories.\n"
+"facilitate AMD and Intel graphics driver and acceleration stack "
+"installation. The drivers are sourced from official ParsLinux, Debian, and "
+"vendor repositories.\n"
 "\n"
 "<b>Driver Source and Usage</b>\n"
-"While this is an official ParsLinux application, the graphics drivers "
-"themselves are developed by Nvidia Corporation. ParsLinux provides this "
-"installation tool as a convenience for our users, but the drivers remain the "
-"intellectual property of Nvidia Corporation.\n"
+"While this is an official ParsLinux application, open-source Mesa drivers "
+"and proprietary acceleration firmware are developed by the open-source "
+"community, AMD, and Intel Corporation.\n"
 "\n"
 "<b>Disclaimer:</b>\n"
 "Please note that while we strive to ensure a smooth installation process, "
-"ParsLinux cannot guarantee the performance or compatibility of Nvidia "
-"drivers with all hardware configurations. Users install these drivers at "
-"their own discretion and risk.\n"
+"ParsLinux cannot guarantee the performance or compatibility with all "
+"hardware configurations. Users install these packages at their own "
+"discretion and risk.\n"
 "\n"
 "<b>Issue Reporting:</b>\n"
 "Feel free to report any issues or concerns via our GitHub repository: <a "
-"href=\"https://github.com/parslinux/parslinux-nvidia-installer\"> ParsLinux "
-"GitHub </a>"
+"href=\"https://github.com/parslinux/-parslinux-amd-intel-installer\"> "
+"ParsLinux GitHub </a>"
 msgstr ""
-"Bu uygulama, Nvidia grafik sürücülerinin kurulumunu kolaylaştırmak için "
-"Pardus ekibi tarafından geliştirilmiş ve yönetilmektedir. Sürücüler, resmi "
-"Pardus ve Nvidia depolarından sağlanmaktadır.\n"
+"Bu uygulama, AMD ve Intel grafik sürücüsü ve hızlandırma yığınının "
+"kurulumunu kolaylaştırmak için ParsLinux ekibi tarafından geliştirilmiş ve "
+"yönetilmektedir. Sürücüler; resmi ParsLinux, Debian ve donanım üreticisi "
+"depolarından sağlanmaktadır.\n"
 "\n"
 "<b>Sürücü Kaynağı ve Kullanımı</b>\n"
-"Bu resmi bir Pardus uygulaması olmakla birlikte, grafik sürücüleri Nvidia "
-"Corporation tarafından geliştirilmiştir. Pardus, bu kurulum aracını "
-"kullanıcılarımıza bir kolaylık olarak sunmaktadır, ancak sürücüler Nvidia "
-"Corporation'ın fikri mülkiyeti olarak kalmaktadır.\n"
+"Bu resmi bir ParsLinux uygulaması olmakla birlikte, açık kaynak Mesa "
+"sürücüleri ve donanım hızlandırma yazılımları açık kaynak topluluğu, AMD ve "
+"Intel Corporation tarafından geliştirilmektedir.\n"
 "\n"
 "<b>Sorumluluk Reddi:</b>\n"
-"Sorunsuz bir kurulum süreci sağlamak için çaba göstermekle birlikte, Pardus, "
-"Nvidia sürücülerinin tüm donanım yapılandırmalarıyla uyumluluğunu veya "
-"performansını garanti edemez. Kullanıcılar bu sürücüleri kendi takdirleri ve "
-"riskleri altında kurarlar.\n"
+"Sorunsuz bir kurulum süreci sağlamak için azami özen gösterilmekle birlikte, "
+"ParsLinux tüm donanım yapılandırmalarıyla mutlak uyumluluk veya performans "
+"garantisi veremez. Kullanıcılar bu paketleri kendi takdirleri ve "
+"sorumlulukları altında kurarlar.\n"
 "\n"
 "<b>Sorun Bildirimi:</b>\n"
-"Her türlü sorun veya endişenizi GitHub depomuz üzerinden bildirebilirsiniz: "
-"<a href=\"https://github.com/pardus/pardus-nvidia-installer\"> Pardus Github "
-"</a>"
+"Her türlü geri bildirim ve hata bildirimini GitHub depomuz üzerinden "
+"iletebilirsiniz: <a href=\"https://github.com/parslinux/-parslinux-amd-intel-"
+"installer\"> ParsLinux GitHub </a>"
 
-#: ui/ui.glade:194
-msgid ""
-"This application indicates that your secondary NVIDIA GPU is currently "
-"disabled. To activate it, simply click the 'Enable GPU' button next to this "
-"message."
-msgstr ""
-"Görünüşe göre ikincil NVIDIA ekran kartınız şu anda etkin değil. "
-"Etkinleştirmek için 'Ekran Kartını Etkinleştir' butonuna basınız."
-
-#: ui/ui.glade:206
-msgid "Enable GPU"
-msgstr "Ekran Kartını Etkinleştir"
-
-#: ui/ui.glade:223 ui/ui.glade:503
-msgid "page1"
-msgstr "sayfa1"
-
-#: ui/ui.glade:252
-msgid "Use Nvidia Repository"
-msgstr "Nvidia Deposunu Kullan"
-
-#: ui/ui.glade:357
-msgid "Disable Secondary GPU"
-msgstr "İkincil Ekran Kartını Devre Dışı Bırak"
-
-#: ui/ui.glade:377
-msgid "Apply Changes"
-msgstr "Değişiklikleri Uygula"
-
-#: ui/ui.glade:403
-msgid "page2"
-msgstr "sayfa2"
-
-#: ui/ui.glade:417
+#: ui/ui.glade:73
 msgid "page_main"
 msgstr "page_main"
 
-#: ui/ui.glade:448
-msgid ""
-"<span font_weight=\"bold\" font_size=\"large\" foreground=\"#F8FAFC\">NVIDIA "
-"Grafik Kartı Algılanmadı</span>"
-msgstr ""
+#: ui/ui.glade:86 ui/ui.glade:230
+msgid "page1"
+msgstr "sayfa1"
 
-#: ui/ui.glade:476
+#: ui/ui.glade:96
 msgid ""
-"<span foreground=\"#64748B\" font_size=\"small\">ParsLinux Nvidia Installer, "
-"resmi NVIDIA sürücülerini yönetmek için tasarlanmıştır.\n"
+"This application indicates that your secondary GPU (AMD / Intel) is "
+"currently disabled. To activate it, simply click the 'Enable GPU' button "
+"next to this message."
+msgstr ""
+"Bu uygulama, ikincil ekran kartınızın (AMD / Intel) şu anda devre dışı "
+"olduğunu belirtmektedir. Etkinleştirmek için bu bildirimin yanındaki 'Ekran "
+"Kartını Etkinleştir' butonuna tıklayınız."
+
+#: ui/ui.glade:108
+msgid "Enable GPU"
+msgstr "Ekran Kartını Etkinleştir"
+
+#: ui/ui.glade:124
+msgid "page2"
+msgstr "sayfa2"
+
+#: ui/ui.glade:147
+msgid "Use Official / Extra Repositories"
+msgstr "Resmi / Ek Sürücü Depolarını Kullan"
+
+#: ui/ui.glade:196
+msgid "Disable Secondary GPU"
+msgstr "İkincil Ekran Kartını Devre Dışı Bırak"
+
+#: ui/ui.glade:206
+msgid "Apply Changes"
+msgstr "Değişiklikleri Uygula"
+
+#: ui/ui.glade:250
+msgid ""
+"<span font_weight=\"bold\" font_size=\"large\" foreground=\"#F8FAFC\">AMD "
+"veya Intel Grafik Kartı Algılanmadı</span>"
+msgstr ""
+"<span font_weight=\"bold\" font_size=\"large\" foreground=\"#F8FAFC\">AMD "
+"veya Intel Grafik Kartı Algılanmadı</span>"
+
+#: ui/ui.glade:266
+msgid ""
+"<span foreground=\"#64748B\" font_size=\"small\">ParsLinux AMD &amp; Intel "
+"Installer, resmi AMD ve Intel grafik bileşenlerini yönetmek için "
+"tasarlanmıştır.\n"
 "Arayüzü ve özellikleri test etmek için aşağıdaki butondan simülasyon modunu "
 "açabilirsiniz.</span>"
 msgstr ""
+"<span foreground=\"#64748B\" font_size=\"small\">ParsLinux AMD &amp; Intel "
+"Installer, resmi AMD ve Intel grafik bileşenlerini yönetmek için "
+"tasarlanmıştır.\n"
+"Arayüzü ve özellikleri test etmek için aşağıdaki butondan simülasyon modunu "
+"açabilirsiniz.</span>"
 
-#: ui/ui.glade:488
+#: ui/ui.glade:274
 msgid "🎮 Arayüzü İncele (Simülasyon Modu)"
-msgstr ""
+msgstr "🎮 Arayüzü İncele (Simülasyon Modu)"
 
-#: ui/ui.glade:530 ui/ui.glade:740
-msgid "Reboot"
-msgstr "Yeniden başlat"
-
-#: ui/ui.glade:544 ui/ui.glade:756
-msgid "Exit"
-msgstr "Çıkış"
-
-#: ui/ui.glade:583
+#: ui/ui.glade:287
 msgid "page_vte"
 msgstr "page_vte"
 
-#: ui/ui.glade:641 src/MainWindow.py:263
-#, fuzzy
-msgid "ParsLinux Nvidia Installer"
-msgstr "Pardus Nvidia Kurucu"
+#: ui/ui.glade:323 ui/ui.glade:431
+msgid "Reboot"
+msgstr "Yeniden başlat"
 
-#: ui/ui.glade:721
+#: ui/ui.glade:331 ui/ui.glade:421
+msgid "Exit"
+msgstr "Çıkış"
+
+#: ui/ui.glade:370 ui/ui.glade:446 src/MainWindow.py:367
+msgid "ParsLinux AMD & Intel Installer"
+msgstr "ParsLinux AMD & Intel Kurucu"
+
+#: ui/ui.glade:408
 msgid "You must reboot your device before using this application."
 msgstr ""
 "Bu uygulamayı kullanmadan önce cihazınızı yeniden başlatmanız gerekmektedir."
 
-#: ui/ui.glade:783
-msgid "Reboot required"
-msgstr "Yeniden başlatma gerekli"
+#: src/MainWindow.py:120
+msgid "Birincil"
+msgstr ""
 
-#: src/MainWindow.py:267
+#: src/MainWindow.py:120
+msgid "Harici/İkincil"
+msgstr ""
+
+#: src/MainWindow.py:125
+msgid "Intel / AMD Grafik Bağdaştırıcısı"
+msgstr ""
+
+#: src/MainWindow.py:283
+msgid "🔄 Donanımı Yeniden Tara"
+msgstr ""
+
+#: src/MainWindow.py:288
+msgid "🔍 Donanım Raporunu Görüntüle"
+msgstr ""
+
+#: src/MainWindow.py:373
+msgid "Donanımı Yeniden Tara (Rescan GPUs)"
+msgstr ""
+
+#: src/MainWindow.py:378
+msgid "Donanım Raporu & Tanılama"
+msgstr ""
+
+#: src/MainWindow.py:383
+msgid "Sistem Geri Yükleme Noktası Al (Timeshift)"
+msgstr ""
+
+#: src/MainWindow.py:388
 msgid "Sistem Tepsisi Göstergesini Başlat (Tray)"
 msgstr ""
 
-#: src/MainWindow.py:329
+#: src/MainWindow.py:404
+msgid "Warning"
+msgstr ""
+
+#: src/MainWindow.py:408
+#, fuzzy
+msgid ""
+"Changes have been made. To ensure these changes take effect, a system "
+"restart is required. Please save any work and click 'OK' to complete the "
+"process."
+msgstr ""
+"Değişiklikler yapıldı. Bu değişikliklerin etkin olması için sisteminizi "
+"yeniden başlatmanız gerekmektedir. Lütfen bütün işlerinizi kaydedin ve "
+"'Tamam' butonuna basarak işlemi tamamlayın."
+
+#: src/MainWindow.py:450
 msgid "Operation completed successfully."
 msgstr ""
 
-#: src/MainWindow.py:331
+#: src/MainWindow.py:452
 #, python-brace-format
 msgid "Operation failed (exit code {code}). Please review the log above."
 msgstr ""
 
-#: src/MainWindow.py:462
+#: src/MainWindow.py:598
+msgid "Grafik Kartı"
+msgstr ""
+
+#: src/MainWindow.py:614
+msgid "✨ Önerilen Sürücüyü Otomatik Seç"
+msgstr ""
+
+#: src/MainWindow.py:619
+msgid "🔍 Donanım Raporu"
+msgstr ""
+
+#: src/MainWindow.py:659
+msgid "🔍 GPU & Donanım Tanılama Raporu"
+msgstr ""
+
+#: src/MainWindow.py:664
+msgid "📋 Panoya Kopyala"
+msgstr ""
+
+#: src/MainWindow.py:665
+msgid "Kapat"
+msgstr ""
+
+#: src/MainWindow.py:803
 msgid "Driver"
 msgstr "Sürücü"
 
-#: src/MainWindow.py:466
+#: src/MainWindow.py:809
 msgid "Version"
 msgstr "Sürüm"
 
-#: src/MainWindow.py:469 src/MainWindow.py:472
+#: src/MainWindow.py:815
 msgid "Description"
 msgstr "Açıklama"
 
-#: src/MainWindow.py:553
+#: src/MainWindow.py:912
 msgid "Selected version is no longer available"
 msgstr ""
 
-#: src/MainWindow.py:556
+#: src/MainWindow.py:915
 msgid "The package list has been refreshed. Please choose a driver again."
 msgstr ""
 
-#: src/MainWindow.py:598
+#: src/MainWindow.py:957
 msgid "🎮 Sürücüler"
 msgstr ""
 
-#: src/MainWindow.py:601
+#: src/MainWindow.py:960
 msgid "📊 Donanım & Güç"
 msgstr ""
 
-#: src/MainWindow.py:604
+#: src/MainWindow.py:963
 msgid "🕹️ Oyun"
 msgstr ""
 
-#: src/MainWindow.py:607
+#: src/MainWindow.py:966
 msgid "🧠 Yapay Zeka (CUDA)"
 msgstr ""
 
-#: src/MainWindow.py:630
+#: src/MainWindow.py:989
 msgid "Sensörleri Yenile"
 msgstr ""
 
-#: src/MainWindow.py:734
+#: src/MainWindow.py:1093
 msgid ""
 "🍃 Tasarruf\n"
 "(Entegre)"
 msgstr ""
 
-#: src/MainWindow.py:738
+#: src/MainWindow.py:1097
 msgid ""
 "⚡ Hibrit\n"
 "(İsteğe Bağlı)"
 msgstr ""
 
-#: src/MainWindow.py:742
+#: src/MainWindow.py:1101
 msgid ""
 "🚀 Performans\n"
-"(NVIDIA)"
+"(Ayrık dGPU)"
 msgstr ""
 
-#: src/MainWindow.py:764
+#: src/MainWindow.py:1123
 msgid "💨 Fan Hızı (%):"
 msgstr ""
 
-#: src/MainWindow.py:771 src/MainWindow.py:788
+#: src/MainWindow.py:1130 src/MainWindow.py:1150
 msgid "Uygula"
 msgstr ""
 
-#: src/MainWindow.py:781
+#: src/MainWindow.py:1140
 msgid "⚡ Güç Sınırı (W):"
 msgstr ""
 
-#: src/MainWindow.py:852
-msgid "NVIDIA ile Başlat"
+#: src/MainWindow.py:1179
+msgid "🎯 Çekirdek (Core MHz):"
 msgstr ""
 
-#: src/MainWindow.py:862
+#: src/MainWindow.py:1191
+msgid "🧠 Bellek (Memory MHz):"
+msgstr ""
+
+#: src/MainWindow.py:1205
+msgid "🔄 Varsayılana Sıfırla (0 MHz)"
+msgstr ""
+
+#: src/MainWindow.py:1208
+msgid "⚡ Hız Aşırtmayı Uygula"
+msgstr ""
+
+#: src/MainWindow.py:1272
+msgid "dGPU ile Başlat"
+msgstr ""
+
+#: src/MainWindow.py:1282
 msgid "🚀 3D Grafik Testi Başlat (vkcube / glxgears)"
 msgstr ""
 
-#: src/MainWindow.py:893
-msgid "🟢 NVIDIA CUDA Toolkit (nvcc, runtimes & headers)"
+#: src/MainWindow.py:1323
+msgid "📦 MangoHud Yükle"
 msgstr ""
 
-#: src/MainWindow.py:898
-msgid "🧬 NVIDIA cuDNN (Derin Sinir Ağları Kütüphanesi)"
+#: src/MainWindow.py:1355
+msgid "🔴 AMD ROCm / HIP Stack (ROCm OpenCL, HIP & Runtimes)"
 msgstr ""
 
-#: src/MainWindow.py:903
-msgid "🚀 NVIDIA TensorRT (Yüksek Hızlı Çıkarım Motoru)"
+#: src/MainWindow.py:1360
+msgid "🔵 Intel oneAPI & Level Zero (NEO OpenCL & Compute Runtime)"
 msgstr ""
 
-#: src/MainWindow.py:919
+#: src/MainWindow.py:1365
+msgid "⚡ Açık Standart OpenCL Araçları (clinfo & ICD Loader)"
+msgstr ""
+
+#: src/MainWindow.py:1381
 msgid "🚀 Seçilen Geliştirici Bileşenlerini Kur"
 msgstr ""
 
-#: src/MainWindow.py:972
-msgid "🍃 Tasarruf (Entegre GPU Aktif - NVIDIA Kapalı)"
+#: src/MainWindow.py:1434
+msgid "🍃 Tasarruf (Entegre GPU Aktif - Harici Kapalı)"
 msgstr ""
 
-#: src/MainWindow.py:973
-msgid "⚡ Hibrit (İsteğe Bağlı / PRIME Render Offload)"
+#: src/MainWindow.py:1435 src/MainWindow.py:1436
+msgid "⚡ Hibrit (İsteğe Bağlı / DRI_PRIME Render Offload)"
 msgstr ""
 
-#: src/MainWindow.py:974
-msgid "🚀 Performans (NVIDIA Kartı Sürekli Aktif)"
+#: src/MainWindow.py:1437
+msgid "🚀 Performans (Ayrık dGPU Sürekli Aktif)"
 msgstr ""
 
-#: src/nvidia.py:386
-msgid "Open Source Driver"
-msgstr "Açık Kaynaklı Sürücü"
+#: src/MainWindow.py:1549
+msgid "Timeshift Kurulu Değil"
+msgstr ""
 
-#: src/nvidia.py:404 src/nvidia.py:415 src/nvidia.py:424 src/nvidia.py:427
-msgid "Proprietary Driver"
-msgstr "Tescilli Sürücü"
+#: src/MainWindow.py:1552
+msgid ""
+"Sistem geri yükleme noktası oluşturmak için Timeshift gereklidir. Şimdi "
+"Timeshift paketini yüklemek ister misiniz?"
+msgstr ""
 
-#: src/nvidia.py:430
-#, fuzzy
-msgid "Legacy Driver"
-msgstr "Tescilli Sürücü"
+#: src/MainWindow.py:1569
+msgid "Sistem Geri Yükleme Noktası Oluştur"
+msgstr ""
 
-#~ msgid ""
-#~ "There is no NVIDIA graphics card on your system. \n"
-#~ "You can't use this application"
-#~ msgstr ""
-#~ "Sisteminizde NVIDIA ekran kartı bulunmuyor.\n"
-#~ "Bu uygulamayı kullanamazsınız."
+#: src/MainWindow.py:1572
+msgid ""
+"Sürücü ve donanım yapılandırması öncesinde Timeshift ile sistem yedeği "
+"alınsın mı?"
+msgstr ""
+
+#: src/amd_intel.py:328
+msgid "Resmi açık kaynak Vulkan sürücüsü"
+msgstr ""
+
+#: src/amd_intel.py:364
+msgid "Mesa RADV Vulkan sürücüsü yüksek oyun performansı için önerilir."
+msgstr ""
+
+#: src/amd_intel.py:379
+msgid "Mesa ANV Vulkan sürücüsü ve VA-API hızlandırma önerilir."
+msgstr ""
+
+#: src/amd_intel.py:414
+msgid "Açık Kaynak (Mesa RADV)"
+msgstr ""
+
+#: src/amd_intel.py:418
+msgid "Valve ACO derleyicili en hızlı Vulkan sürücüsü"
+msgstr ""
+
+#: src/amd_intel.py:430
+msgid "Donanım Video Hızlandırıcı (VA-API)"
+msgstr ""
+
+#: src/amd_intel.py:434
+msgid "4K/8K tarayıcı ve video donanım hızlandırma"
+msgstr ""
+
+#: src/amd_intel.py:446
+msgid "Hesaplama & Yapay Zeka (ROCm/OpenCL)"
+msgstr ""
+
+#: src/amd_intel.py:450
+msgid "Blender ve PyTorch için OpenCL/HIP desteği"
+msgstr ""
+
+#: src/amd_intel.py:463
+msgid "Açık Kaynak (Mesa ANV)"
+msgstr ""
+
+#: src/amd_intel.py:467
+msgid "Intel Arc ve Iris Xe için resmi Vulkan sürücüsü"
+msgstr ""
+
+#: src/amd_intel.py:479
+msgid "Intel QuickSync Donanım Hızlandırıcı"
+msgstr ""
+
+#: src/amd_intel.py:483
+msgid "Intel Gen9+ ve Arc için donanım video çözme"
+msgstr ""
+
+#: src/amd_intel.py:495
+msgid "Intel oneAPI / OpenCL NEO Runtime"
+msgstr ""
+
+#: src/amd_intel.py:499
+msgid "Intel Level Zero ve OpenCL hesaplama"
+msgstr ""

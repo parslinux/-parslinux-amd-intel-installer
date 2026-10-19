@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# ParsLinux Nvidia Installer - Process Termination Script
+# ParsLinux AMD & Intel Installer - Process Termination Script
 # ==============================================================================
 set -e
 
@@ -11,12 +11,12 @@ CYAN=$'\033[0;36m'
 BOLD=$'\033[1m'
 NC=$'\033[0m'
 
-echo -e "${CYAN}${BOLD}=== ParsLinux Nvidia Installer — Process Stopper ===${NC}"
+echo -e "${CYAN}${BOLD}=== ParsLinux AMD & Intel Installer — Process Stopper ===${NC}"
 
-PIDS=$(pgrep -f "parslinux-nvidia-installer|pardus-nvidia-installer" || true)
+PIDS=$(pgrep -f "parslinux-amd-intel-installer" || true)
 
 if [ -z "$PIDS" ]; then
-    echo -e "${GREEN}✓ No running ParsLinux Nvidia Installer processes found.${NC}"
+    echo -e "${GREEN}✓ No running ParsLinux AMD & Intel Installer processes found.${NC}"
     exit 0
 fi
 
@@ -29,7 +29,7 @@ done
 sleep 1
 
 # Force kill any stuck processes
-REMAINING=$(pgrep -f "parslinux-nvidia-installer|pardus-nvidia-installer" || true)
+REMAINING=$(pgrep -f "parslinux-amd-intel-installer" || true)
 if [ -n "$REMAINING" ]; then
     echo -e "${RED}Force killing remaining PIDs: $REMAINING${NC}"
     for pid in $REMAINING; do
@@ -37,4 +37,4 @@ if [ -n "$REMAINING" ]; then
     done
 fi
 
-echo -e "${GREEN}✓ All ParsLinux Nvidia Installer processes terminated.${NC}"
+echo -e "${GREEN}✓ All ParsLinux AMD & Intel Installer processes terminated.${NC}"

@@ -1,34 +1,32 @@
-# 🎮 ParsLinux Nvidia Installer
+# 🎮 ParsLinux AMD & Intel Installer
 
 [![License: GPL-3.0-or-later](https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg)](LICENSE)
 [![ParsLinux](https://img.shields.io/badge/ParsLinux-Ecosystem-orange.svg)](https://parslinux.org)
 [![Python 3](https://img.shields.io/badge/Python-3.8+-green.svg)](https://www.python.org/)
-[![GTK 3](https://img.shields.io/badge/GUI-GTK%203-blue.svg)](https://www.gtk.org/)
-[![Version](https://img.shields.io/badge/Version-1.2.0-brightgreen.svg)](docs/VERSION.md)
+[![GTK 4](https://img.shields.io/badge/GUI-GTK%204-blue.svg)](https://www.gtk.org/)
+[![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen.svg)](docs/VERSION.md)
 
-**ParsLinux Nvidia Installer**, ParsLinux işletim sisteminde resmi NVIDIA grafik sürücülerini tek tıkla kurmayı, güncellemeyi, donanım telemetrisini canlı izlemeyi, fan ve güç limitlerini ayarlamayı, oyun hızlandırmayı ve yapay zeka/CUDA ortamını yapılandırmayı sağlayan modern bir grafiksel sistem merkezidir.
+**ParsLinux AMD & Intel Installer**, ParsLinux işletim sisteminde AMD Radeon ve Intel (Iris Xe, UHD, Arc) ekran kartları ve entegre grafik işlemcileri için Vulkan katmanlarını, donanım video hızlandırma kütüphanelerini (VA-API/QuickSync), 32-bit oyun paketlerini, hesaplama/AI çalışma ortamlarını (ROCm/oneAPI) ve canlı donanım telemetrisini yöneten modern bir grafiksel sistem merkezidir.
 
-Pardus projesinin `pardus-nvidia-installer` aracından forklanarak ParsLinux mimarisine, çoklu dağıtım paketleme sistemine ve ParsLinux görsel kimliğine uyarlanmış; üzerine telemetri, güç yönetimi, oyun hızlandırıcı ve sistem tepsisi katmanları eklenmiştir.
+Hem saf tekil GPU sistemlerini hem de çift grafik kartlı melez dizüstü bilgisayarları (Intel CPU + AMD GPU veya AMD APU + Intel Arc) otomatik olarak tanır ve en uygun optimizasyonları sunar.
 
 ---
 
 ## 🚀 Temel Özellikler
 
-- 🔍 **Akıllı Donanım Tespiti:** Sistemdeki PCI veriyolunu tarayarak NVIDIA kartlarını otomatik algılar.
-- 🎯 **Donanıma Özel Sürücü Önerisi:** Kartınızın mimarisine (`RTX`, `GTX`, `Tesla 470`, `Nouveau`) en uygun sürücüyü filtreleyerek sunar.
-- 📊 **Canlı Donanım İzleme & Sensörler:** Gerçek zamanlı GPU sıcaklığı (renk kodlu), fan devri, VRAM kullanımı (GB ve çubuk) ve anlık güç tüketimi (`Watt`).
-- ⚡ **PRIME Güç Profili Seçici:** Melez (Optimus/hybrid) dizüstü bilgisayarlarda 3 profil:
-  - 🍃 **Tasarruf (Entegre):** NVIDIA GPU'yu uyutup batarya ömrünü maksimuma çıkarır.
-  - ⚡ **Hibrit (İsteğe Bağlı):** Masaüstü entegre kartta çalışır, oyunlar NVIDIA ile başlar.
-  - 🚀 **Performans (NVIDIA):** Sürekli harici GPU devrededir, harici ekranlar aktiftir.
-- ⚙️ **Özel Fan Eğrisi & Güç Sınırı (Power Limit):** Fan devrini (%20-%100) ve kartın maksimum güç sınırını (TDP) kaydırıcılarla manuel ayarlama.
-- 🕹️ **Oyun Hızlandırıcı & PRIME Offload:** Steam, Lutris, Heroic ve Bottles oyunlarını otomatik olarak yüksek performanslı NVIDIA GPU ve Vulkan/DXVK katmanıyla açar (`/etc/environment.d`).
-- 🧠 **Yapay Zeka ve Geliştirici Kütüphaneleri:** Tek tıkla **CUDA Toolkit** (`nvcc`), **cuDNN** ve **TensorRT** kurulum sihirbazı.
-- 🖥️ **Sistem Tepsisi (AppIndicator / Tray):** Masaüstü üst barında canlı sıcaklık ve profil göstergesi (`45°C • Hibrit`) ve sağ tık hızlı erişim menüsü (`--tray` / `-t`).
-- 🛡️ **Güvenli Çekirdek Filtresi:** Birincil ekran bağdaştırıcısını (`boot_vga=1`) asla kaldırmaz; siyah ekran riskini önler.
-- 🖥️ **Entegre VTE Terminali:** Kurulum ve kaldırma adımlarını gerçek zamanlı terminal günlüğüyle takip etme imkanı.
-- 🧪 **Geliştirici & Sanal Makine Simülasyonu:** NVIDIA kartı bulunmayan cihazlarda dahi `--debug` moduyla tam arayüz testi.
-- 📦 **Çift Paketleme Desteği:** Hem Debian tabanlı sistemler için `.deb` hem de Arch Linux / CachyOS için `.pkg.tar.zst` paketleme.
+- 🔍 **Akıllı Donanım Tespiti:** Sistemdeki PCI veriyolunu tarayarak AMD ve Intel grafik donanımlarını (Dahili iGPU / Harici dGPU rollerini) otomatik olarak algılar.
+- 🎯 **Vulkan & Grafik Katmanları:** AMD için RADV (`vulkan-radeon`) ve AMDVLK; Intel için ANV (`vulkan-intel`) ve Xe sürücüleri ile 32-bit multilib oyun kütüphanelerini tek tıkla kurup yapılandırır.
+- 🎬 **Donanım Video Hızlandırma (VA-API & QuickSync):** Web tarayıcılarında (Firefox, Chromium) ve medya oynatıcılarda 4K/8K videoların GPU üzerinden akıcı çözülmesi için `mesa-va-drivers`, `intel-media-driver` entegrasyonu.
+- 📊 **Canlı Donanım İzleme & Sensörler:** Gerçek zamanlı GPU sıcaklığı, fan hızı, VRAM bellek kullanımı ve güç tüketimi (`Watt`) takibi.
+- ⚡ **PRIME & Melez Güç Yönetimi:** Dizüstü bilgisayarlarda pil tasarrufu modu ile harici kartı uyutma veya oyunlarda yüksek performanslı GPU offload (`DRI_PRIME=1`) geçişi.
+- 🧠 **Yapay Zeka & Hesaplama (Compute / AI):** 
+  - **AMD:** ROCm Toolkit, OpenCL (`rocm-opencl-runtime` / `rusticl`), HIP ve PyTorch desteği.
+  - **Intel:** Intel oneAPI, Intel Compute Runtime (NEO OpenCL), Level Zero ve OpenVINO desteği.
+- 🕹️ **Oyun Hızlandırıcı & MangoHud:** Steam, Lutris, Heroic ve Bottles oyunlarında ekran üzeri canlı FPS, sıcaklık ve gecikme HUD katmanı (`MangoHud`).
+- 🖥️ **Sistem Tepsisi (AppIndicator / Tray):** Masaüstü üst barında canlı sıcaklık ve aktif kart göstergesi ile hızlı menü erişimi.
+- 🖥️ **Entegre VTE Terminali:** Yapılan tüm paket ve yapılandırma işlemlerini gerçek zamanlı terminal günlüğüyle takip etme imkanı.
+- 🧪 **Geliştirici & Sanal Makine Simülasyonu:** AMD/Intel kartı bulunmayan ortamlarda dahi `--debug` moduyla tam arayüz testi.
+- 📦 **Çift Paketleme Desteği:** Hem Debian tabanlı sistemler için `.deb` hem de Arch Linux / CachyOS için `.pkg.tar.zst` paketleme desteği.
 
 ---
 
@@ -37,12 +35,11 @@ Pardus projesinin `pardus-nvidia-installer` aracından forklanarak ParsLinux mim
 | Bileşen | Paket Adı (Debian / ParsLinux) | Paket Adı (Arch Linux / CachyOS) |
 |---|---|---|
 | **Python** | `python3` (3.8+) | `python` |
-| **GObject Introspection** | `python3-gi`, `gir1.2-gtk-3.0` | `python-gobject`, `gtk3` |
+| **GObject Introspection** | `python3-gi`, `gir1.2-gtk-4.0` | `python-gobject`, `gtk4` |
 | **Terminal Bileşeni** | `gir1.2-vte-2.91` | `vte3` |
 | **Sistem Tepsisi** | `gir1.2-ayatanaappindicator3-0.1` | `libayatana-appindicator` |
 | **Yetkilendirme (Polkit)** | `gir1.2-polkit-1.0`, `policykit-1` | `polkit` |
-| **Donanım Tanıma** | `pciutils` | `hwdata` |
-| **GPG Doğrulama** | `gnupg` | `gnupg` |
+| **Donanım Tanıma** | `pciutils`, `hwdata` | `pciutils`, `hwdata` |
 
 ---
 
@@ -50,14 +47,17 @@ Pardus projesinin `pardus-nvidia-installer` aracından forklanarak ParsLinux mim
 
 ### Geliştirici / Yerel Çalıştırma
 ```bash
-# Donanım tespiti yaparak başlatma (kart yoksa otomatik simülasyon)
+# Donanım tespiti yaparak başlatma
 ./run.sh
 
-# Simüle edilmiş RTX 4070 Ti kartı ile demo modu
+# Simülasyon modunda başlatma (Test için)
 ./run.sh --debug
 
 # Sistem tepsisi göstergesini başlatma
-./parslinux-nvidia-installer --tray
+./parslinux-amd-intel-installer --tray
+
+# Donanım tespitini terminale yazdırma
+./parslinux-amd-intel-installer --detect --json
 
 # Master kontrol paneli
 ./manage.sh
@@ -96,14 +96,10 @@ python3 -m unittest discover -s tests -p "test_*.py" -v
 ## 📁 Proje Dizin Yapısı
 
 ```
-parslinux-nvidia-installer/
-├── parslinux-nvidia-installer      # Ana ikili başlatıcı (CLI / GUI)
-├── pardus-nvidia-installer         # Geriye dönük uyumluluk sembolik bağı
-├── org.parslinux.nvidia-installer.desktop # XDG masaüstü kısayolu
-├── org.parslinux.pkexec.parslinux-nvidia-installer.policy # Polkit güvenlik politikası
-├── pni-disable-gpu.service         # Melez kart açılış systemd servisi
-├── pni-disable-gpu.sh              # Melez kart PCI yönetim betiği
-├── nvidia.pub                      # Resmi NVIDIA GPG imza anahtarları
+parslinux-amd-intel-installer/
+├── parslinux-amd-intel-installer # Ana ikili başlatıcı (CLI / GUI)
+├── org.parslinux.amd-intel-installer.desktop # XDG masaüstü kısayolu
+├── org.parslinux.pkexec.parslinux-amd-intel-installer.policy # Polkit güvenlik politikası
 ├── setup.py                        # Python kurulum betiği
 ├── meson.build                     # Meson derleme tanımı
 ├── PKGBUILD / .SRCINFO             # Arch Linux / CachyOS paket tanımları
@@ -111,12 +107,12 @@ parslinux-nvidia-installer/
 ├── docs/                           # Kapsamlı standart dokümantasyon seti
 ├── src/
 │   ├── Main.py                     # Gtk.Application giriş noktası ve CLI ayrıştırıcı
-│   ├── MainWindow.py               # 4 sekmeli ana pencere denetleyicisi
-│   ├── monitor.py                  # Canlı GPU telemetri, sensör, PRIME ve AI tespit motoru
+│   ├── MainWindow.py               # Modern sekmeli ana pencere denetleyicisi
+│   ├── detector.py                 # PCI, sysfs ve donanım algılama motoru
+│   ├── monitor.py                  # Canlı GPU sensörleri, telemetri ve fan/güç takibi
 │   ├── tray.py                     # Sistem tepsisi (AppIndicator) durum göstergesi
-│   ├── nvidia.py                   # PCI donanım tespiti ve sürücü eşleme motoru
-│   └── package.py                  # PolicyKit root yetkili paket ve donanım yürütücüsü
-└── tests/                          # 20/20 birim test takımı
+│   └── package.py                  # PolicyKit root yetkili paket yöneticisi
+└── tests/                          # Birim test takımı
 ```
 
 ---

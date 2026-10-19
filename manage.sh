@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# ParsLinux Nvidia Installer - Master Management Script
+# ParsLinux AMD & Intel Installer - Master Management Script
 # ==============================================================================
 set -e
 
@@ -19,7 +19,7 @@ cd "$PROJECT_DIR"
 show_header() {
     clear 2>/dev/null || true
     echo -e "${CYAN}${BOLD}╔══════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${CYAN}${BOLD}║        ParsLinux Nvidia Installer — Control Panel            ║${NC}"
+    echo -e "${CYAN}${BOLD}║     ParsLinux AMD & Intel Installer — Control Panel          ║${NC}"
     echo -e "${CYAN}${BOLD}╚══════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
@@ -59,6 +59,9 @@ if [ -n "$ACTION" ]; then
             ;;
         package|paketle)
             exec ./package.sh "$@"
+            ;;
+        detect|algila|tara)
+            exec ./run.sh --detect "$@"
             ;;
         test|testler)
             exec python3 -m unittest discover -s tests -p "test_*.py" -v

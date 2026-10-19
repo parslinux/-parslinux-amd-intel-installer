@@ -1,0 +1,20 @@
+[Desktop Entry]
+Name=ParsLinux AMD & Intel Installer
+Name[tr]=ParsLinux AMD & Intel Grafik Yöneticisi
+Name[pt]=Instalador AMD e Intel ParsLinux
+GenericName=AMD & Intel Graphics Manager
+GenericName[tr]=AMD & Intel Grafik Yöneticisi
+GenericName[pt]=Gestor de Gráficos AMD e Intel
+Comment=Easily configure AMD Radeon and Intel graphics drivers, Vulkan, VA-API and hybrid GPUs
+Comment[tr]=AMD Radeon ve Intel grafik sürücülerini, Vulkan, VA-API ve melez GPU'ları kolayca yapılandırın
+Comment[pt]=Configure facilmente controladores AMD Radeon e Intel, Vulkan, VA-API e GPUs híbridas
+Exec=parslinux-amd-intel-installer %u
+Icon=parslinux-amd-intel-installer
+Terminal=false
+Type=Application
+Categories=Settings;HardwareSettings;System;X-ParsLinux-Apps;
+StartupNotify=true
+Keywords=amd;intel;radeon;arc;iris;driver;gpu;graphics;vulkan;vaapi;hybrid;rocm;oneapi;gaming;
+Keywords[tr]=amd;intel;radeon;arc;iris;surucu;sürücü;ekran kartı;grafik;vulkan;vaapi;melez;rocm;oneapi;oyun;
+Keywords[pt]=amd;intel;radeon;arc;iris;controlador;gpu;gráficos;vulkan;vaapi;híbrido;jogos;
+X-ParsLinux-Priority=High

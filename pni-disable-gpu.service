@@ -6,7 +6,7 @@ Before=display-manager.service graphical.target
 Type=oneshot
 RemainAfterExit=yes
 User=root
-ExecStart=/usr/share/parslinux/parslinux-nvidia-installer/pni-disable-gpu.sh
+ExecStart=/usr/share/parslinux/parslinux-amd-intel-installer/pni-disable-gpu.sh
 
 [Install]
 WantedBy=multi-user.target

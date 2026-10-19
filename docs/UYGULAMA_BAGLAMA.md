@@ -1,32 +1,33 @@
-# 🔗 Sistem ve Dağıtım Entegrasyonu (`UYGULAMA_BAGLAMA.md`)
+# 🔗 Dağıtım Entegrasyonu ve Uygulama Bağlama (`UYGULAMA_BAGLAMA.md`)
 
-Bu belge, `parslinux-nvidia-installer` paketinin ParsLinux dağıtım ekosistemine, ISO kalıplarına ve masaüstü ortamlarına nasıl bağlandığını açıklar.
-
----
-
-## 1. Masaüstü Ortamı (XDG) Entegrasyonu
-
-Uygulamanın GNOME, XFCE ve KDE başlatıcı menülerinde yer alması için:
-- **Desktop Girişi:** `/usr/share/applications/org.parslinux.nvidia-installer.desktop`
-- **Kategoriler:** `Settings;HardwareSettings;System;`
-- **İkon Konumu:** `/usr/share/icons/hicolor/scalable/apps/parslinux-nvidia-installer.svg`
-- **AppStream Metainfo:** `/usr/share/metainfo/org.parslinux.nvidia-installer.metainfo.xml`
+Bu belge, `parslinux-amd-intel-installer` paketinin ParsLinux dağıtım ekosistemine, ISO kalıplarına ve masaüstü ortamlarına nasıl bağlandığını açıklar.
 
 ---
 
-## 2. PolicyKit Yetkilendirme Entegrasyonu
+## 1. Masaüstü Ortamı Entegrasyonu (XDG)
 
-Kullanıcı arayüzünden doğrudan paket kurulumu veya GPU kapatma çağrıldığında:
-- `/usr/share/polkit-1/actions/org.parslinux.pkexec.parslinux-nvidia-installer.policy`
-- Sistem yöneticisi şifre doğrulama penceresi tetiklenir ve işlem arka planda `root` yetkisiyle güvenle yürütülür.
+Uygulama, ParsLinux GNOME, XFCE ve KDE masaüstü ortamlarına standart XDG spesifikasyonları ile bağlanır:
+
+- **Desktop Girişi:** `/usr/share/applications/org.parslinux.amd-intel-installer.desktop`
+- **Menü Kategorisi:** `System;Settings;HardwareSettings;`
+- **İkon Konumu:** `/usr/share/icons/hicolor/scalable/apps/parslinux-amd-intel-installer.svg`
+- **AppStream Metainfo:** `/usr/share/metainfo/org.parslinux.amd-intel-installer.metainfo.xml`
 
 ---
 
-## 3. `live-build` ve Calamares Entegrasyonu
+## 2. PolicyKit (Ayrıcalık Yükseltme) Bağlantısı
 
-Canlı ParsLinux ISO kalıbı (`ParsLinux-1.0-gnome-amd64.iso`) derlenirken:
-1. `config/package-lists/drivers.list.chroot` dosyasına eklenir:
-   ```bash
-   parslinux-nvidia-installer
-   ```
-2. Calamares kurulum sihirbazının `packages` veya `post-install` modülünde NVIDIA GPU tespiti yapılarak kullanıcının ilk masaüstü açılışında bu aracı çalıştırması önerilebilir.
+Grafik arayüz standart kullanıcı ile çalışırken, paket kurulumları ve güç profili değişiklikleri için PolicyKit devreye girer:
+
+- `/usr/share/polkit-1/actions/org.parslinux.pkexec.parslinux-amd-intel-installer.policy`
+
+---
+
+## 3. ParsLinux Canlı Medya ve ISO Kalıplarına Dahil Edilmesi
+
+ParsLinux ISO derleme sisteminde uygulamanın kalıba dahil edilmesi için:
+
+```bash
+# ISO paket listesine ekleme:
+parslinux-amd-intel-installer
+```

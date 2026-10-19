@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Background Shadow -->
+    <filter id="shadowFilter" x="-25%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#020813" flood-opacity="0.7"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#ED1C24" flood-opacity="0.2"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#00C7FD" flood-opacity="0.2"/>
+    </filter>
+
+    <!-- Neon Glow Filter -->
+    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Base Gradient (Obsidian to Deep Space Navy) -->
+    <linearGradient id="baseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#151922"/>
+      <stop offset="50%" stop-color="#0e121a"/>
+      <stop offset="100%" stop-color="#07090e"/>
+    </linearGradient>
+
+    <!-- Border Dual Gradient: AMD Radeon Crimson to Intel Arc Cyan -->
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF2A35"/>
+      <stop offset="45%" stop-color="#9333EA"/>
+      <stop offset="70%" stop-color="#0071C5"/>
+      <stop offset="100%" stop-color="#00E5FF"/>
+    </linearGradient>
+
+    <!-- Shroud Metallic Gradient -->
+    <linearGradient id="shroudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#262d38"/>
+      <stop offset="45%" stop-color="#1a2029"/>
+      <stop offset="100%" stop-color="#10141a"/>
+    </linearGradient>
+
+    <!-- AMD Crimson Neon Gradient -->
+    <linearGradient id="amdNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF4B4B"/>
+      <stop offset="100%" stop-color="#D60017"/>
+    </linearGradient>
+
+    <!-- Intel Arc Cyan Neon Gradient -->
+    <linearGradient id="intelNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F0FF"/>
+      <stop offset="100%" stop-color="#0071C5"/>
+    </linearGradient>
+
+    <!-- Central Silicon Core Gradient -->
+    <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <!-- Gold PCIe Fingers -->
+    <linearGradient id="goldPcie" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Squircle with Premium Shadow -->
+  <rect x="8" y="8" width="112" height="112" rx="28" fill="url(#baseGrad)" filter="url(#shadowFilter)"/>
+  
+  <!-- Sleek Border Ring with Dual Accent -->
+  <rect x="8.75" y="8.75" width="110.5" height="110.5" rx="27.25" fill="none" stroke="url(#borderGrad)" stroke-width="1.8" stroke-opacity="0.9"/>
+  <rect x="10" y="10" width="108" height="108" rx="26" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.08"/>
+
+  <!-- Subtle Cyber Hex Grid Background Accents -->
+  <g opacity="0.07" stroke="#ffffff" stroke-width="0.8" fill="none">
+    <path d="M22,28 L30,24 L38,28 L38,36 L30,40 L22,36 Z" />
+    <path d="M38,28 L46,24 L54,28 L54,36 L46,40 L38,36 Z" />
+    <path d="M74,28 L82,24 L90,28 L90,36 L82,40 L74,36 Z" />
+    <path d="M90,28 L98,24 L106,28 L106,36 L98,40 L90,36 Z" />
+    <path d="M22,92 L30,88 L38,92 L38,100 L30,104 L22,100 Z" />
+    <path d="M90,92 L98,88 L106,92 L106,100 L98,104 L90,100 Z" />
+  </g>
+
+  <!-- GPU Card Body / Armor Plate -->
+  <g id="gpuCard">
+    <!-- Main Card Body Shell -->
+    <rect x="20" y="30" width="88" height="66" rx="8" fill="url(#shroudGrad)" stroke="#334155" stroke-width="1.2"/>
+    
+    <!-- Top Accent Bar: Split AMD Red and Intel Blue -->
+    <path d="M22,32 L63,32 L63,34 L22,34 Z" fill="url(#amdNeon)" filter="url(#neonGlow)" opacity="0.85"/>
+    <path d="M65,32 L106,32 L106,34 L65,34 Z" fill="url(#intelNeon)" filter="url(#neonGlow)" opacity="0.85"/>
+
+    <!-- Left Heatsink / Fan Section (AMD Radeon Ruby Red) -->
+    <g transform="translate(42, 63)">
+      <!-- Fan Outer Ring -->
+      <circle cx="0" cy="0" r="19" fill="#131920" stroke="#FF2A35" stroke-width="1.5" stroke-opacity="0.7"/>
+      <circle cx="0" cy="0" r="16.5" fill="#0b0f14" stroke="#ffffff" stroke-width="0.4" stroke-opacity="0.1"/>
+      
+      <!-- Fan Blades (Red Aura) -->
+      <path d="M0,0 L3,-15 A15,15 0 0,1 11,-10 Z" fill="#2d1519"/>
+      <path d="M0,0 L15,-3 A15,15 0 0,1 10,11 Z" fill="#2d1519"/>
+      <path d="M0,0 L-3,15 A15,15 0 0,1 -11,10 Z" fill="#2d1519"/>
+      <path d="M0,0 L-15,3 A15,15 0 0,1 -10,-11 Z" fill="#2d1519"/>
+
+      <!-- Center Fan Cap (AMD Radeon R / Red Glow) -->
+      <circle cx="0" cy="0" r="6.5" fill="url(#baseGrad)" stroke="url(#amdNeon)" stroke-width="1.2"/>
+      <path d="M-2.5,-3 L1,-3 C2.5,-3 3.2,-2.2 3.2,-1 C3.2,0 2.4,0.7 1.2,0.8 L3.5,3 L1.8,3 L-0.5,1 L-1.2,1 L-1.2,3 L-2.5,3 Z M-1.2,-0.2 L0.8,-0.2 C1.5,-0.2 1.9,-0.5 1.9,-1.1 C1.9,-1.7 1.5,-2 0.8,-2 L-1.2,-2 Z" fill="#FF4B4B"/>
+    </g>
+
+    <!-- Right Heatsink / Fan Section (Intel Arc Ice Blue) -->
+    <g transform="translate(86, 63)">
+      <!-- Fan Outer Ring -->
+      <circle cx="0" cy="0" r="19" fill="#131920" stroke="#00C7FD" stroke-width="1.5" stroke-opacity="0.7"/>
+      <circle cx="0" cy="0" r="16.5" fill="#0b0f14" stroke="#ffffff" stroke-width="0.4" stroke-opacity="0.1"/>
+      
+      <!-- Fan Blades (Blue Aura) -->
+      <path d="M0,0 L3,-15 A15,15 0 0,1 11,-10 Z" fill="#0d2230"/>
+      <path d="M0,0 L15,-3 A15,15 0 0,1 10,11 Z" fill="#0d2230"/>
+      <path d="M0,0 L-3,15 A15,15 0 0,1 -11,10 Z" fill="#0d2230"/>
+      <path d="M0,0 L-15,3 A15,15 0 0,1 -10,-11 Z" fill="#0d2230"/>
+
+      <!-- Center Fan Cap (Intel Xe Arc Glow) -->
+      <circle cx="0" cy="0" r="6.5" fill="url(#baseGrad)" stroke="url(#intelNeon)" stroke-width="1.2"/>
+      <!-- Stylized Sparkle / Arc 'i' -->
+      <circle cx="0" cy="-2.5" r="1" fill="#00E5FF"/>
+      <rect x="-0.7" y="-0.5" width="1.4" height="3.5" rx="0.5" fill="#00E5FF"/>
+    </g>
+
+    <!-- Central Divider / Bridging Circuitry -->
+    <line x1="64" y1="36" x2="64" y2="90" stroke="#334155" stroke-width="1" stroke-dasharray="2 2"/>
+    <circle cx="64" cy="63" r="3" fill="#0f172a" stroke="#A855F7" stroke-width="1.2"/>
+    <circle cx="64" cy="63" r="1" fill="#C084FC"/>
+
+    <!-- Left Bracket Screw Mounts -->
+    <circle cx="23" cy="36" r="1.5" fill="#475569"/>
+    <circle cx="23" cy="90" r="1.5" fill="#475569"/>
+
+    <!-- Gold PCIe Connector Pins at Bottom -->
+    <g transform="translate(32, 96)">
+      <!-- PCIe PCB Tab -->
+      <rect x="0" y="0" width="56" height="6" fill="#1e293b" rx="1"/>
+      <!-- Gold Connector Teeth -->
+      <rect x="3" y="1" width="3" height="5" rx="0.5" fill="url(#goldPcie)"/>
+      <rect x="8" y="1" width="3" height="5" rx="0.5" fill="url(#goldPcie)"/>
+      <rect x="13" y="1" width="3" height="5" rx="0.5" fill="url(#goldPcie)"/>
+      <rect x="18" y="1" width="3" height="5" rx="0.5" fill="url(#goldPcie)"/>
+      <!-- Key notch -->
+      <rect x="23" y="1" width="4" height="3" fill="#0f172a"/>
+      <rect x="29" y="1" width="3" height="5" rx="0.5" fill="url(#goldPcie)"/>
+      <rect x="34" y="1" width="3" height="5" rx="0.5" fill="url(#goldPcie)"/>
+      <rect x="39" y="1" width="3" height="5" rx="0.5" fill="url(#goldPcie)"/>
+      <rect x="44" y="1" width="3" height="5" rx="0.5" fill="url(#goldPcie)"/>
+      <rect x="49" y="1" width="3" height="5" rx="0.5" fill="url(#goldPcie)"/>
+    </g>
+  </g>
+
+  <!-- Glowing Corner Status LED Dots -->
+  <circle cx="27" cy="21" r="2" fill="#FF2A35" filter="url(#neonGlow)"/>
+  <circle cx="101" cy="21" r="2" fill="#00C7FD" filter="url(#neonGlow)"/>
+</svg>

@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: parslinux-nvidia-installer
+Upstream-Name: parslinux-amd-intel-installer
 Upstream-Contact: ParsLinux Developers <dev@parslinux.org>
-Source: https://github.com/parslinux/parslinux-nvidia-installer
+Source: https://github.com/parslinux/-parslinux-amd-intel-installer
 
 Files: *
 Copyright:

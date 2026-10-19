@@ -1,4 +1,4 @@
-Source: parslinux-nvidia-installer
+Source: parslinux-amd-intel-installer
 Section: admin
 Priority: optional
 Maintainer: ParsLinux Developers <dev@parslinux.org>
@@ -11,27 +11,23 @@ Build-Depends:
  pkg-config,
 Standards-Version: 4.6.2
 Homepage: https://parslinux.org
-Vcs-Browser: https://github.com/parslinux/parslinux-nvidia-installer
-Vcs-Git: https://github.com/parslinux/parslinux-nvidia-installer.git
+Vcs-Browser: https://github.com/parslinux/-parslinux-amd-intel-installer
+Vcs-Git: https://github.com/parslinux/-parslinux-amd-intel-installer.git
 
-Package: parslinux-nvidia-installer
+Package: parslinux-amd-intel-installer
 Architecture: any
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
  python3,
  python3-gi,
- gir1.2-gtk-3.0,
- gir1.2-vte-2.91,
+ gir1.2-gtk-4.0,
+ gir1.2-vte-3.91 | gir1.2-vte-2.91-gtk4,
  gir1.2-polkit-1.0,
  python3-apt,
  pciutils,
- gnupg,
-Replaces: pardus-nvidia-installer
-Conflicts: pardus-nvidia-installer
-Provides: pardus-nvidia-installer
-Description: ParsLinux NVIDIA graphics driver installer and GPU manager
- A graphical tool that helps you install and manage NVIDIA GPU drivers
- on ParsLinux. It detects your hardware, suggests fitting proprietary
- or open-source drivers, integrates official repositories, and manages
- secondary GPUs on hybrid laptops.
+Description: ParsLinux AMD and Intel graphics driver installer and GPU manager
+ A graphical tool that helps you configure AMD Radeon and Intel GPU drivers
+ on ParsLinux. It detects your hardware, manages Vulkan layers (RADV/ANV),
+ hardware video acceleration (VA-API/QuickSync), and manages hybrid graphics
+ on laptops.

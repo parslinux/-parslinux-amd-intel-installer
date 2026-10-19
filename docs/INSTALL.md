@@ -1,6 +1,6 @@
 # 🚀 Kurulum ve Yapılandırma Kılavuzu (`INSTALL.md`)
 
-Bu belge, **ParsLinux Nvidia Installer** (`parslinux-nvidia-installer`) aracının ParsLinux ve diğer Linux dağıtımlarına kurulumu, yapılandırılması ve kaldırılması adımlarını içerir.
+Bu belge, **ParsLinux AMD & Intel Installer** (`parslinux-amd-intel-installer`) aracının ParsLinux ve diğer Linux dağıtımlarına kurulumu, yapılandırılması ve kaldırılması adımlarını içerir.
 
 ---
 
@@ -9,19 +9,18 @@ Bu belge, **ParsLinux Nvidia Installer** (`parslinux-nvidia-installer`) aracın�
 Depoyu yerel bilgisayarınıza indirin ve kurulum betiğini root yetkileriyle çalıştırın:
 
 ```bash
-git clone https://github.com/parslinux/parslinux-nvidia-installer.git
-cd parslinux-nvidia-installer
+git clone git@github.com:parslinux/-parslinux-amd-intel-installer.git
+cd -parslinux-amd-intel-installer
 sudo ./install.sh
 ```
 
 Betiğin gerçekleştirdiği adımlar:
-1. Gerekli bağımlılıkları (`python3`, `python3-gi`, `gir1.2-gtk-3.0`, `gir1.2-vte-2.91`, `polkit`, `pciutils`) denetler ve kurar.
-2. Kaynak kodları `/usr/share/parslinux/parslinux-nvidia-installer/` dizinine yerleştirir.
-3. Çalıştırılabilir ikili dosyayı `/usr/bin/parslinux-nvidia-installer` altına sembolik bağlar.
-4. Masaüstü kısayolunu (`org.parslinux.nvidia-installer.desktop`) ve AppStream meta verilerini kopyalar.
-5. PolicyKit kuralını (`org.parslinux.pkexec.parslinux-nvidia-installer.policy`) yetkilendirme dizinine kurar.
-6. Systemd GPU güç tasarruf servisini (`pni-disable-gpu.service`) kaydeder.
-7. İkon ve masaüstü önbelleklerini yeniler.
+1. Gerekli bağımlılıkları (`python3`, `python3-gi`, `gir1.2-gtk-4.0`, `gir1.2-vte-2.91`, `polkit`, `pciutils`) denetler ve kurar.
+2. Kaynak kodları `/usr/share/parslinux/parslinux-amd-intel-installer/` dizinine yerleştirir.
+3. Çalıştırılabilir ikili dosyayı `/usr/bin/parslinux-amd-intel-installer` altına sembolik bağlar.
+4. Masaüstü kısayolunu (`org.parslinux.amd-intel-installer.desktop`) ve AppStream meta verilerini kopyalar.
+5. PolicyKit kuralını (`org.parslinux.pkexec.parslinux-amd-intel-installer.policy`) yetkilendirme dizinine kurar.
+6. İkon ve masaüstü önbelleklerini yeniler.
 
 ---
 
@@ -30,7 +29,7 @@ Betiğin gerçekleştirdiği adımlar:
 ### Debian / ParsLinux (.deb)
 ```bash
 # Önceden derlenmiş paketi kurun:
-sudo dpkg -i dist/parslinux-nvidia-installer_1.0.0-1_all.deb
+sudo dpkg -i dist/parslinux-amd-intel-installer_1.0.0-1_all.deb
 sudo apt install -f
 ```
 
@@ -52,5 +51,5 @@ sudo ./uninstall.sh
 
 Veya Debian paket yöneticisi ile:
 ```bash
-sudo apt purge parslinux-nvidia-installer
+sudo apt purge parslinux-amd-intel-installer
 ```

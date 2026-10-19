@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Background Dropshadow & Ambient Glow -->
+    <filter id="badgeShadow" x="-25%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#030712" flood-opacity="0.8"/>
+      <feDropShadow dx="-2" dy="1" stdDeviation="4" flood-color="#ED1C24" flood-opacity="0.25"/>
+      <feDropShadow dx="2" dy="1" stdDeviation="4" flood-color="#00C7FD" flood-opacity="0.25"/>
+    </filter>
+
+    <!-- Neon Glow Filter -->
+    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <!-- Deep Metallic Badge Background -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1317"/>
+      <stop offset="50%" stop-color="#0f141c"/>
+      <stop offset="100%" stop-color="#091522"/>
+    </linearGradient>
+
+    <!-- Outer Dual Border Gradient (AMD Red -> Pars Purple -> Intel Cyan) -->
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF2A35"/>
+      <stop offset="35%" stop-color="#ED1C24"/>
+      <stop offset="50%" stop-color="#8B5CF6"/>
+      <stop offset="65%" stop-color="#0071C5"/>
+      <stop offset="100%" stop-color="#00E5FF"/>
+    </linearGradient>
+
+    <!-- AMD Red Gradient -->
+    <linearGradient id="amdRedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF4D4D"/>
+      <stop offset="100%" stop-color="#ED1C24"/>
+    </linearGradient>
+
+    <!-- Intel Cyan Gradient -->
+    <linearGradient id="intelBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F0FF"/>
+      <stop offset="100%" stop-color="#0071C5"/>
+    </linearGradient>
+
+    <!-- Divider Laser Gradient -->
+    <linearGradient id="laserGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF2A35" stop-opacity="0.2"/>
+      <stop offset="30%" stop-color="#A855F7" stop-opacity="0.9"/>
+      <stop offset="70%" stop-color="#38BDF8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#00C7FD" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Squircle Base Frame -->
+  <rect x="8" y="8" width="112" height="112" rx="26" fill="url(#bgGrad)" filter="url(#badgeShadow)"/>
+  
+  <!-- Sleek Dual Border Ring -->
+  <rect x="8.75" y="8.75" width="110.5" height="110.5" rx="25.25" fill="none" stroke="url(#borderGrad)" stroke-width="1.8"/>
+  <rect x="10" y="10" width="108" height="108" rx="24" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.08"/>
+
+  <!-- Background Cyber Circuit Accents -->
+  <g opacity="0.08" stroke="#ffffff" stroke-width="0.8" fill="none">
+    <path d="M16,36 L30,36 L38,44 L38,60" />
+    <path d="M112,36 L98,36 L90,44 L90,60" />
+    <path d="M16,92 L30,92 L38,84 L38,68" />
+    <path d="M112,92 L98,92 L90,84 L90,68" />
+  </g>
+
+  <!-- ==================== LEFT SIDE: AMD RADEON ==================== -->
+  <g transform="translate(18, 30)">
+    <!-- Ambient Red Underglow -->
+    <circle cx="21" cy="22" r="22" fill="#ED1C24" opacity="0.12" filter="url(#neonGlow)"/>
+
+    <!-- Authentic AMD Chevron Geometry -->
+    <g transform="translate(1, 2) scale(1.05)">
+      <!-- Left Large L-Chevron -->
+      <polygon points="0,0 22,0 22,9 9,9 9,22 0,22" fill="url(#amdRedGrad)"/>
+      <!-- Top Small Square -->
+      <polygon points="24,0 33,0 33,9 24,9" fill="url(#amdRedGrad)"/>
+      <!-- Right L-Chevron -->
+      <polygon points="24,11 33,11 33,33 11,33 11,24 24,24" fill="url(#amdRedGrad)"/>
+    </g>
+
+    <!-- "AMD" Bold Typography -->
+    <text x="21" y="52" 
+          font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
+          font-size="12" 
+          font-weight="900" 
+          letter-spacing="2" 
+          fill="#FFFFFF" 
+          text-anchor="middle">AMD</text>
+    
+    <!-- Small "RADEON" Subtitle -->
+    <text x="21" y="62" 
+          font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
+          font-size="6.5" 
+          font-weight="700" 
+          letter-spacing="1.5" 
+          fill="#FF4D4D" 
+          text-anchor="middle">RADEON</text>
+  </g>
+
+  <!-- ==================== CENTER DIVIDER ==================== -->
+  <g>
+    <!-- Laser Beam -->
+    <line x1="64" y1="20" x2="64" y2="108" stroke="url(#laserGrad)" stroke-width="1.4"/>
+    
+    <!-- Central Bridge Node -->
+    <circle cx="64" cy="64" r="4.5" fill="#0f172a" stroke="#A855F7" stroke-width="1.2"/>
+    <circle cx="64" cy="64" r="2" fill="#C084FC" filter="url(#neonGlow)"/>
+
+    <!-- Small Accent Nodes -->
+    <circle cx="64" cy="34" r="1.5" fill="#FF4D4D"/>
+    <circle cx="64" cy="94" r="1.5" fill="#00E5FF"/>
+  </g>
+
+  <!-- ==================== RIGHT SIDE: INTEL ARC / XE ==================== -->
+  <g transform="translate(72, 30)">
+    <!-- Ambient Blue Underglow -->
+    <circle cx="19" cy="22" r="22" fill="#0071C5" opacity="0.14" filter="url(#neonGlow)"/>
+
+    <!-- Intel Typography / Emblem -->
+    <g transform="translate(1, 4)">
+      <!-- Lowercase "intel" -->
+      <text x="19" y="24" 
+            font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
+            font-size="22" 
+            font-weight="800" 
+            letter-spacing="-0.8" 
+            fill="url(#intelBlueGrad)" 
+            text-anchor="middle">intel</text>
+      
+      <!-- Spark / Diamond Dot on the 'i' -->
+      <rect x="2.5" y="4.5" width="3.2" height="3.2" rx="0.8" fill="#00F0FF" filter="url(#neonGlow)"/>
+
+      <!-- Classic Intel Dynamic Arc Curve -->
+      <path d="M-2,6 C10,-2 26,-2 39,7" fill="none" stroke="url(#intelBlueGrad)" stroke-width="1.6" stroke-linecap="round"/>
+    </g>
+
+    <!-- "ARC" Bold Typography -->
+    <text x="19" y="52" 
+          font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
+          font-size="12" 
+          font-weight="900" 
+          letter-spacing="2" 
+          fill="#FFFFFF" 
+          text-anchor="middle">ARC</text>
+    
+    <!-- Small "GRAPHICS" Subtitle -->
+    <text x="19" y="62" 
+          font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
+          font-size="6.5" 
+          font-weight="700" 
+          letter-spacing="1.2" 
+          fill="#38BDF8" 
+          text-anchor="middle">GRAPHICS</text>
+  </g>
+
+  <!-- Top Center Status Capsule -->
+  <g transform="translate(44, 15)">
+    <rect x="0" y="0" width="40" height="8" rx="4" fill="#0b0f19" stroke="#334155" stroke-width="0.8"/>
+    <circle cx="6" cy="4" r="1.5" fill="#22C55E"/>
+    <text x="22" y="6" 
+          font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
+          font-size="5" 
+          font-weight="700" 
+          letter-spacing="0.8" 
+          fill="#94A3B8" 
+          text-anchor="middle">PARSLINUX</text>
+  </g>
+</svg>

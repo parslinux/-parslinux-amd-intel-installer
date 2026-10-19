@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-ParsLinux Nvidia Installer - System Tray & AppIndicator Module
+ParsLinux AMD & Intel Installer - System Tray & AppIndicator Module
 Provides background GPU temperature monitoring and quick PRIME profile switching in the system tray.
 """
 
@@ -32,16 +32,16 @@ except Exception:
 import monitor
 import package
 
-TRAY_ID = "parslinux-nvidia-tray"
+TRAY_ID = "parslinux-amd-intel-tray"
 
 
-class NvidiaTrayIndicator:
+class GpuTrayIndicator:
     def __init__(self, on_open_callback=None):
         self.on_open_callback = on_open_callback
         self.indicator = None
         self.status_icon = None
 
-        icon_name = "parslinux-nvidia-installer"
+        icon_name = "parslinux-amd-intel-installer"
 
         if HAS_INDICATOR and IndicatorLib:
             self.indicator = IndicatorLib.Indicator.new(
@@ -54,10 +54,9 @@ class NvidiaTrayIndicator:
             self.build_menu()
             self.indicator.set_menu(self.menu)
         else:
-            # Fallback to standard Gtk.StatusIcon
             try:
                 self.status_icon = Gtk.StatusIcon.new_from_icon_name(icon_name)
-                self.status_icon.set_title("ParsLinux Nvidia")
+                self.status_icon.set_title("ParsLinux AMD & Intel")
                 self.menu = Gtk.Menu()
                 self.build_menu()
                 self.status_icon.connect("popup-menu", self.on_status_icon_popup)
@@ -73,7 +72,7 @@ class NvidiaTrayIndicator:
 
     def build_menu(self):
         # Header / Title
-        self.item_title = Gtk.MenuItem(label="ParsLinux Nvidia Control")
+        self.item_title = Gtk.MenuItem(label="ParsLinux AMD & Intel Kontrolü")
         self.item_title.set_sensitive(False)
         self.menu.append(self.item_title)
 
@@ -89,22 +88,22 @@ class NvidiaTrayIndicator:
         self.menu.append(Gtk.SeparatorMenuItem())
 
         # Profile Switchers
-        item_integ = Gtk.MenuItem(label="🍃 Tasarruf Modu (Entegre GPU)")
+        item_integ = Gtk.MenuItem(label="🍃 Tasarruf Modu (Dahili GPU)")
         item_integ.connect("activate", lambda w: self.switch_profile("integrated"))
         self.menu.append(item_integ)
 
-        item_ondemand = Gtk.MenuItem(label="⚡ Hibrit Mod (İsteğe Bağlı)")
-        item_ondemand.connect("activate", lambda w: self.switch_profile("on-demand"))
-        self.menu.append(item_ondemand)
+        item_hybrid = Gtk.MenuItem(label="⚡ Melez Mod (Dinamik DRI_PRIME)")
+        item_hybrid.connect("activate", lambda w: self.switch_profile("hybrid"))
+        self.menu.append(item_hybrid)
 
-        item_nvidia = Gtk.MenuItem(label="🚀 Performans Modu (NVIDIA)")
-        item_nvidia.connect("activate", lambda w: self.switch_profile("nvidia"))
-        self.menu.append(item_nvidia)
+        item_perf = Gtk.MenuItem(label="🚀 Performans Modu (Harici GPU)")
+        item_perf.connect("activate", lambda w: self.switch_profile("performance"))
+        self.menu.append(item_perf)
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
         # Open Control Panel
-        item_open = Gtk.MenuItem(label="🖥️ Kontrol Panelini Aç")
+        item_open = Gtk.MenuItem(label="🖥️ Grafik Panelini Aç")
         item_open.connect("activate", self.on_open_window)
         self.menu.append(item_open)
 
@@ -116,20 +115,21 @@ class NvidiaTrayIndicator:
         self.menu.show_all()
 
     def update_tray(self):
-        is_debug = os.environ.get("PARSLINUX_NVI_DEBUG") == "1"
+        is_debug = os.environ.get("PARSLINUX_NVI_DEBUG") == "1" or os.environ.get("PARSLINUX_DEBUG") == "1"
         data = monitor.get_gpu_telemetry(simulated=is_debug)
         prime_mode = monitor.get_prime_profile()
 
         mode_names = {
-            "integrated": "Tasarruf (Entegre)",
-            "on-demand": "Hibrit",
-            "nvidia": "Performans",
+            "integrated": "Tasarruf (Dahili)",
+            "hybrid": "Melez",
+            "on-demand": "Melez",
+            "performance": "Performans",
         }
         mode_text = mode_names.get(prime_mode, prime_mode)
 
         if data and data.get("available"):
             temp = data.get("temp", 45)
-            gpu_name = data.get("name", "NVIDIA GPU")
+            gpu_name = data.get("name", "AMD / Intel GPU")
             power = data.get("power", 0)
 
             label_text = f"{temp}°C • {mode_text}"
@@ -146,7 +146,7 @@ class NvidiaTrayIndicator:
         return True
 
     def switch_profile(self, mode):
-        cmd = ["pkexec", "/usr/share/parslinux/parslinux-nvidia-installer/src/package.py", "prime-mode", mode]
+        cmd = ["pkexec", "/usr/share/parslinux/parslinux-amd-intel-installer/src/package.py", "prime-mode", mode]
         try:
             subprocess.Popen(cmd)
         except Exception as e:
@@ -157,11 +157,21 @@ class NvidiaTrayIndicator:
             self.on_open_callback()
         else:
             try:
-                subprocess.Popen(["parslinux-nvidia-installer"])
+                subprocess.Popen(["parslinux-amd-intel-installer"])
             except Exception:
                 pass
 
 
 def run_tray_indicator(on_open_callback=None):
-    indicator = NvidiaTrayIndicator(on_open_callback)
+    indicator = GpuTrayIndicator(on_open_callback)
     return indicator
+
+
+def main():
+    ind = run_tray_indicator()
+    loop = GLib.MainLoop()
+    loop.run()
+
+
+if __name__ == "__main__":
+    main()

@@ -1,12 +1,11 @@
 #!/bin/bash
 # ==============================================================================
-# ParsLinux Nvidia Installer - Secondary GPU Boot Disabler
-# Safely powers down / detaches secondary discrete NVIDIA GPU on hybrid laptops
+# ParsLinux AMD & Intel Installer - Secondary GPU Boot Disabler
+# Safely powers down / detaches secondary discrete GPU on hybrid laptops
 # ==============================================================================
 set -e
 
-# Support both ParsLinux and legacy marker paths
-if [[ ! -f /var/cache/parslinux-nvi-disable-gpu && ! -f /var/cache/pni-disable-gpu ]]; then
+if [[ ! -f /var/cache/parslinux-disable-gpu && ! -f /var/cache/parslinux-nvi-disable-gpu && ! -f /var/cache/pni-disable-gpu ]]; then
     exit 0
 fi
 
@@ -48,10 +47,6 @@ for dir in /sys/bus/pci/devices/*; do
     [ -d "$dir" ] || continue
     dev_name=$(basename "$dir")
     
-    # Check for Nvidia vendor ID (0x10de)
-    vendor=$(cat "$dir/vendor" 2>/dev/null || true)
-    [ "$vendor" = "0x10de" ] || continue
-
     # Check for display controller classes (0x03xxxx)
     class=$(cat "$dir/class" 2>/dev/null || true)
     case "$class" in
@@ -66,7 +61,7 @@ for dir in /sys/bus/pci/devices/*; do
         continue
     fi
 
-    echo "Found secondary NVIDIA GPU: $dev_name"
+    echo "Found secondary GPU: $dev_name"
     remove_pci "$dev_name"
 done
 

@@ -1,41 +1,19 @@
-# 🌍 Çeviri ve Yerelleştirme Kılavuzu (`TRANSLATION_GUIDE.md`)
+# 🌍 Çeviri ve Yerelleştirme Rehberi (`TRANSLATION_GUIDE.md`)
 
-Bu rehber, **ParsLinux Nvidia Installer** arayüzünün ve sistem iletilerinin çoklu dil desteğine (GNU gettext) nasıl katkı sağlanacağını açıklar.
+Bu rehber, **ParsLinux AMD & Intel Installer** arayüzünün ve sistem iletilerinin çoklu dil desteğine (GNU gettext) nasıl katkı sağlanacağını açıklar.
 
 ---
 
-## 1. Dizin Yapısı
+## 1. Çeviri Dosyalarının Konumu
 
-Çeviri kaynakları `po/` dizininde yer almaktadır:
-- `po/parslinux-nvidia-installer.pot`: Ana şablon dosyası
+- `po/parslinux-amd-intel-installer.pot`: Ana şablon dosyası
 - `po/tr.po`: Türkçe çeviriler
 - `po/en.po`: İngilizce çeviriler
 
-Derlenmiş ikili çeviriler ise `mo/` dizini altına oluşturulur.
-
 ---
 
-## 2. Çeviri Şablonunu Güncelleme
-
-Kod içerisine yeni metinler eklendiğinde veya var olanlar güncellendiğinde:
+## 2. Yeni Dil Ekleme
 
 ```bash
-./update_translations.sh
+msginit -i po/parslinux-amd-intel-installer.pot -o po/de.po -l de_DE.UTF-8
 ```
-
-Bu betik:
-1. Python ve Glade dosyalarındaki `_("metin")` veya `translatable="yes"` ifadelerini tarar.
-2. `po/` altındaki `.po` dosyalarını otomatik senkronize eder.
-3. `msgfmt` ile derleyerek `mo/` dizinine `.mo` dosyalarını yazar.
-
----
-
-## 3. Yeni Bir Dil Ekleme
-
-Örneğin Almanca (`de`) desteği eklemek için:
-
-```bash
-msginit -i po/parslinux-nvidia-installer.pot -o po/de.po -l de_DE.UTF-8
-```
-
-Ardından Poedit veya herhangi bir metin editörüyle `po/de.po` dosyasını düzenleyin ve `./update_translations.sh` çalıştırın.

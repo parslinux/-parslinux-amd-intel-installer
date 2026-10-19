@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# ParsLinux Nvidia Installer - System Installation Script
+# ParsLinux AMD & Intel Installer - System Installation Script
 # ==============================================================================
 set -e
 
@@ -15,7 +15,7 @@ NC=$'\033[0m'
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$PROJECT_DIR"
 
-echo -e "${CYAN}${BOLD}=== ParsLinux Nvidia Installer — Installer ===${NC}"
+echo -e "${CYAN}${BOLD}=== ParsLinux AMD & Intel Installer — Installer ===${NC}"
 
 show_help() {
     echo -e "Usage: ${BOLD}./install.sh [OPTIONS]${NC}"
@@ -63,27 +63,26 @@ if [ "$NO_DEPS" = false ]; then
         sudo apt-get install -y \
             python3 \
             python3-gi \
-            gir1.2-gtk-3.0 \
-            gir1.2-vte-2.91 \
+            gir1.2-gtk-4.0 \
+            gir1.2-vte-3.91 \
             gir1.2-polkit-1.0 \
             python3-apt \
             pciutils \
-            gnupg \
             gettext
     elif command -v pacman &>/dev/null; then
         echo -e "${GREEN}Detected Pacman (Arch Linux / CachyOS / ParsLinux Arch)...${NC}"
         sudo pacman -S --needed --noconfirm \
             python \
             python-gobject \
-            gtk3 \
-            vte3 \
+            gtk4 \
+            vte4 \
             polkit \
             hwdata \
-            gnupg \
+            pciutils \
             gettext \
             python-setuptools
     else
-        echo -e "${YELLOW}Unknown package manager. Please ensure Python 3, GTK 3, VTE, and Polkit are installed.${NC}"
+        echo -e "${YELLOW}Unknown package manager. Please ensure Python 3, GTK 4, VTE 4, and Polkit are installed.${NC}"
     fi
 fi
 
@@ -96,14 +95,13 @@ echo -e "${BLUE}▶ Building localization and installing files...${NC}"
 ./update_translations.sh 2>/dev/null || true
 
 # Execute setup.py install
-echo -e "${BLUE}▶ Installing ParsLinux Nvidia Installer to system...${NC}"
+echo -e "${BLUE}▶ Installing ParsLinux AMD & Intel Installer to system...${NC}"
 sudo python3 setup.py install --root=/ --prefix=/usr --optimize=1
 
 # Reload systemd and desktop database
-echo -e "${BLUE}▶ Updating desktop and systemd caches...${NC}"
+echo -e "${BLUE}▶ Updating desktop caches...${NC}"
 sudo update-desktop-database -q /usr/share/applications 2>/dev/null || true
-sudo systemctl daemon-reload 2>/dev/null || true
 
-echo -e "${GREEN}${BOLD}✓ ParsLinux Nvidia Installer installed successfully!${NC}"
+echo -e "${GREEN}${BOLD}✓ ParsLinux AMD & Intel Installer installed successfully!${NC}"
 echo -e "You can now run it from your application menu or via command line:"
-echo -e "  ${BOLD}parslinux-nvidia-installer${NC}"
+echo -e "  ${BOLD}parslinux-amd-intel-installer${NC}"

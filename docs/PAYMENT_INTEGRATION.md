@@ -1,14 +1,11 @@
-# ☕ Topluluk Desteği ve Bağış Modeli (`PAYMENT_INTEGRATION.md`)
+# ☕ Destek ve Katkı Rehberi (`PAYMENT_INTEGRATION.md`)
 
-ParsLinux, kâr amacı gütmeyen bağımsız bir açık kaynak Linux dağıtımı projesidir.
+ParsLinux AMD & Intel Installer tamamen özgür ve açık kaynak kodlu bir projedir (GPL-3.0).
 
----
+## Topluluk Desteği
+ParsLinux geliştirme süreçlerini, AMD & Intel donanım test laboratuvarını ve paket barındırma sunucularını desteklemek için:
 
-## 1. Destek Kanalları
+- **Web Sitesi:** https://parslinux.org
+- **GitHub Sponsor:** https://github.com/sponsors/parslinux
 
-ParsLinux geliştirme süreçlerini, NVIDIA test laboratuvarı donanımlarını ve paket barındırma sunucularını desteklemek için:
-- **GitHub Sponsors**: [github.com/sponsors/parslinux](https://github.com/sponsors/parslinux)
-- **Patreon**: [patreon.com/parslinux](https://patreon.com/parslinux)
-- **Kripto Varlıklar**: BTC, ETH ve USDT bağış adresleri resmi web sitemizde yayınlanmaktadır.
-
-Tüm katkılar tamamen gönüllülük esasına dayanır. ParsLinux Nvidia Installer tamamen özgür ve ücretsizdir; hiçbir ticari kısıtlama veya ödeme duvarı içermez.
+Tüm katkılar tamamen gönüllülük esasına dayanır. ParsLinux AMD & Intel Installer tamamen özgür ve ücretsizdir; hiçbir ticari kısıtlama veya ödeme duvarı içermez.

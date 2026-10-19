@@ -1,25 +1,27 @@
 # Maintainer: ParsLinux Developers <dev@parslinux.org>
-pkgname=parslinux-nvidia-installer
+pkgname=parslinux-amd-intel-installer
 pkgver=1.0.0
 pkgrel=1
-pkgdesc="ParsLinux NVIDIA Graphics Driver Installer and Hybrid GPU Manager"
+pkgdesc="ParsLinux AMD Radeon & Intel Graphics Driver Installer and Hybrid GPU Manager"
 arch=('any')
 url="https://parslinux.org"
 license=('GPL-3.0-or-later')
 depends=(
     'python'
     'python-gobject'
-    'gtk3'
-    'vte3'
+    'gtk4'
+    'vte4'
     'polkit'
     'hwdata'
-    'gnupg'
+    'pciutils'
 )
 optdepends=(
-    'nvidia-dkms: NVIDIA proprietary kernel module'
-    'nvidia-utils: NVIDIA user-space tools and libraries'
-    'opencl-nvidia: NVIDIA OpenCL implementation'
-    'optimus-manager: Hybrid GPU switching support'
+    'vulkan-radeon: AMD Vulkan driver (RADV)'
+    'vulkan-intel: Intel Vulkan driver (ANV)'
+    'mesa-va-drivers: AMD VA-API hardware video acceleration'
+    'intel-media-driver: Intel modern VA-API hardware video acceleration'
+    'rocm-opencl-runtime: AMD OpenCL and ROCm runtime'
+    'intel-compute-runtime: Intel OpenCL NEO and Level Zero runtime'
 )
 makedepends=(
     'python-setuptools'

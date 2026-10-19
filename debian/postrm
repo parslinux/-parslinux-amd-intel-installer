@@ -3,12 +3,8 @@ set -e
 
 case "$1" in
     purge)
-        rm -f /usr/share/keyrings/nvidia-drivers.gpg
-        rm -f /etc/apt/sources.list.d/nvidia-drivers.list
-        rm -f /var/cache/parslinux-nvi-disable-gpu
-        rm -f /var/cache/pni-disable-gpu
-        rm -f /run/parslinux-nvi.reboot
-        rm -f /run/pardus-nvi.reboot
+        rm -f /var/cache/parslinux-disable-gpu
+        rm -f /etc/parslinux-amd-intel-installer.conf
         ;;
     remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
         ;;

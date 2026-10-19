@@ -1,28 +1,20 @@
-# 📦 Flatpak ve Sandbox Kapsamı Değerlendirmesi (`FLATPAK_PACKAGING.md`)
+# 📦 Flatpak ve Grafik Entegrasyonu (`FLATPAK_PACKAGING.md`)
 
-Bu belge, **ParsLinux Nvidia Installer** aracının neden doğrudan bir Flatpak sandbox paketi olamayacağını ve Flatpak oyun/grafik ekosistemiyle nasıl entegre çalıştığını açıklar.
-
----
-
-## 1. Mimari Sınırlar ve Sandbox Engelleri
-
-Grafik sürücüsü yükleyicileri, doğası gereği işletim sistemi çekirdeği ve donanım denetimiyle en alt düzeyde etkileşime girer:
-
-- **DKMS ve Çekirdek Modülleri**: Sürücü kurulumu, ana bilgisayardaki Linux çekirdeği için `nvidia.ko`, `nvidia-modeset.ko` ve `nvidia-uvm.ko` modüllerinin derlenmesini ve `/lib/modules/` altına yerleştirilmesini gerektirir.
-- **Donanım ve PCI Erişimi**: `/sys/bus/pci/devices` üzerinden aygıtların güç durumunu yönetmek (`power/control`, `remove`) çekirdek düzeyinde yetki gerektirir.
-- **APT / Paket Yönetimi**: Sistem paket yöneticisi (`apt-get`) kilit mekanizmalarına ve `/var/lib/dpkg/` veritabanına erişmek Flatpak kısıtlamaları dahilinde mümkün değildir.
-
-Bu nedenlerle `parslinux-nvidia-installer` ana sistem paketi (`.deb` / Arch PKGBUILD) olarak çalışmalıdır.
+Bu belge, **ParsLinux AMD & Intel Installer** aracının sistem grafik katmanları ve Flatpak oyun/grafik ekosistemiyle nasıl entegre çalıştığını açıklar.
 
 ---
 
-## 2. Flatpak Uygulamalarıyla Entegrasyon (Steam, Lutris, Blender)
+## 1. Neden Sistem Düzeyinde Paketleme?
 
-ParsLinux üzerinde Flatpak ile çalışan grafik uygulamaları, ana sisteme kurulan NVIDIA sürücüsünü otomatik olarak tanır:
+- **Mesa ve Çekirdek Entegrasyonu**: Vulkan (`vulkan-radeon`, `vulkan-intel`) ve VA-API (`mesa-va-drivers`, `intel-media-driver`) sürücüleri sistem geneli grafik alt yapısını ve donanım video hızlandırmasını yapılandırır.
+- **Root Yetkileri**: Paket kurulumu ve sistem geneli ortam değişkenleri PolicyKit doğrulaması gerektirir.
 
-1. `parslinux-nvidia-installer` ana sisteme NVIDIA tescilli sürücüsünü (örn. `550.xx`) kurar.
-2. Flatpak, sistemdeki sürücü sürümünü tespit ederek uyumlu grafik katmanını indirir:
-   ```bash
-   org.freedesktop.Platform.GL.nvidia-550-xx
-   ```
-3. Kullanıcı Flatpak üzerinden Steam veya Lutris başlattığında tam 3D hızlandırma ve DLSS/Ray Tracing desteği kesintisiz çalışır.
+Bu nedenlerle `parslinux-amd-intel-installer` ana sistem paketi (`.deb` / Arch PKGBUILD) olarak çalışır.
+
+---
+
+## 2. Flatpak Uygulamalarıyla Uyumluluk
+
+ParsLinux üzerinde Flatpak ile çalışan oyunlar (Steam, Heroic vb.) ve medya oynatıcılar, ana sistemdeki Mesa sürücülerini otomatik olarak tanır:
+- Flatpak Mesa GL/Vulkan çalışma zamanı (`org.freedesktop.Platform.GL.default`) sistemdeki GPU ile kusursuz uyum sağlar.
+- `DRI_PRIME=1` komutu Flatpak oyunlarında doğrudan harici GPU'yu devreye sokar.

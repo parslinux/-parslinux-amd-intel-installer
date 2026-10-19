@@ -31,7 +31,7 @@ wheels/
 debian/.debhelper/
 debian/debhelper-build-stamp
 debian/files
-debian/parslinux-nvidia-installer/
+debian/parslinux-amd-intel-installer/
 debian/*.substvars
 debian/*.debhelper.log
 *.deb

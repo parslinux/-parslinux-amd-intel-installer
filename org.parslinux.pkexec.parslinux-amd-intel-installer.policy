@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+
+<policyconfig>
+
+  <vendor>ParsLinux Developers</vendor>
+  <vendor_url>https://parslinux.org/</vendor_url>
+
+  <action id="org.parslinux.pkexec.parslinux-amd-intel-installer">
+    <description>Run AMD and Intel Graphics Installer Helper</description>
+    <description xml:lang="tr">AMD ve Intel Grafik Kurucu Yardımcısını Çalıştır</description>
+    <message>Authentication is required for ParsLinux AMD &amp; Intel Installer to manage drivers and settings on your system.</message>
+    <message xml:lang="tr">ParsLinux AMD &amp; Intel Grafik Yöneticisi'nin sisteminizde sürücü ve ayarları yapılandırabilmesi için yönetici yetkisi gerekiyor.</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/share/parslinux/parslinux-amd-intel-installer/src/package.py</annotate>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+  </action>
+
+</policyconfig>

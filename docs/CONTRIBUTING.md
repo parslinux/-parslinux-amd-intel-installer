@@ -1,17 +1,17 @@
 # 🤝 Katkıda Bulunma Kılavuzu (Contributing Guide)
 
-ParsLinux projesine ve `parslinux-nvidia-installer` aracına katkı sağlamak istediğiniz için teşekkür ederiz!
+ParsLinux projesine ve `parslinux-amd-intel-installer` aracına katkı sağlamak istediğiniz için teşekkür ederiz!
 
 ## 🌿 Geliştirme Ortamı Kurulumu
 
 1. Projeyi yerel makinenize klonlayın:
    ```bash
-   git clone https://github.com/parslinux/parslinux-nvidia-installer.git
-   cd parslinux-nvidia-installer
+   git clone git@github.com:parslinux/-parslinux-amd-intel-installer.git
+   cd -parslinux-amd-intel-installer
    ```
 2. Geliştirme bağımlılıklarını kurun:
-   - **Debian / ParsLinux:** `sudo apt install python3 python3-gi gir1.2-gtk-3.0 gir1.2-vte-2.91 gir1.2-polkit-1.0 pciutils gnupg gettext`
-   - **Arch / CachyOS:** `sudo pacman -S python python-gobject gtk3 vte3 polkit hwdata gnupg gettext`
+   - **Debian / ParsLinux:** `sudo apt install python3 python3-gi gir1.2-gtk-4.0 gir1.2-vte-2.91 gir1.2-polkit-1.0 pciutils hwdata gettext`
+   - **Arch / CachyOS:** `sudo pacman -S python python-gobject gtk4 vte3 polkit hwdata pciutils gettext`
 3. Uygulamayı simülasyon modunda çalıştırın:
    ```bash
    ./run.sh --debug

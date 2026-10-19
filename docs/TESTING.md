@@ -1,34 +1,26 @@
-# 🧪 Test ve Kalite Doğrulama Kılavuzu (`TESTING.md`)
+# 🧪 Test ve Kalite Güvencesi (`TESTING.md`)
 
-Bu belge, **ParsLinux Nvidia Installer** üzerindeki birim testleri, donanım simülatörü ve arayüz doğrulama yöntemlerini açıklamaktadır.
+Bu belge, **ParsLinux AMD & Intel Installer** üzerindeki birim testleri, donanım simülatörü ve arayüz doğrulama yöntemlerini açıklamaktadır.
 
 ---
 
-## 1. Otomatik Birim Testleri (Unit Tests)
+## 1. Birim Testlerini Çalıştırma
 
-Proje, fiziksel bir NVIDIA kartı gerektirmeyen kapsamlı bir test takımına sahiptir:
+Proje, fiziksel bir grafik kartı gerektirmeyen kapsamlı bir test takımına sahiptir:
 
 ```bash
-# Tüm birim testlerini çalıştırın (20/20 Test):
+# Standart unittest koşucusu:
 python3 -m unittest discover -s tests -p "test_*.py" -v
-```
 
-### Test Edilen Kritik Alanlar:
-- **Güvenlik Doğrulaması (`test_package_name_validation`):** Paket adları, fan hızı ve TDP güç limiti doğrulama kontrolleri ile komut enjeksiyonunun engellenmesi.
-- **Yeniden Başlatma Bayrağı (`test_reboot_required_detection`):** Çekirdek güncelleme durumunun tespiti.
-- **Dağıtım Sürüm Ayrıştırma (`test_debian_major_parsing`):** ParsLinux ve Debian sürümlerinin doğru eşlenmesi.
-- **Simülatör Donanım Verisi (`test_debug_simulation_mode`):** Debug modunda mock GPU ve sürücü listesinin doğru üretilmesi.
-- **Canlı Sensör ve Telemetri (`test_monitor_hardware_telemetry`):** Sıcaklık, fan, VRAM ve güç tüketimi okuma/simülasyon mekanizması.
-- **Oyun ve Başlatıcı Tespiti (`test_monitor_gaming_launchers_and_offload`):** Steam, Lutris, Heroic tespiti ve offload yapılandırma doğrulaması.
-- **PRIME Güç Profilleri (`test_monitor_prime_profiles`):** Tasarruf, Hibrit, Performans modlarının doğrulanması.
-- **Sistem Tepsisi Entegrasyonu (`test_tray_app_creation`):** AppIndicator ve StatusIcon fallback yapılandırılması.
-- **Varlık ve XML Doğrulaması (`test_assets_and_metadata_exist`):** Glade, CSS, SVG ve AppStream dosyalarının sağlamlığı.
+# veya yönetim konsolundan:
+./manage.sh test
+```
 
 ---
 
-## 2. Masaüstünde Canlı Arayüz Testi (Simülasyon Modu)
+## 2. Geliştirici Simülatörü ve Donanım Olmayan Ortamlar
 
-Mevcut makinenizde fiziksel NVIDIA kartı yoksa bile arayüzü tam işlevsel olarak test edebilirsiniz:
+Mevcut makinenizde fiziksel AMD/Intel kartı yoksa veya sanal makinede test ediyorsanız:
 
 ```bash
 # Simülasyon modunda başlatma:
@@ -36,17 +28,5 @@ Mevcut makinenizde fiziksel NVIDIA kartı yoksa bile arayüzü tam işlevsel ola
 ```
 
 Bu modda:
-- Simüle edilmiş bir NVIDIA GeForce RTX 4070 Ti kartı ekrana gelir.
-- Donanım detay sayfası, sürücü versiyonları ve simülasyon terminali etkileşimli olarak test edilebilir.
-
----
-
-## 3. Paket Derleme Testi
-
-Dağıtım paketlerinin sorunsuz üretildiğini doğrulamak için:
-
-```bash
-./package.sh
-```
-
-`dist/` dizini altında hem Debian (`.deb`) hem de Arch Linux (`.pkg.tar.zst`) paketlerinin üretildiğini teyit edin.
+- Simüle edilmiş AMD Radeon ve Intel Iris Xe donanımları arayüze yüklenir.
+- Canlı telemetri, Vulkan durumu ve güç profili bileşenleri GUI üzerinde görselleştirilebilir.
