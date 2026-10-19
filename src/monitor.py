@@ -251,46 +251,94 @@ def get_detected_game_launchers():
     return launchers
 
 
+MANGOHUD_PRESETS = {
+    "compact": (
+        "fps\n"
+        "frametime=0\n"
+        "frame_timing=0\n"
+        "round_corners=8\n"
+        "font_size=18\n"
+        "background_alpha=0.3\n"
+        "position=top-left\n"
+    ),
+    "detailed": (
+        "fps\n"
+        "gpu_stats\n"
+        "gpu_temp\n"
+        "gpu_core_clock\n"
+        "gpu_mem_clock\n"
+        "gpu_power\n"
+        "vram\n"
+        "cpu_stats\n"
+        "cpu_temp\n"
+        "ram\n"
+        "gamemode\n"
+        "round_corners=10\n"
+        "font_size=20\n"
+        "position=top-left\n"
+    ),
+    "streamer": (
+        "fps\n"
+        "font_size=16\n"
+        "background_alpha=0.2\n"
+        "round_corners=6\n"
+        "position=top-right\n"
+    ),
+    "benchmark": (
+        "fps\n"
+        "frametime\n"
+        "frame_timing=1\n"
+        "histogram\n"
+        "gpu_stats\n"
+        "cpu_stats\n"
+        "vram\n"
+        "round_corners=10\n"
+        "font_size=22\n"
+        "output_folder=~/.mangohud/benchmarks\n"
+    ),
+}
+
+
 def get_mangohud_status():
     """
-    Checks if MangoHud is installed and if an optimized config exists.
+    Checks if MangoHud is installed and detects the active preset.
     """
     installed = shutil.which("mangohud") is not None
     config_dir = os.path.expanduser("~/.config/MangoHud")
     config_file = os.path.join(config_dir, "MangoHud.conf")
     configured = os.path.isfile(config_file)
     enabled = configured and installed
+    active_preset = "detailed"
+
+    if configured:
+        try:
+            with open(config_file, "r") as f:
+                content = f.read()
+                if "output_folder" in content:
+                    active_preset = "benchmark"
+                elif "top-right" in content:
+                    active_preset = "streamer"
+                elif "gpu_stats" not in content and "fps" in content:
+                    active_preset = "compact"
+        except Exception:
+            pass
+
     return {
         "installed": installed,
         "configured": configured,
         "enabled": enabled,
+        "active_preset": active_preset,
         "config_file": config_file,
     }
 
 
-def set_mangohud_profile(enable: bool):
-    """Creates or removes MangoHud performance overlay config."""
+def set_mangohud_profile(enable: bool, preset: str = "detailed"):
+    """Creates or removes MangoHud performance overlay config with presets."""
     config_dir = os.path.expanduser("~/.config/MangoHud")
     config_file = os.path.join(config_dir, "MangoHud.conf")
     if enable:
         os.makedirs(config_dir, exist_ok=True)
-        content = (
-            "fps\n"
-            "gpu_stats\n"
-            "gpu_temp\n"
-            "gpu_core_clock\n"
-            "gpu_mem_clock\n"
-            "gpu_power\n"
-            "vram\n"
-            "cpu_stats\n"
-            "cpu_temp\n"
-            "ram\n"
-            "arch\n"
-            "gamemode\n"
-            "round_corners=10\n"
-            "font_size=20\n"
-            "position=top-left\n"
-        )
+        content = MANGOHUD_PRESETS.get(preset, MANGOHUD_PRESETS["detailed"])
         try:
             with open(config_file, "w") as f:
                 f.write(content)
@@ -303,6 +351,25 @@ def set_mangohud_profile(enable: bool):
             except OSError:
                 pass
     return True
+
+
+def get_gamemode_status():
+    """
+    Checks if Feral GameMode (gamemoderun / gamemoded) is available and running.
+    """
+    installed = shutil.which("gamemoderun") is not None or shutil.which("gamemoded") is not None
+    running = False
+    if installed:
+        try:
+            res = subprocess.run(["gamemoded", "-s"], capture_args=True, text=True, timeout=1)
+            if "is active" in res.stdout:
+                running = True
+        except Exception:
+            pass
+    return {
+        "installed": installed,
+        "running": running,
+    }
 
 
 def is_timeshift_installed():

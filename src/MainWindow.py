@@ -17,6 +17,7 @@ import detector
 import monitor
 import amd_intel
 import package
+import kernel_config
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Polkit", "1.0")
@@ -452,7 +453,7 @@ class MainWindow(object):
                 markup = f'<span foreground="tomato">{_("Operation failed (exit code {code}). Please review the log above.").format(code=exit_code)}</span>'
             status_label.set_markup(markup)
 
-        if self.apt_opr in ("install-driver", "install-gpu", "update", "prime-mode", "install-ai-tools"):
+        if self.apt_opr in ("install-driver", "install-gpu", "update", "prime-mode", "install-ai-tools", "set-kernel-modules"):
             amd_intel.reopen_cache()
             self.refresh_prime_ui()
             self.refresh_ai_ui()
@@ -993,7 +994,7 @@ class MainWindow(object):
 
         # GPU Model & Driver Label
         self.lbl_mon_gpu_title = Gtk.Label()
-        self.lbl_mon_gpu_title.set_markup('<span font_weight="bold" font_size="small" foreground="#E2E8F0">NVIDIA Grafik Kartı</span>')
+        self.lbl_mon_gpu_title.set_markup('<span font_weight="bold" font_size="small" foreground="#E2E8F0">AMD / Intel Grafik Donanımı</span>')
         self.lbl_mon_gpu_title.set_halign(Gtk.Align.START)
         card_mon.pack_start(self.lbl_mon_gpu_title, False, False, 0)
 
@@ -1215,6 +1216,54 @@ class MainWindow(object):
 
         box.pack_start(card_oc, False, False, 0)
 
+        # 5. Kernel & Driver Modprobe Optimization Card
+        card_mod = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        card_mod.get_style_context().add_class("monitor-card")
+
+        mod_header = Gtk.Label()
+        mod_header.set_markup('<span font_weight="bold" foreground="#38BDF8">🛡️ Çekirdek &amp; Sürücü Modül Ayarları (Kernel Parameters)</span>')
+        mod_header.set_halign(Gtk.Align.START)
+        card_mod.pack_start(mod_header, False, False, 0)
+
+        mod_desc = Gtk.Label()
+        mod_desc.set_markup('<span font_size="small" foreground="#94A3B8">Ekran kartınızın tam potansiyelini açmak için çekirdek modül seçeneklerini yapılandırın (/etc/modprobe.d/):</span>')
+        mod_desc.set_line_wrap(True)
+        mod_desc.set_halign(Gtk.Align.START)
+        card_mod.pack_start(mod_desc, False, False, 0)
+
+        k_status = kernel_config.get_kernel_module_status()
+
+        # AMD Row
+        row_amd_k = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        lbl_amd_k = Gtk.Label()
+        lbl_amd_k.set_markup('<b>🔴 AMD PowerPlay &amp; Overclock Kilidi</b> <span foreground="#94A3B8">(amdgpu.ppfeaturemask=0xffffffff)</span>')
+        lbl_amd_k.set_halign(Gtk.Align.START)
+        self.switch_amd_k = Gtk.Switch()
+        self.switch_amd_k.set_active(k_status["amd"]["conf_active"] or k_status["amd"]["runtime_unlocked"])
+        row_amd_k.pack_start(lbl_amd_k, True, True, 0)
+        row_amd_k.pack_end(self.switch_amd_k, False, False, 0)
+        card_mod.pack_start(row_amd_k, False, False, 2)
+
+        # Intel Row
+        row_intel_k = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        lbl_intel_k = Gtk.Label()
+        lbl_intel_k.set_markup('<b>🔵 Intel GuC/HuC Donanım Hızlandırma</b> <span foreground="#94A3B8">(i915.enable_guc=3)</span>')
+        lbl_intel_k.set_halign(Gtk.Align.START)
+        self.switch_intel_k = Gtk.Switch()
+        self.switch_intel_k.set_active(k_status["intel"]["conf_active"] or k_status["intel"]["runtime_active"])
+        row_intel_k.pack_start(lbl_intel_k, True, True, 0)
+        row_intel_k.pack_end(self.switch_intel_k, False, False, 0)
+        card_mod.pack_start(row_intel_k, False, False, 2)
+
+        # Save Button
+        btn_save_k = Gtk.Button(label=_("💾 Modül Ayarlarını Sisteme Kaydet (Initramfs Güncelle)"))
+        btn_save_k.get_style_context().add_class("prime-btn")
+        btn_save_k.set_halign(Gtk.Align.END)
+        btn_save_k.connect("clicked", lambda b: self.on_apply_kernel_module_settings())
+        card_mod.pack_start(btn_save_k, False, False, 4)
+
+        box.pack_start(card_mod, False, False, 0)
+
         self.refresh_telemetry_ui()
         self.refresh_prime_ui()
         return box
@@ -1235,7 +1284,7 @@ class MainWindow(object):
         card_game.pack_start(header, False, False, 0)
 
         desc = Gtk.Label()
-        desc.set_markup('<span font_size="small" foreground="#94A3B8">Oyunları otomatik olarak yüksek performanslı NVIDIA GPU ve Vulkan DXVK katmanlarıyla çalıştırın.</span>')
+        desc.set_markup('<span font_size="small" foreground="#94A3B8">Oyunları otomatik olarak yüksek performanslı ayrık AMD / Intel GPU ve Vulkan DXVK katmanlarıyla çalıştırın.</span>')
         desc.set_line_wrap(True)
         desc.set_halign(Gtk.Align.START)
         card_game.pack_start(desc, False, False, 0)
@@ -1315,6 +1364,29 @@ class MainWindow(object):
         row_hud.pack_end(self.switch_mangohud, False, False, 0)
         card_hud.pack_start(row_hud, False, False, 4)
 
+        # MangoHud Presets row
+        row_preset = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        lbl_preset = Gtk.Label(label=_("🎨 HUD Gösterge Profili:"))
+        lbl_preset.set_halign(Gtk.Align.START)
+
+        self.preset_keys = ["detailed", "compact", "streamer", "benchmark"]
+        preset_names = [
+            _("📊 Detaylı Donanım (Standart)"),
+            _("⚡ Kompakt FPS"),
+            _("🎥 Yayıncı Modu (Şeffaf & Sağ Üst)"),
+            _("📈 Benchmark & Kayıt Modu"),
+        ]
+        active_preset = hud_status.get("active_preset", "detailed")
+        active_idx = self.preset_keys.index(active_preset) if active_preset in self.preset_keys else 0
+
+        self.dd_hud_preset = Gtk.DropDown.new_from_strings(preset_names)
+        self.dd_hud_preset.set_selected(active_idx)
+        self.dd_hud_preset.connect("notify::selected", self.on_mangohud_preset_changed)
+
+        row_preset.pack_start(lbl_preset, True, True, 0)
+        row_preset.pack_end(self.dd_hud_preset, False, False, 0)
+        card_hud.pack_start(row_preset, False, False, 2)
+
         if not hud_status["installed"]:
             row_install = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
             lbl_not_inst = Gtk.Label()
@@ -1328,6 +1400,41 @@ class MainWindow(object):
             card_hud.pack_start(row_install, False, False, 2)
 
         box.pack_start(card_hud, False, False, 0)
+
+        # GameMode Card
+        card_gamemode = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        card_gamemode.get_style_context().add_class("card-box")
+
+        gm_header = Gtk.Label()
+        gm_header.set_markup('<span font_weight="bold" foreground="#38BDF8">🚀 Feral GameMode (Oyun Performans Modu)</span>')
+        gm_header.set_halign(Gtk.Align.START)
+        card_gamemode.pack_start(gm_header, False, False, 0)
+
+        gm_desc = Gtk.Label()
+        gm_desc.set_markup('<span font_size="small" foreground="#94A3B8">Oyun başlatıldığında CPU yöneticisini performans moduna alır, I/O önceliklerini yükseltir ve arka plan servislerini sınırlar.</span>')
+        gm_desc.set_line_wrap(True)
+        gm_desc.set_halign(Gtk.Align.START)
+        card_gamemode.pack_start(gm_desc, False, False, 0)
+
+        gm_status = monitor.get_gamemode_status()
+        row_gm = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        lbl_gm_info = Gtk.Label()
+        if gm_status["installed"]:
+            st_text = '<span foreground="#4ADE80">✓ GameMode Kurulu ve Hazır (gamemoderun)</span>'
+        else:
+            st_text = '<span foreground="#F59E0B">⚠️ GameMode sistemde kurulu değil.</span>'
+        lbl_gm_info.set_markup(st_text)
+        lbl_gm_info.set_halign(Gtk.Align.START)
+        row_gm.pack_start(lbl_gm_info, True, True, 0)
+
+        if not gm_status["installed"]:
+            btn_inst_gm = Gtk.Button(label=_("📦 GameMode Yükle"))
+            btn_inst_gm.get_style_context().add_class("prime-btn")
+            btn_inst_gm.connect("clicked", lambda b: self.on_install_gamemode())
+            row_gm.pack_end(btn_inst_gm, False, False, 0)
+        card_gamemode.pack_start(row_gm, False, False, 2)
+
+        box.pack_start(card_gamemode, False, False, 0)
         return box
 
     def build_ai_page(self):
@@ -1420,7 +1527,7 @@ class MainWindow(object):
                 f'<span font_size="small">💾 VRAM: <b>{u_gb:.1f} GB</b> / {t_gb:.1f} GB (%{fraction*100:.0f})</span>'
             )
 
-            name = data.get("name", "NVIDIA GPU")
+            name = data.get("name", "AMD / Intel GPU")
             self.lbl_mon_gpu_title.set_markup(f'<span font_weight="bold" font_size="small" foreground="#E2E8F0">{name}</span>')
         except Exception as e:
             print(f"Warning: Failed to update telemetry: {e}", file=sys.stderr)
@@ -1531,12 +1638,45 @@ class MainWindow(object):
         self.on_apply_overclock()
 
     def on_toggle_mangohud(self, switch, state):
-        monitor.set_mangohud_profile(state)
+        preset = "detailed"
+        if hasattr(self, "dd_hud_preset") and hasattr(self, "preset_keys"):
+            idx = self.dd_hud_preset.get_selected()
+            if 0 <= idx < len(self.preset_keys):
+                preset = self.preset_keys[idx]
+        monitor.set_mangohud_profile(state, preset=preset)
+
+    def on_mangohud_preset_changed(self, dropdown, pspec):
+        if hasattr(self, "dd_hud_preset") and hasattr(self, "preset_keys"):
+            idx = self.dd_hud_preset.get_selected()
+            if 0 <= idx < len(self.preset_keys):
+                preset = self.preset_keys[idx]
+                if hasattr(self, "switch_mangohud") and self.switch_mangohud.get_active():
+                    monitor.set_mangohud_profile(True, preset=preset)
 
     def on_install_mangohud(self):
         self.apt_opr = "install-extra"
         exec_path = get_package_exec_path()
         params = ["/usr/bin/pkexec", exec_path, "install-extra", "mangohud"]
+        self.vte_start(params)
+
+    def on_install_gamemode(self):
+        self.apt_opr = "install-extra"
+        exec_path = get_package_exec_path()
+        params = ["/usr/bin/pkexec", exec_path, "install-extra", "gamemode"]
+        self.vte_start(params)
+
+    def on_apply_kernel_module_settings(self):
+        enable_amd = self.switch_amd_k.get_active() if hasattr(self, "switch_amd_k") else False
+        enable_intel = self.switch_intel_k.get_active() if hasattr(self, "switch_intel_k") else False
+        self.apt_opr = "set-kernel-modules"
+        exec_path = get_package_exec_path()
+        params = [
+            "/usr/bin/pkexec",
+            exec_path,
+            "set-kernel-modules",
+            "on" if enable_amd else "off",
+            "on" if enable_intel else "off",
+        ]
         self.vte_start(params)
 
     def on_create_snapshot_clicked(self):

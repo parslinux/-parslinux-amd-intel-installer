@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 18:07+0300\n"
+"POT-Creation-Date: 2026-10-19 19:08+0300\n"
 "PO-Revision-Date: 2024-07-16 11:17+0300\n"
 "Last-Translator: Osman Coskun <osman.coskun@pardus.org.tr>\n"
 "Language-Team: Turkish <dev@pardus.org.tr>\n"
@@ -157,7 +157,7 @@ msgstr "Yeniden başlat"
 msgid "Exit"
 msgstr "Çıkış"
 
-#: ui/ui.glade:370 ui/ui.glade:446 src/MainWindow.py:367
+#: ui/ui.glade:370 ui/ui.glade:446 src/MainWindow.py:368
 msgid "ParsLinux AMD & Intel Installer"
 msgstr "ParsLinux AMD & Intel Kurucu"
 
@@ -166,47 +166,47 @@ msgid "You must reboot your device before using this application."
 msgstr ""
 "Bu uygulamayı kullanmadan önce cihazınızı yeniden başlatmanız gerekmektedir."
 
-#: src/MainWindow.py:120
+#: src/MainWindow.py:121
 msgid "Birincil"
 msgstr ""
 
-#: src/MainWindow.py:120
+#: src/MainWindow.py:121
 msgid "Harici/İkincil"
 msgstr ""
 
-#: src/MainWindow.py:125
+#: src/MainWindow.py:126
 msgid "Intel / AMD Grafik Bağdaştırıcısı"
 msgstr ""
 
-#: src/MainWindow.py:283
+#: src/MainWindow.py:284
 msgid "🔄 Donanımı Yeniden Tara"
 msgstr ""
 
-#: src/MainWindow.py:288
+#: src/MainWindow.py:289
 msgid "🔍 Donanım Raporunu Görüntüle"
 msgstr ""
 
-#: src/MainWindow.py:373
+#: src/MainWindow.py:374
 msgid "Donanımı Yeniden Tara (Rescan GPUs)"
 msgstr ""
 
-#: src/MainWindow.py:378
+#: src/MainWindow.py:379
 msgid "Donanım Raporu & Tanılama"
 msgstr ""
 
-#: src/MainWindow.py:383
+#: src/MainWindow.py:384
 msgid "Sistem Geri Yükleme Noktası Al (Timeshift)"
 msgstr ""
 
-#: src/MainWindow.py:388
+#: src/MainWindow.py:389
 msgid "Sistem Tepsisi Göstergesini Başlat (Tray)"
 msgstr ""
 
-#: src/MainWindow.py:404
+#: src/MainWindow.py:405
 msgid "Warning"
 msgstr ""
 
-#: src/MainWindow.py:408
+#: src/MainWindow.py:409
 #, fuzzy
 msgid ""
 "Changes have been made. To ensure these changes take effect, a system "
@@ -217,180 +217,208 @@ msgstr ""
 "yeniden başlatmanız gerekmektedir. Lütfen bütün işlerinizi kaydedin ve "
 "'Tamam' butonuna basarak işlemi tamamlayın."
 
-#: src/MainWindow.py:450
+#: src/MainWindow.py:451
 msgid "Operation completed successfully."
 msgstr ""
 
-#: src/MainWindow.py:452
+#: src/MainWindow.py:453
 #, python-brace-format
 msgid "Operation failed (exit code {code}). Please review the log above."
 msgstr ""
 
-#: src/MainWindow.py:598
+#: src/MainWindow.py:599
 msgid "Grafik Kartı"
 msgstr ""
 
-#: src/MainWindow.py:614
+#: src/MainWindow.py:615
 msgid "✨ Önerilen Sürücüyü Otomatik Seç"
 msgstr ""
 
-#: src/MainWindow.py:619
+#: src/MainWindow.py:620
 msgid "🔍 Donanım Raporu"
 msgstr ""
 
-#: src/MainWindow.py:659
+#: src/MainWindow.py:660
 msgid "🔍 GPU & Donanım Tanılama Raporu"
 msgstr ""
 
-#: src/MainWindow.py:664
+#: src/MainWindow.py:665
 msgid "📋 Panoya Kopyala"
 msgstr ""
 
-#: src/MainWindow.py:665
+#: src/MainWindow.py:666
 msgid "Kapat"
 msgstr ""
 
-#: src/MainWindow.py:803
+#: src/MainWindow.py:804
 msgid "Driver"
 msgstr "Sürücü"
 
-#: src/MainWindow.py:809
+#: src/MainWindow.py:810
 msgid "Version"
 msgstr "Sürüm"
 
-#: src/MainWindow.py:815
+#: src/MainWindow.py:816
 msgid "Description"
 msgstr "Açıklama"
 
-#: src/MainWindow.py:912
+#: src/MainWindow.py:913
 msgid "Selected version is no longer available"
 msgstr ""
 
-#: src/MainWindow.py:915
+#: src/MainWindow.py:916
 msgid "The package list has been refreshed. Please choose a driver again."
 msgstr ""
 
-#: src/MainWindow.py:957
+#: src/MainWindow.py:958
 msgid "🎮 Sürücüler"
 msgstr ""
 
-#: src/MainWindow.py:960
+#: src/MainWindow.py:961
 msgid "📊 Donanım & Güç"
 msgstr ""
 
-#: src/MainWindow.py:963
+#: src/MainWindow.py:964
 msgid "🕹️ Oyun"
 msgstr ""
 
-#: src/MainWindow.py:966
-msgid "🧠 Yapay Zeka (CUDA)"
+#: src/MainWindow.py:967
+msgid "🧠 Yapay Zeka (ROCm / oneAPI)"
 msgstr ""
 
-#: src/MainWindow.py:989
+#: src/MainWindow.py:990
 msgid "Sensörleri Yenile"
 msgstr ""
 
-#: src/MainWindow.py:1093
+#: src/MainWindow.py:1094
 msgid ""
 "🍃 Tasarruf\n"
 "(Entegre)"
 msgstr ""
 
-#: src/MainWindow.py:1097
+#: src/MainWindow.py:1098
 msgid ""
 "⚡ Hibrit\n"
 "(İsteğe Bağlı)"
 msgstr ""
 
-#: src/MainWindow.py:1101
+#: src/MainWindow.py:1102
 msgid ""
 "🚀 Performans\n"
 "(Ayrık dGPU)"
 msgstr ""
 
-#: src/MainWindow.py:1123
+#: src/MainWindow.py:1124
 msgid "💨 Fan Hızı (%):"
 msgstr ""
 
-#: src/MainWindow.py:1130 src/MainWindow.py:1150
+#: src/MainWindow.py:1131 src/MainWindow.py:1151
 msgid "Uygula"
 msgstr ""
 
-#: src/MainWindow.py:1140
+#: src/MainWindow.py:1141
 msgid "⚡ Güç Sınırı (W):"
 msgstr ""
 
-#: src/MainWindow.py:1179
+#: src/MainWindow.py:1180
 msgid "🎯 Çekirdek (Core MHz):"
 msgstr ""
 
-#: src/MainWindow.py:1191
+#: src/MainWindow.py:1192
 msgid "🧠 Bellek (Memory MHz):"
 msgstr ""
 
-#: src/MainWindow.py:1205
+#: src/MainWindow.py:1206
 msgid "🔄 Varsayılana Sıfırla (0 MHz)"
 msgstr ""
 
-#: src/MainWindow.py:1208
+#: src/MainWindow.py:1209
 msgid "⚡ Hız Aşırtmayı Uygula"
 msgstr ""
 
-#: src/MainWindow.py:1272
+#: src/MainWindow.py:1259
+msgid "💾 Modül Ayarlarını Sisteme Kaydet (Initramfs Güncelle)"
+msgstr ""
+
+#: src/MainWindow.py:1321
 msgid "dGPU ile Başlat"
 msgstr ""
 
-#: src/MainWindow.py:1282
+#: src/MainWindow.py:1331
 msgid "🚀 3D Grafik Testi Başlat (vkcube / glxgears)"
 msgstr ""
 
-#: src/MainWindow.py:1323
+#: src/MainWindow.py:1369
+msgid "🎨 HUD Gösterge Profili:"
+msgstr ""
+
+#: src/MainWindow.py:1374
+msgid "📊 Detaylı Donanım (Standart)"
+msgstr ""
+
+#: src/MainWindow.py:1375
+msgid "⚡ Kompakt FPS"
+msgstr ""
+
+#: src/MainWindow.py:1376
+msgid "🎥 Yayıncı Modu (Şeffaf & Sağ Üst)"
+msgstr ""
+
+#: src/MainWindow.py:1377
+msgid "📈 Benchmark & Kayıt Modu"
+msgstr ""
+
+#: src/MainWindow.py:1395
 msgid "📦 MangoHud Yükle"
 msgstr ""
 
-#: src/MainWindow.py:1355
+#: src/MainWindow.py:1431
+msgid "📦 GameMode Yükle"
+msgstr ""
+
+#: src/MainWindow.py:1462
 msgid "🔴 AMD ROCm / HIP Stack (ROCm OpenCL, HIP & Runtimes)"
 msgstr ""
 
-#: src/MainWindow.py:1360
+#: src/MainWindow.py:1467
 msgid "🔵 Intel oneAPI & Level Zero (NEO OpenCL & Compute Runtime)"
 msgstr ""
 
-#: src/MainWindow.py:1365
+#: src/MainWindow.py:1472
 msgid "⚡ Açık Standart OpenCL Araçları (clinfo & ICD Loader)"
 msgstr ""
 
-#: src/MainWindow.py:1381
+#: src/MainWindow.py:1488
 msgid "🚀 Seçilen Geliştirici Bileşenlerini Kur"
 msgstr ""
 
-#: src/MainWindow.py:1434
+#: src/MainWindow.py:1541
 msgid "🍃 Tasarruf (Entegre GPU Aktif - Harici Kapalı)"
 msgstr ""
 
-#: src/MainWindow.py:1435 src/MainWindow.py:1436
+#: src/MainWindow.py:1542 src/MainWindow.py:1543
 msgid "⚡ Hibrit (İsteğe Bağlı / DRI_PRIME Render Offload)"
 msgstr ""
 
-#: src/MainWindow.py:1437
+#: src/MainWindow.py:1544
 msgid "🚀 Performans (Ayrık dGPU Sürekli Aktif)"
 msgstr ""
 
-#: src/MainWindow.py:1549
+#: src/MainWindow.py:1689
 msgid "Timeshift Kurulu Değil"
 msgstr ""
 
-#: src/MainWindow.py:1552
+#: src/MainWindow.py:1692
 msgid ""
 "Sistem geri yükleme noktası oluşturmak için Timeshift gereklidir. Şimdi "
 "Timeshift paketini yüklemek ister misiniz?"
 msgstr ""
 
-#: src/MainWindow.py:1569
+#: src/MainWindow.py:1709
 msgid "Sistem Geri Yükleme Noktası Oluştur"
 msgstr ""
 
-#: src/MainWindow.py:1572
+#: src/MainWindow.py:1712
 msgid ""
 "Sürücü ve donanım yapılandırması öncesinde Timeshift ile sistem yedeği "
 "alınsın mı?"

@@ -18,6 +18,7 @@ import amd_intel
 import detector
 import monitor
 import package
+import kernel_config
 
 
 class TestGpuModel(unittest.TestCase):
@@ -136,6 +137,39 @@ class TestMonitor(unittest.TestCase):
         status = monitor.get_gaming_status()
         self.assertIn("launchers", status)
         self.assertIn("global_offload", status)
+
+    def test_mangohud_presets(self):
+        status = monitor.get_mangohud_status()
+        self.assertIn("installed", status)
+        self.assertIn("active_preset", status)
+        self.assertIn("compact", monitor.MANGOHUD_PRESETS)
+        self.assertIn("detailed", monitor.MANGOHUD_PRESETS)
+        self.assertIn("streamer", monitor.MANGOHUD_PRESETS)
+        self.assertIn("benchmark", monitor.MANGOHUD_PRESETS)
+
+    def test_gamemode_status(self):
+        status = monitor.get_gamemode_status()
+        self.assertIn("installed", status)
+        self.assertIn("running", status)
+
+
+class TestKernelConfig(unittest.TestCase):
+    def test_kernel_status_structure(self):
+        status = kernel_config.get_kernel_module_status()
+        self.assertIn("amd", status)
+        self.assertIn("intel", status)
+        self.assertIn("conf_active", status["amd"])
+        self.assertIn("conf_active", status["intel"])
+
+    def test_generate_apply_command(self):
+        cmd = kernel_config.generate_apply_command(True, True)
+        self.assertIn("ppfeaturemask=0xffffffff", cmd)
+        self.assertIn("enable_guc=3", cmd)
+        self.assertIn("/etc/modprobe.d", cmd)
+
+    def test_generate_disable_command(self):
+        cmd = kernel_config.generate_apply_command(False, False)
+        self.assertIn("rm -f", cmd)
 
 
 class TestFilesystemIntegration(unittest.TestCase):

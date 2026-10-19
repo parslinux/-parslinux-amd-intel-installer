@@ -300,6 +300,52 @@ def update():
     return True
 
 
+def apply_kernel_module_settings(enable_amd_oc: bool, enable_intel_guc: bool):
+    """
+    Applies /etc/modprobe.d settings for AMD ppfeaturemask and Intel GuC/HuC.
+    Re-generates initramfs and sets reboot marker.
+    """
+    amd_conf = "/etc/modprobe.d/amdgpu.conf"
+    intel_conf = "/etc/modprobe.d/i915.conf"
+
+    try:
+        os.makedirs("/etc/modprobe.d", exist_ok=True)
+        if enable_amd_oc:
+            with open(amd_conf, "w") as f:
+                f.write("# ParsLinux AMD Overclock & PowerPlay\noptions amdgpu ppfeaturemask=0xffffffff\n")
+            print(f"Configured: {amd_conf}")
+        else:
+            if os.path.isfile(amd_conf):
+                os.remove(amd_conf)
+                print(f"Removed: {amd_conf}")
+
+        if enable_intel_guc:
+            with open(intel_conf, "w") as f:
+                f.write("# ParsLinux Intel GuC/HuC Hardware Acceleration\noptions i915 enable_guc=3\n")
+            print(f"Configured: {intel_conf}")
+        else:
+            if os.path.isfile(intel_conf):
+                os.remove(intel_conf)
+                print(f"Removed: {intel_conf}")
+    except OSError as e:
+        print(f"Error configuring modprobe files: {e}", file=sys.stderr)
+        return False
+
+    # Regenerate initramfs
+    if shutil.which("update-initramfs"):
+        print("Running: update-initramfs -u")
+        subprocess.call(["update-initramfs", "-u"])
+    elif shutil.which("mkinitcpio"):
+        print("Running: mkinitcpio -P")
+        subprocess.call(["mkinitcpio", "-P"])
+    elif shutil.which("dracut"):
+        print("Running: dracut --force")
+        subprocess.call(["dracut", "--force"])
+
+    mark_need_reboot()
+    return True
+
+
 if __name__ == "__main__":
     args = sys.argv
     if len(args) <= 1:
@@ -331,6 +377,10 @@ if __name__ == "__main__":
         c_off = int(args[2]) if len(args) > 2 else 0
         m_off = int(args[3]) if len(args) > 3 else 0
         ok = set_gpu_overclock(c_off, m_off)
+    elif param1 == "set-kernel-modules":
+        amd_oc = (args[2] == "on") if len(args) > 2 else False
+        intel_guc = (args[3] == "on") if len(args) > 3 else False
+        ok = apply_kernel_module_settings(amd_oc, intel_guc)
     elif param1 == "create-snapshot":
         comment = args[2] if len(args) > 2 else "ParsLinux Graphics Driver Backup"
         ok = create_timeshift_snapshot(comment)

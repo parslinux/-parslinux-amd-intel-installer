@@ -106,7 +106,9 @@ data_files = [
     ("/usr/share/parslinux/parslinux-amd-intel-installer/src", [
         "src/Main.py",
         "src/MainWindow.py",
+        "src/amd_intel.py",
         "src/detector.py",
+        "src/kernel_config.py",
         "src/monitor.py",
         "src/tray.py",
         "src/package.py",

@@ -48,15 +48,17 @@
 ## 🎯 Gelecek Hedefler (v1.1.0 & v1.2.0 Yol Haritası)
 
 ### v1.1.0 — Gelişmiş Ayarlar & Çekirdek Yapılandırması
-- [ ] **Kernel Modül Parametreleri Yöneticisi:**
+- [x] **Kernel Modül Parametreleri Yöneticisi (`src/kernel_config.py`):**
   - AMD: `/etc/modprobe.d/amdgpu.conf` üzerinden `amdgpu.ppfeaturemask=0xffffffff` overclock kilidi açma.
   - Intel: `/etc/modprobe.d/i915.conf` ve `xe.conf` üzerinden `enable_guc=3` (GuC/HuC donanım hızlandırma) aktivasyonu.
-- [ ] **MangoHud Önayar Yapılandırıcısı (Presets):**
+  - Sisteme kaydetme ve otomatik `update-initramfs` / `mkinitcpio` / `dracut` tetikleme altyapısı.
+- [x] **MangoHud Önayar Yapılandırıcısı (Presets):**
   - Kompakt FPS Modu, Ayrıntılı Donanım Modu, Yayıncı Modu ve Benchmark Modu hazır profilleri.
-- [ ] **GameMode (Feral Interactive) Entegrasyonu:**
-  - `gamemoderun` durum tespiti, otomatik profil optimizasyonu ve CPU governor ayarları.
-- [ ] **Sistem Geri Yükleme / Timeshift Entegrasyonu:**
-  - Sürücü veya derin kütüphane kurulumlarından önce isteğe bağlı otomatik geri yükleme noktası oluşturma.
+  - GTK4 açılır menü (DropDown) ile anlık profil değişimi.
+- [x] **GameMode (Feral Interactive) Entegrasyonu:**
+  - `gamemoderun` durum tespiti ve tek tıkla sistem paket yöneticisinden kurulum.
+- [x] **Sistem Geri Yükleme / Timeshift Entegrasyonu:**
+  - Timeshift kontrolü ve sürücü/kütüphane kurulumları öncesi yedek alma yönlendirmesi.
 
 ### v1.2.0 — Kapsamlı Benchmark ve Performans Araçları
 - [ ] **Dahili Grafik Benchmark Aracı:**
