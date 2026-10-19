@@ -58,7 +58,7 @@ def run_generator():
             ("drivers", "screenshot_drivers.png"),
             ("monitor", "screenshot_monitor.png"),
             ("gaming", "screenshot_gaming.png"),
-            ("ai", "screenshot_ai.png"),
+            ("ai_tools", "screenshot_ai.png"),
         ]
 
         # Hero screenshot

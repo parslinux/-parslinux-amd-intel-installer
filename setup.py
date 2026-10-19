@@ -123,6 +123,9 @@ data_files = [
         "data/assets/amd_logo.svg",
         "data/assets/intel_logo.svg",
         "data/assets/amd_intel_logo.svg",
+        "data/assets/amd_logo.png",
+        "data/assets/intel_logo.png",
+        "data/assets/amd_intel_logo.png",
         "data/assets/parslinux-logo.svg",
         "data/assets/video_card.svg",
         "data/assets/video_card_disabled.svg"

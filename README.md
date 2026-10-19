@@ -30,6 +30,18 @@ Hem saf tekil GPU sistemlerini hem de çift grafik kartlı melez dizüstü bilgi
 
 ---
 
+## 📸 Ekran Görüntüleri
+
+| 🎮 Sürücüler & Grafik Katmanları | 📊 Donanım & Güç İzleme |
+| :---: | :---: |
+| ![Sürücüler](images/screenshot_drivers.png) | ![Sensörler](images/screenshot_monitor.png) |
+
+| 🕹️ Oyun & PRIME Performans | 🧠 Yapay Zeka (ROCm / oneAPI) |
+| :---: | :---: |
+| ![Oyun](images/screenshot_gaming.png) | ![Yapay Zeka](images/screenshot_ai.png) |
+
+---
+
 ## 🛠️ Sistem Gereksinimleri
 
 | Bileşen | Paket Adı (Debian / ParsLinux) | Paket Adı (Arch Linux / CachyOS) |

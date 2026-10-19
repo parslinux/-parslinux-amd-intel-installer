@@ -963,7 +963,7 @@ class MainWindow(object):
         self.feature_stack.add_titled(self.page_gaming, "gaming", _("🕹️ Oyun"))
 
         self.page_ai = self.build_ai_page()
-        self.feature_stack.add_titled(self.page_ai, "ai_tools", _("🧠 Yapay Zeka (CUDA)"))
+        self.feature_stack.add_titled(self.page_ai, "ai_tools", _("🧠 Yapay Zeka (ROCm / oneAPI)"))
 
         self.ui_enabled_gpu_box.pack_start(self.feature_switcher, False, False, 0)
         self.ui_enabled_gpu_box.pack_start(self.feature_stack, True, True, 0)
